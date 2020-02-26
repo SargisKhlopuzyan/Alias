@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="horizontal_padding">8dp</dimen>
+    <dimen name="padding_12">12dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
+
+    <dimen name="settingsSeekBarProgressDrawableHeight">18dp</dimen>
+    <dimen name="settingsSeekBarThumbHeight">20dp</dimen>
+</resources>
