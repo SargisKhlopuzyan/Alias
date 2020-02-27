@@ -1,102 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/toolsl">
 
     <data>
 
         <variable
             name="viewModel"
-            type="app.sargis.khlopuzyan.alias.ui.MainViewModel" />
+            type="app.sargis.khlopuzyan.alias.ui.main.MainViewModel" />
 
     </data>
 
-    <FrameLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:context=".ui.MainFragment">
+        tools:openDrawer="start">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutLanguage"
-            android:background="@color/cardview_dark_background"
+        <include
+            android:id="@+id/layout_fragment_main"
+            layout="@layout/layout_fragment_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            bind:viewModel="@{viewModel}" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:nestedScrollingEnabled="true">
 
-                <ImageView
-                    android:id="@+id/imageViewLanguage"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/ic_flag_armenia_transparent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <include
+                android:id="@+id/layout_nav_settings"
+                layout="@layout/layout_nav_settings"
+                bind:viewModel="@{viewModel}" />
 
-                <ImageView
-                    android:id="@+id/imageViewLanguageArmenia"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginEnd="100dp"
-                    android:src="@drawable/ic_flag_armenia"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        </com.google.android.material.navigation.NavigationView>
 
-                <ImageView
-                    android:id="@+id/imageViewLanguageEnglish"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginEnd="80dp"
-                    android:src="@drawable/ic_flag_usa"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageViewLanguageRussian"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="100dp"
-                    android:src="@drawable/ic_flag_russian"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <ImageView
-                android:id="@+id/imageViewInfo"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_settings_normal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <ImageView
-                android:id="@+id/imageViewAlias"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/alias"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <Button
-                android:id="@+id/buttonNewGame"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FF0000"
-                android:onClick="@{(v) -> viewModel.onOpenGalleryClick(v)}"
-                android:text="@string/new_game"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </FrameLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

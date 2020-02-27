@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.widget.CheckBox" />
+
+        <import type="android.widget.SeekBar" />
+
+        <variable
+            name="viewModel"
+            type="app.sargis.khlopuzyan.alias.ui.main.MainViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/nav_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorBlue"
+            android:gravity="center_vertical"
+            android:padding="@dimen/horizontal_padding"
+            android:text="@string/settings" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutRoundTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/padding_12">
+
+                    <TextView
+                        android:id="@+id/textViewRoundTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/horizontal_padding"
+                        android:maxLines="1"
+                        android:text="@string/round_time"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintEnd_toStartOf="@+id/textViewRoundTimeValue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewRoundTimeValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{`` + viewModel.settings.roundTime + ` SEC`}"
+                        android:textColor="@color/colorBlue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <SeekBar
+                        android:id="@+id/seekBarRoundTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/padding_12"
+                        android:max="180"
+                        android:min="10"
+                        android:onProgressChanged="@{viewModel::onRoundTimeProgressChanged}"
+                        android:progress="@{viewModel.settings.roundTime}"
+                        android:progressDrawable="@drawable/shape_seek_bar_progress"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/shape_seek_bar_thumb"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewRoundTime" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutDefaultTeamsCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/padding_12">
+
+                    <TextView
+                        android:id="@+id/textViewDefaultTeamsCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/horizontal_padding"
+                        android:maxLines="1"
+                        android:text="@string/default_teams_count"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintEnd_toStartOf="@+id/textViewDefaultTeamsCountValue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewDefaultTeamsCountValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{`` + viewModel.settings.defaultTeamCount}"
+                        android:textColor="@color/colorBlue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <SeekBar
+                        android:id="@+id/seekBarDefaultTeamsCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/padding_12"
+                        android:max="10"
+                        android:min="2"
+                        android:onProgressChanged="@{viewModel::onDefaultTeamsCountProgressChanged}"
+                        android:progress="@{viewModel.settings.defaultTeamCount}"
+                        android:progressDrawable="@drawable/shape_seek_bar_progress"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/shape_seek_bar_thumb"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewDefaultTeamsCount" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutGameSound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/padding_12">
+
+                    <TextView
+                        android:id="@+id/textViewGameSound"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/horizontal_padding"
+                        android:maxLines="1"
+                        android:text="@string/game_sound"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBoxGameSound"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxGameSound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorBlue"
+                        android:checked="@{viewModel.settings.isGameSoundEnabled}"
+                        android:onCheckedChanged="@{viewModel::onGameSoundCheckedChange}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutMissedWordPenalty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/padding_12">
+
+                    <TextView
+                        android:id="@+id/textViewMissedWordPenalty"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/horizontal_padding"
+                        android:maxLines="1"
+                        android:text="@string/missed_word_penalty"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBoxMissedWordPenalty"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxMissedWordPenalty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorBlue"
+                        android:checked="@{viewModel.settings.isMissedWordPenaltyEnabled}"
+                        android:onCheckedChanged="@{viewModel::onMissedWordPenaltyCheckedChange}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/padding_12">
+
+                    <TextView
+                        android:id="@+id/textViewLanguage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/select_app_language"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintBottom_toTopOf="@+id/radioGroupAppLanguage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupAppLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding_20"
+                        android:layout_marginTop="@dimen/padding_12"
+                        android:layout_marginRight="@dimen/padding_20"
+                        android:layout_marginBottom="@dimen/padding_12"
+                        android:onCheckedChanged="@{viewModel::onAppLanguageCheckChanged}"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewLanguage">
+
+                        <RadioButton
+                            android:id="@+id/radioButtonAppLanguageEnglish"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/selector_flag_usa"
+                            android:button="@null"
+                            android:checked="true" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonAppLanguageArmenian"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="@dimen/padding_20"
+                            android:layout_marginRight="@dimen/padding_20"
+                            android:background="@drawable/selector_flag_armenia"
+                            android:button="@null" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonAppLanguageRussian"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/selector_flag_russian"
+                            android:button="@null" />
+
+                    </RadioGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutGameWordsLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/padding_12">
+
+                    <TextView
+                        android:id="@+id/textViewGameWordsLanguage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/game_words_language"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintBottom_toTopOf="@+id/radioGroupGameWordsLanguage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupGameWordsLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding_20"
+                        android:layout_marginTop="@dimen/padding_12"
+                        android:layout_marginRight="@dimen/padding_20"
+                        android:layout_marginBottom="@dimen/padding_12"
+                        android:checkedButton="@id/radioButtonGameWordsLanguageArmenian"
+                        android:onCheckedChanged="@{viewModel::onGameWordsLanguageCheckChanged}"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewGameWordsLanguage">
+
+                        <RadioButton
+                            android:id="@+id/radioButtonGameWordsLanguageEnglish"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/selector_flag_usa"
+                            android:button="@null" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonGameWordsLanguageArmenian"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="@dimen/padding_20"
+                            android:layout_marginRight="@dimen/padding_20"
+                            android:background="@drawable/selector_flag_armenia"
+                            android:button="@null" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonGameWordsLanguageRussian"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/selector_flag_russian"
+                            android:button="@null" />
+
+                    </RadioGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutEnableTranslate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/padding_12">
+
+                    <TextView
+                        android:id="@+id/textViewEnableTranslate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/horizontal_padding"
+                        android:maxLines="1"
+                        android:text="@string/enable_translate"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBoxEnableTranslate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxEnableTranslate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorBlue"
+                        android:checked="@{viewModel.settings.isWordTranslateEnabled}"
+                        android:onCheckedChanged="@{viewModel::onEnableTranslateCheckedChange}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutTranslateLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/padding_12">
+
+                    <TextView
+                        android:id="@+id/textViewTranslateLanguage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/select_translate_language"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintBottom_toTopOf="@+id/radioGroupTranslateLanguage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupTranslateLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding_20"
+                        android:layout_marginTop="@dimen/padding_12"
+                        android:layout_marginRight="@dimen/padding_20"
+                        android:layout_marginBottom="@dimen/padding_12"
+                        android:onCheckedChanged="@{viewModel::onTranslateLanguageCheckChanged}"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewTranslateLanguage">
+
+                        <RadioButton
+                            android:id="@+id/radioButtonTranslateLanguageEnglish"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/selector_flag_usa"
+                            android:button="@null"
+                            android:checked="true" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonTranslateLanguageArmenian"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="@dimen/padding_20"
+                            android:layout_marginRight="@dimen/padding_20"
+                            android:background="@drawable/selector_flag_armenia"
+                            android:button="@null" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonTranslateLanguageRussian"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/selector_flag_russian"
+                            android:button="@null" />
+
+                    </RadioGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

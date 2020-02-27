@@ -3,8 +3,9 @@ package app.sargis.khlopuzyan.alias.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import app.sargis.khlopuzyan.alias.di.annotation.ViewModelKey
-import app.sargis.khlopuzyan.alias.ui.MainFragment
-import app.sargis.khlopuzyan.alias.ui.MainViewModel
+import app.sargis.khlopuzyan.alias.repository.SettingsRepository
+import app.sargis.khlopuzyan.alias.ui.main.MainFragment
+import app.sargis.khlopuzyan.alias.ui.main.MainViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -28,7 +29,8 @@ interface MainModule {
         @IntoMap
         @ViewModelKey(MainViewModel::class)
         fun provideMainViewModel(
-        ): ViewModel = MainViewModel()
+            settingsRepository: SettingsRepository
+        ): ViewModel = MainViewModel(settingsRepository)
     }
 
     @Module

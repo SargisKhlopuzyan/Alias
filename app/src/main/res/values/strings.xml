@@ -10,4 +10,5 @@
     <string name="enable_translate">Enable translate</string>
     <string name="default_teams_count">Default teams count</string>
     <string name="missed_word_penalty">Missed word penalty</string>
+    <string name="settings">Settings</string>
 </resources>
