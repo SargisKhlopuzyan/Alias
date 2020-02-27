@@ -20,11 +20,6 @@ import javax.inject.Inject
 class MainFragment : DaggerFragment() {
 
     companion object {
-
-        const val REQUEST_CODE_PERMISSION = 100
-        const val REQUEST_CAPTURE_IMAGE = 101
-        const val REQUEST_CAPTURE_GALLERY = 102
-
         fun newInstance() = MainFragment()
     }
 
@@ -53,8 +48,6 @@ class MainFragment : DaggerFragment() {
         binding.viewModel = viewModel
         setupNavigationDrawer()
         setupObservers()
-
-//        checkPermissions()
     }
 
     private fun setupNavigationDrawer() {
@@ -62,11 +55,11 @@ class MainFragment : DaggerFragment() {
     }
 
     private fun setupObservers() {
-        viewModel.openSettingsLiveData.observe(this) {
+        viewModel.openSettingsLiveData.observe(viewLifecycleOwner) {
             openSettings()
         }
 
-        viewModel.newGameLiveData.observe(this) {
+        viewModel.newGameLiveData.observe(viewLifecycleOwner) {
             openNewGameFragment()
         }
     }
@@ -85,93 +78,5 @@ class MainFragment : DaggerFragment() {
             addToBackStack("select_game_type")
         }
     }
-
-    /**
-    private fun checkPermissions() {
-
-
-    activity?.let {
-
-    //check permission is granted or no
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-    (it.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || it.checkSelfPermission(
-    Manifest.permission.CAMERA
-    ) != PackageManager.PERMISSION_GRANTED)
-    ) {
-    requestPermissions(
-    arrayOf(
-    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-    Manifest.permission.CAMERA
-    ), REQUEST_CODE_PERMISSION
-    )
-    }
-    }
-    }
-
-    private fun takePictureFromCamera() {
-    val values = ContentValues()
-    values.put(MediaStore.Images.Media.TITLE, "MyPicture")
-    values.put(
-    MediaStore.Images.Media.DESCRIPTION,
-    "Photo taken on " + System.currentTimeMillis()
-    )
-
-    imageUri =
-    activity!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-
-    startActivityForResult(intent, REQUEST_CAPTURE_IMAGE)
-    }
-
-    private fun pickPhotoFromGallery() {
-    val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-    startActivityForResult(pickPhoto, REQUEST_CAPTURE_GALLERY)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-    if (resultCode == RESULT_OK) {
-
-    when (requestCode) {
-
-    REQUEST_CAPTURE_IMAGE -> {
-
-    val bitmap: Bitmap
-
-    try {
-    bitmap =
-    MediaStore.Images.Media.getBitmap(activity!!.contentResolver, imageUri)
-    binding.imageView.setImageBitmap(bitmap)
-    viewModel.bitmap = bitmap
-
-    } catch (e: FileNotFoundException) {
-    } catch (e: IOException) {
-    }
-    }
-
-    REQUEST_CAPTURE_GALLERY -> {
-
-    data?.data?.let {
-
-    binding.imageView.setImageURI(it)
-
-    val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-    val source = ImageDecoder.createSource(File(it.toString()))
-    ImageDecoder.decodeBitmap(source)
-    } else {
-    MediaStore.Images.Media.getBitmap(
-    App.getContext().contentResolver, it
-    )
-    }
-
-    viewModel.bitmap = bitmap
-    }
-    }
-    }
-    }
-    }
-     */
 
 }

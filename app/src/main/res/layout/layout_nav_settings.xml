@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@android:color/white"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <TextView
@@ -107,7 +108,7 @@
                         android:id="@+id/textViewDefaultTeamsCountValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{`` + viewModel.settings.defaultTeamCount}"
+                        android:text="@{`` + viewModel.settings.defaultTeamsCount}"
                         android:textColor="@color/colorBlue"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -120,7 +121,7 @@
                         android:max="10"
                         android:min="2"
                         android:onProgressChanged="@{viewModel::onDefaultTeamsCountProgressChanged}"
-                        android:progress="@{viewModel.settings.defaultTeamCount}"
+                        android:progress="@{viewModel.settings.defaultTeamsCount}"
                         android:progressDrawable="@drawable/shape_seek_bar_progress"
                         android:splitTrack="false"
                         android:thumb="@drawable/shape_seek_bar_thumb"
@@ -226,6 +227,7 @@
                         android:layout_marginBottom="@dimen/padding_12"
                         android:onCheckedChanged="@{viewModel::onAppLanguageCheckChanged}"
                         android:orientation="horizontal"
+                        app:bindAppLanguageCheckedButton="@{viewModel.settings}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -236,8 +238,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:background="@drawable/selector_flag_usa"
-                            android:button="@null"
-                            android:checked="true" />
+                            android:button="@null" />
 
                         <RadioButton
                             android:id="@+id/radioButtonAppLanguageArmenian"
@@ -290,6 +291,7 @@
                         android:checkedButton="@id/radioButtonGameWordsLanguageArmenian"
                         android:onCheckedChanged="@{viewModel::onGameWordsLanguageCheckChanged}"
                         android:orientation="horizontal"
+                        app:bindGameWordsLanguageCheckedButton="@{viewModel.settings}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -360,7 +362,7 @@
                     android:id="@+id/constraintLayoutTranslateLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:background="@android:color/white"
                     android:minHeight="?actionBarSize"
                     android:padding="@dimen/padding_12">
 
@@ -371,19 +373,20 @@
                         android:gravity="center_vertical"
                         android:text="@string/select_translate_language"
                         android:textColor="@android:color/black"
-                        app:layout_constraintBottom_toTopOf="@+id/radioGroupTranslateLanguage"
+                        app:layout_constraintBottom_toTopOf="@+id/radioGroupWordTranslateLanguage"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <RadioGroup
-                        android:id="@+id/radioGroupTranslateLanguage"
+                        android:id="@+id/radioGroupWordTranslateLanguage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/padding_20"
                         android:layout_marginTop="@dimen/padding_12"
                         android:layout_marginRight="@dimen/padding_20"
                         android:layout_marginBottom="@dimen/padding_12"
+                        app:bindWordTranslateLanguageCheckedButton="@{viewModel.settings}"
                         android:onCheckedChanged="@{viewModel::onTranslateLanguageCheckChanged}"
                         android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -392,7 +395,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textViewTranslateLanguage">
 
                         <RadioButton
-                            android:id="@+id/radioButtonTranslateLanguageEnglish"
+                            android:id="@+id/radioButtonWordTranslateLanguageEnglish"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:background="@drawable/selector_flag_usa"
@@ -400,7 +403,7 @@
                             android:checked="true" />
 
                         <RadioButton
-                            android:id="@+id/radioButtonTranslateLanguageArmenian"
+                            android:id="@+id/radioButtonWordTranslateLanguageArmenian"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginLeft="@dimen/padding_20"
@@ -409,7 +412,7 @@
                             android:button="@null" />
 
                         <RadioButton
-                            android:id="@+id/radioButtonTranslateLanguageRussian"
+                            android:id="@+id/radioButtonWordTranslateLanguageRussian"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:background="@drawable/selector_flag_russian"

@@ -1,6 +1,5 @@
 package app.sargis.khlopuzyan.alias.ui.main
 
-import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.RadioGroup
@@ -9,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
+import app.sargis.khlopuzyan.alias.model.Language
 import app.sargis.khlopuzyan.alias.model.Settings
 import app.sargis.khlopuzyan.alias.repository.SettingsRepository
 
@@ -21,7 +21,6 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
 
     init {
         settings.value = settingsRepository.loadSettings()
-        Log.e("LOG_TAG", "settings: $settings")
     }
 
     /**
@@ -43,13 +42,19 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
     fun onRoundTimeProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (fromUser) {
             settings.value?.roundTime = progress
+            settings.value?.let {
+                settingsRepository.storeRoundTime(it)
+            }
             settings.value = settings.value
         }
     }
 
     fun onDefaultTeamsCountProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (fromUser) {
-            settings.value?.defaultTeamCount = progress
+            settings.value?.defaultTeamsCount = progress
+            settings.value?.let {
+                settingsRepository.storeDefaultTeamsCount(it)
+            }
             settings.value = settings.value
         }
     }
@@ -57,70 +62,79 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
 
     /** Checkbox : Checked Change */
     fun onGameSoundCheckedChange(button: CompoundButton, check: Boolean) {
-        Log.e("LOG_TAG", "onGameSoundCheckedChange: $check")
+        settings.value?.isGameSoundEnabled = check
+        settings.value?.let {
+            settingsRepository.storeGameSoundState(it)
+        }
     }
 
     fun onMissedWordPenaltyCheckedChange(button: CompoundButton, check: Boolean) {
-        Log.e("LOG_TAG", "onMissedWordPenaltyCheckedChange: $check")
+        settings.value?.isMissedWordPenaltyEnabled = check
+        settings.value?.let {
+            settingsRepository.storeMissedWordPenaltyState(it)
+        }
     }
 
     fun onEnableTranslateCheckedChange(button: CompoundButton, check: Boolean) {
-        Log.e("LOG_TAG", "onEnableTranslateCheckedChange: $check")
+        settings.value?.isWordTranslateEnabled = check
+        settings.value?.let {
+            settingsRepository.storeWordTranslateState(it)
+        }
     }
 
     /** Radio Group : Check Changed */
     fun onAppLanguageCheckChanged(radioGroup: RadioGroup, id: Int) {
         when (id) {
             R.id.radioButtonAppLanguageEnglish -> {
-                Log.e("LOG_TAG", "English: $id")
+                settings.value?.appLanguage = Language.EN
             }
             R.id.radioButtonAppLanguageArmenian -> {
-                Log.e("LOG_TAG", "Armenian: $id")
+                settings.value?.appLanguage = Language.AM
             }
             R.id.radioButtonAppLanguageRussian -> {
-                Log.e("LOG_TAG", "Russian: $id")
+                settings.value?.appLanguage = Language.RU
             }
+        }
+
+        settings.value?.let {
+            settingsRepository.storeAppLanguage(it)
         }
     }
 
     fun onGameWordsLanguageCheckChanged(radioGroup: RadioGroup, id: Int) {
         when (id) {
             R.id.radioButtonGameWordsLanguageEnglish -> {
-                Log.e("LOG_TAG", "English: $id")
+                settings.value?.gameWordLanguage = Language.EN
             }
             R.id.radioButtonGameWordsLanguageArmenian -> {
-                Log.e("LOG_TAG", "Armenian: $id")
+                settings.value?.gameWordLanguage = Language.AM
             }
             R.id.radioButtonGameWordsLanguageRussian -> {
-                Log.e("LOG_TAG", "Russian: $id")
+                settings.value?.gameWordLanguage = Language.RU
             }
+        }
+
+        settings.value?.let {
+            settingsRepository.storeGameWordsLanguage(it)
         }
     }
 
     fun onTranslateLanguageCheckChanged(radioGroup: RadioGroup, id: Int) {
         when (id) {
-            R.id.radioButtonTranslateLanguageEnglish -> {
-                Log.e("LOG_TAG", "English: $id")
+            R.id.radioButtonWordTranslateLanguageEnglish -> {
+                settings.value?.wordTranslateLanguage = Language.EN
             }
-            R.id.radioButtonTranslateLanguageArmenian -> {
-                Log.e("LOG_TAG", "Armenian: $id")
+            R.id.radioButtonWordTranslateLanguageArmenian -> {
+                settings.value?.wordTranslateLanguage = Language.AM
             }
-            R.id.radioButtonTranslateLanguageRussian -> {
-                Log.e("LOG_TAG", "Russian: $id")
+            R.id.radioButtonWordTranslateLanguageRussian -> {
+                settings.value?.wordTranslateLanguage = Language.RU
             }
         }
-    }
 
-    fun storeAppLanguage() {
-//        settingsRepository.storeAppLanguage()
-    }
-
-    fun storeGameWordsLanguage() {
-
-    }
-
-    fun storeTranslateLanguage() {
-
+        settings.value?.let {
+            settingsRepository.storeWordTranslateLanguage(it)
+        }
     }
 
 }

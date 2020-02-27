@@ -11,8 +11,8 @@ import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
 interface SettingsRepository {
     fun storeRoundTime(settings: Settings)
     fun storeDefaultTeamsCount(settings: Settings)
-    fun storeGameSound(settings: Settings)
-    fun storeMissedWordPenalty(settings: Settings)
+    fun storeGameSoundState(settings: Settings)
+    fun storeMissedWordPenaltyState(settings: Settings)
     fun storeAppLanguage(settings: Settings)
     fun storeGameWordsLanguage(settings: Settings)
     fun storeWordTranslateLanguage(settings: Settings)
@@ -31,11 +31,11 @@ class SettingsRepositoryImpl(
     override fun storeDefaultTeamsCount(settings: Settings) {
         sharedPrefManager.storeIntInSharedPref(
             SHARED_PREF_DEFAULT_TEAM_COUNT,
-            settings.defaultTeamCount
+            settings.defaultTeamsCount
         )
     }
 
-    override fun storeGameSound(settings: Settings) {
+    override fun storeGameSoundState(settings: Settings) {
         sharedPrefManager.storeBooleanInSharedPref(
             SHARED_PREF_IS_GAME_SOUND_ENABLED,
             settings.isGameSoundEnabled
@@ -43,7 +43,7 @@ class SettingsRepositoryImpl(
     }
 
 
-    override fun storeMissedWordPenalty(settings: Settings) {
+    override fun storeMissedWordPenaltyState(settings: Settings) {
         sharedPrefManager.storeBooleanInSharedPref(
             SHARED_PREF_MISSED_WORD_PENALTY,
             settings.isMissedWordPenaltyEnabled
@@ -88,9 +88,9 @@ class SettingsRepositoryImpl(
 
         sharedPrefManager.loadIntFromSharedPref(SHARED_PREF_DEFAULT_TEAM_COUNT).let {
             if (it == 0)
-                settings.defaultTeamCount = 2
+                settings.defaultTeamsCount = 2
             else
-                settings.defaultTeamCount = it
+                settings.defaultTeamsCount = it
         }
 
         settings.isGameSoundEnabled =

@@ -7,7 +7,7 @@ package app.sargis.khlopuzyan.alias.model
  */
 data class Settings(
     var roundTime: Int = 20,
-    var defaultTeamCount: Int = 2,
+    var defaultTeamsCount: Int = 2,
     var isGameSoundEnabled: Boolean = true,
     var isMissedWordPenaltyEnabled: Boolean = true,
     var appLanguage: String = "en",
