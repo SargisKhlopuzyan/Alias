@@ -18,7 +18,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:nestedScrollingEnabled="true"
-        app:headerLayout="@layout/layout_nav_header_main" />
+        android:nestedScrollingEnabled="true">
+
+        <include layout="@layout/layout_nav_main"/>
+
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
