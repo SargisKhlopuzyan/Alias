@@ -2,15 +2,28 @@ package app.sargis.khlopuzyan.alias.helper
 
 import android.widget.RadioGroup
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.model.Language
 import app.sargis.khlopuzyan.alias.model.Settings
+import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
 
 /**
  * Created by Sargis Khlopuzyan, on 2/28/2020.
  *
  * @author Sargis Khlopuzyan (sargis.khlopuzyan@gmail.com)
  */
+
+@BindingAdapter("data")
+fun <T> RecyclerView.setRecyclerViewData(items: T?) {
+    if (adapter is BindableAdapter<*>) {
+        @Suppress("UNCHECKED_CAST")
+        (adapter as BindableAdapter<T>).setItems(items)
+        adapter?.let {
+            scrollToPosition(it.itemCount - 1)
+        }
+    }
+}
 
 @BindingAdapter("bindAppLanguageCheckedButton")
 fun RadioGroup.bindAppLanguageCheckedButton(settings: Settings) {

@@ -1,16 +1,10 @@
 package app.sargis.khlopuzyan.alias.ui.teams
 
 import android.view.View
-import android.widget.CompoundButton
-import android.widget.RadioGroup
-import android.widget.SeekBar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
-import app.sargis.khlopuzyan.alias.model.Language
 import app.sargis.khlopuzyan.alias.model.Settings
-import app.sargis.khlopuzyan.alias.repository.GameSettingsRepository
 import app.sargis.khlopuzyan.alias.repository.TeamsRepository
 
 class TeamsViewModel constructor(private val teamsRepository: TeamsRepository) : ViewModel() {
@@ -19,6 +13,7 @@ class TeamsViewModel constructor(private val teamsRepository: TeamsRepository) :
     val newGameLiveData: SingleLiveEvent<View> = SingleLiveEvent()
 
     val settings = MutableLiveData<Settings>()
+    val addNewTeamLiveData = MutableLiveData<String>()
 
     init {
         settings.value = teamsRepository.loadSettings()
@@ -28,7 +23,7 @@ class TeamsViewModel constructor(private val teamsRepository: TeamsRepository) :
      * Handles Settings icon click
      * */
     fun onAddTeamClick(v: View) {
-        openSettingsLiveData.value = v
+        addNewTeamLiveData.value = "TEAM"
     }
 
     /**

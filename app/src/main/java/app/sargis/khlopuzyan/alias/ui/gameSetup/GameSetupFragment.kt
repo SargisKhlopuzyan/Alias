@@ -40,7 +40,6 @@ class GameSetupFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
-//        setupNavigationDrawer()
         setupObservers()
     }
 

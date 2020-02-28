@@ -1,16 +1,14 @@
 package app.sargis.khlopuzyan.alias.ui.teams
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
-import app.sargis.khlopuzyan.alias.databinding.FragmentGameSettingsBinding
 import app.sargis.khlopuzyan.alias.databinding.FragmentTeamsBinding
 import app.sargis.khlopuzyan.alias.ui.gameSetup.GameSetupFragment
 import dagger.android.support.DaggerFragment
@@ -44,7 +42,18 @@ class TeamsFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
+
+        setupRecyclerView()
         setupObservers()
+    }
+
+    private fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(context)
+
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.hasFixedSize()
+        val adapter = TeamsAdapter(viewModel)
+        binding.recyclerView.adapter = adapter
     }
 
     private fun setupObservers() {
