@@ -3,6 +3,7 @@ package app.sargis.khlopuzyan.alias.di.module
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import app.sargis.khlopuzyan.alias.database.DatabaseManager
 import app.sargis.khlopuzyan.alias.di.factory.AppViewModelFactory
 import app.sargis.khlopuzyan.alias.repository.*
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
@@ -25,6 +26,12 @@ abstract class AppModule {
         fun provideViewModelFactory(
             providers: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
         ): ViewModelProvider.Factory = AppViewModelFactory(providers)
+
+        @Provides
+        @Singleton
+        fun provideDatabaseManager(
+            context: Context
+        ): DatabaseManager = DatabaseManager(context)
 
         @Provides
         @Singleton
