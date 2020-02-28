@@ -1,6 +1,8 @@
 package app.sargis.khlopuzyan.alias.repository
 
+import app.sargis.khlopuzyan.alias.database.TeamNamesDatabaseManager
 import app.sargis.khlopuzyan.alias.model.Settings
+import app.sargis.khlopuzyan.alias.model.TeamName
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
 
 /**
@@ -19,9 +21,13 @@ interface SettingsRepository {
     fun storeWordTranslateState(settings: Settings)
 
     fun loadSettings(): Settings
+
+
+    fun storeDefaultTeamNames()
 }
 
 class SettingsRepositoryImpl(
+    private val databaseManager: TeamNamesDatabaseManager,
     private val sharedPrefManager: SharedPrefManager
 ) : SettingsRepository {
     override fun storeRoundTime(settings: Settings) {
@@ -124,6 +130,25 @@ class SettingsRepositoryImpl(
             sharedPrefManager.loadBooleanFromSharedPref(SHARED_PREF_IS_WORD_TRANSLATE_ENABLED)
 
         return settings
+    }
+
+    override fun storeDefaultTeamNames() {
+
+        val names = listOf(
+            "Mad Men",
+            "No Chance",
+            "Men of Genius",
+            "Team No. 1",
+            "The Best of The Best",
+            "The Bosses",
+            "The Capitalist",
+            "The Leaders",
+            "The Managers"
+        )
+
+        for ((index: Int, e: String) in names.withIndex()) {
+            databaseManager.saveTeamNameInDatabase(TeamName(uuid = index.toString(), teamName = e))
+        }
     }
 
     companion object {

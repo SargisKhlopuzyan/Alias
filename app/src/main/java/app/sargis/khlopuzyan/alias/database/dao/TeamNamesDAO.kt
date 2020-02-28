@@ -13,13 +13,13 @@ import app.sargis.khlopuzyan.alias.model.TeamName
 interface TeamNamesDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTeamName(item: String): Long
+    fun insertTeamName(teamName: TeamName): Long
 
     @Update
     fun updateTeamName(vararg teamNames: TeamName): Int
 
-    @Query("DELETE FROM teamNames WHERE teamName = :name")
-    fun deleteTeamName(name: String?): Int
+    @Query("DELETE FROM teamNames WHERE uuid = :id")
+    fun deleteTeamName(id: String?): Int
 
     @Query("SELECT * FROM teamNames WHERE teamName = :name")
     fun getTeamNameByName(name: String?): TeamName?

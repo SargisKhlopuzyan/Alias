@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
 import app.sargis.khlopuzyan.alias.model.Settings
+import app.sargis.khlopuzyan.alias.model.TeamName
 import app.sargis.khlopuzyan.alias.repository.TeamsRepository
 
 class TeamsViewModel constructor(private val teamsRepository: TeamsRepository) : ViewModel() {
@@ -13,17 +14,23 @@ class TeamsViewModel constructor(private val teamsRepository: TeamsRepository) :
     val newGameLiveData: SingleLiveEvent<View> = SingleLiveEvent()
 
     val settings = MutableLiveData<Settings>()
-    val addNewTeamLiveData = MutableLiveData<String>()
+    val teamNames: List<TeamName>
+
+    val addNewTeamLiveData = MutableLiveData<TeamName>()
 
     init {
         settings.value = teamsRepository.loadSettings()
+
+        teamNames = teamsRepository.loadTeamNames().toMutableList()
     }
 
+    var teamsCount = 0
     /**
      * Handles Settings icon click
      * */
     fun onAddTeamClick(v: View) {
-        addNewTeamLiveData.value = "TEAM"
+        if (teamsCount < teamNames.size - 1)
+            addNewTeamLiveData.value = teamNames[++teamsCount]
     }
 
     /**

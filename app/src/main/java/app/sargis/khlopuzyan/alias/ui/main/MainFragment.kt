@@ -36,7 +36,6 @@ class MainFragment : DaggerFragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
-
         return binding.root
     }
 
@@ -45,6 +44,8 @@ class MainFragment : DaggerFragment() {
         binding.viewModel = viewModel
         setupNavigationDrawer()
         setupObservers()
+
+        viewModel.storeDefaultTeamNames()
     }
 
     private fun setupNavigationDrawer() {

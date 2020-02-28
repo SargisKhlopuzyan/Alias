@@ -10,6 +10,7 @@ import app.sargis.khlopuzyan.alias.database.converter.WordConverter
 import app.sargis.khlopuzyan.alias.database.dao.TeamNamesDAO
 import app.sargis.khlopuzyan.alias.database.dao.WordsDAO
 import app.sargis.khlopuzyan.alias.model.TeamName
+import app.sargis.khlopuzyan.alias.model.Word
 
 /**
  * Created by Sargis Khlopuzyan, on 2/28/2020.
@@ -20,7 +21,7 @@ import app.sargis.khlopuzyan.alias.model.TeamName
     TeamNameConverter::class,
     WordConverter::class
 )
-@Database(entities = [TeamName::class], version = 1, exportSchema = false)
+@Database(entities = [TeamName::class, Word::class], version = 1, exportSchema = false)
 abstract class AliasDb : RoomDatabase() {
 
     abstract fun getTeamNamesDAO(): TeamNamesDAO

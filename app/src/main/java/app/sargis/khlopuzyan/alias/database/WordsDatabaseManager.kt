@@ -11,7 +11,7 @@ import javax.inject.Inject
  * @author Sargis Khlopuzyan (sargis.khlopuzyan@fcc.am)
  */
 
-class DatabaseManager @Inject constructor(var context: Context) {
+class WordsDatabaseManager @Inject constructor(var context: Context) {
 
     fun saveWordInDatabase(word: Word): Long {
         return AliasDb.getInstance(context).getWordsDAO().insertWord(word)

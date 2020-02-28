@@ -1,6 +1,8 @@
 package app.sargis.khlopuzyan.alias.repository
 
+import app.sargis.khlopuzyan.alias.database.TeamNamesDatabaseManager
 import app.sargis.khlopuzyan.alias.model.Settings
+import app.sargis.khlopuzyan.alias.model.TeamName
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
 
 /**
@@ -19,9 +21,12 @@ interface TeamsRepository {
     fun storeWordTranslateState(settings: Settings)
 
     fun loadSettings(): Settings
+
+    fun loadTeamNames(): List<TeamName>
 }
 
 class TeamsRepositoryImpl(
+    private val teamNamesDatabaseManager: TeamNamesDatabaseManager,
     private val sharedPrefManager: SharedPrefManager
 ) : TeamsRepository {
     override fun storeRoundTime(settings: Settings) {
@@ -124,6 +129,10 @@ class TeamsRepositoryImpl(
             sharedPrefManager.loadBooleanFromSharedPref(SHARED_PREF_IS_WORD_TRANSLATE_ENABLED)
 
         return settings
+    }
+
+    override fun loadTeamNames(): List<TeamName> {
+        return teamNamesDatabaseManager.getAllTeamNamesFromDatabase()
     }
 
     companion object {

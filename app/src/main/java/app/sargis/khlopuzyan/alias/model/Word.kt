@@ -2,6 +2,7 @@ package app.sargis.khlopuzyan.alias.model
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
@@ -15,6 +16,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class Word(
+
+    @PrimaryKey(autoGenerate = true)
+    var dbRowId: Long = 0.toLong(),
 
     @Json(name = "uuid")
     var uuid: String? = null,

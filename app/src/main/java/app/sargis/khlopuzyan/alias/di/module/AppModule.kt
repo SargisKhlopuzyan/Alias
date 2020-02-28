@@ -3,7 +3,8 @@ package app.sargis.khlopuzyan.alias.di.module
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.sargis.khlopuzyan.alias.database.DatabaseManager
+import app.sargis.khlopuzyan.alias.database.TeamNamesDatabaseManager
+import app.sargis.khlopuzyan.alias.database.WordsDatabaseManager
 import app.sargis.khlopuzyan.alias.di.factory.AppViewModelFactory
 import app.sargis.khlopuzyan.alias.repository.*
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
@@ -29,9 +30,15 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideDatabaseManager(
+        fun provideTeamNamesDatabaseManager(
             context: Context
-        ): DatabaseManager = DatabaseManager(context)
+        ): TeamNamesDatabaseManager = TeamNamesDatabaseManager(context)
+
+        @Provides
+        @Singleton
+        fun provideWordsDatabaseManager(
+            context: Context
+        ): WordsDatabaseManager = WordsDatabaseManager(context)
 
         @Provides
         @Singleton
@@ -42,9 +49,11 @@ abstract class AppModule {
         @Provides
         @Singleton
         fun provideSettingsRepository(
+            databaseManager: TeamNamesDatabaseManager,
             sharedPrefManager: SharedPrefManager
         ): SettingsRepository =
             SettingsRepositoryImpl(
+                databaseManager,
                 sharedPrefManager
             )
 
@@ -69,9 +78,11 @@ abstract class AppModule {
         @Provides
         @Singleton
         fun provideTeamsRepository(
+            teamNamesDatabaseManager: TeamNamesDatabaseManager,
             sharedPrefManager: SharedPrefManager
         ): TeamsRepository =
             TeamsRepositoryImpl(
+                teamNamesDatabaseManager,
                 sharedPrefManager
             )
 
