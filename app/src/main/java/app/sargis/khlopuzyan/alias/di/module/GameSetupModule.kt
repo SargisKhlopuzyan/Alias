@@ -3,9 +3,9 @@ package app.sargis.khlopuzyan.alias.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import app.sargis.khlopuzyan.alias.di.annotation.ViewModelKey
-import app.sargis.khlopuzyan.alias.repository.SettingsRepository
-import app.sargis.khlopuzyan.alias.ui.main.MainFragment
-import app.sargis.khlopuzyan.alias.ui.main.MainViewModel
+import app.sargis.khlopuzyan.alias.repository.GameSetupRepository
+import app.sargis.khlopuzyan.alias.ui.gameSetup.GameSetupFragment
+import app.sargis.khlopuzyan.alias.ui.gameSetup.GameSetupViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -17,19 +17,19 @@ import dagger.multibindings.IntoMap
  * @author Sargis Khlopuzyan (sargis.khlopuzyan@fcc.am)
  */
 
-@Module(includes = [MainModule.ProvideViewModel::class])
-interface MainModule {
+@Module(includes = [GameSetupModule.ProvideViewModel::class])
+interface GameSetupModule {
 
     @ContributesAndroidInjector(modules = [InjectViewModel::class])
-    fun bind(): MainFragment
+    fun bind(): GameSetupFragment
 
     @Module
     class InjectViewModel {
         @Provides
-        fun provideMainViewModel(
+        fun provideGameSetupViewModel(
             factory: ViewModelProvider.Factory,
-            target: MainFragment
-        ) = ViewModelProvider(target, factory)[MainViewModel::class.java]
+            target: GameSetupFragment
+        ) = ViewModelProvider(target, factory)[GameSetupViewModel::class.java]
     }
 
     @Module
@@ -37,10 +37,10 @@ interface MainModule {
 
         @Provides
         @IntoMap
-        @ViewModelKey(MainViewModel::class)
-        fun provideMainViewModel(
-            settingsRepository: SettingsRepository
-        ): ViewModel = MainViewModel(settingsRepository)
+        @ViewModelKey(GameSetupViewModel::class)
+        fun provideGameSetupViewModel(
+            gameSetupRepository: GameSetupRepository
+        ): ViewModel = GameSetupViewModel(gameSetupRepository)
 
     }
 }

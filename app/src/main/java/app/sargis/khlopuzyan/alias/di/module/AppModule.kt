@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import app.sargis.khlopuzyan.alias.di.factory.AppViewModelFactory
-import app.sargis.khlopuzyan.alias.repository.SettingsRepository
-import app.sargis.khlopuzyan.alias.repository.SettingsRepositoryImpl
+import app.sargis.khlopuzyan.alias.repository.*
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
 import dagger.Module
 import dagger.Provides
@@ -29,7 +28,7 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideDatabaseManager(
+        fun provideSharedPrefManager(
             context: Context
         ): SharedPrefManager = SharedPrefManager(context)
 
@@ -39,6 +38,33 @@ abstract class AppModule {
             sharedPrefManager: SharedPrefManager
         ): SettingsRepository =
             SettingsRepositoryImpl(
+                sharedPrefManager
+            )
+
+        @Provides
+        @Singleton
+        fun provideGameSetupRepository(
+            sharedPrefManager: SharedPrefManager
+        ): GameSetupRepository =
+            GameSetupRepositoryImpl(
+                sharedPrefManager
+            )
+
+        @Provides
+        @Singleton
+        fun provideGameSettingsRepository(
+            sharedPrefManager: SharedPrefManager
+        ): GameSettingsRepository =
+            GameSettingsRepositoryImpl(
+                sharedPrefManager
+            )
+
+        @Provides
+        @Singleton
+        fun provideTeamsRepository(
+            sharedPrefManager: SharedPrefManager
+        ): TeamsRepository =
+            TeamsRepositoryImpl(
                 sharedPrefManager
             )
 

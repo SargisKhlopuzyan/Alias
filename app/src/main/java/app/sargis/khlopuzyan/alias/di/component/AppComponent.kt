@@ -1,8 +1,7 @@
 package app.sargis.khlopuzyan.alias.di.component
 
 import android.content.Context
-import app.sargis.khlopuzyan.alias.di.module.AppModule
-import app.sargis.khlopuzyan.alias.di.module.MainModule
+import app.sargis.khlopuzyan.alias.di.module.*
 import app.sargis.khlopuzyan.alias.ui.App
 import dagger.BindsInstance
 import dagger.Component
@@ -21,10 +20,10 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         AppModule::class,
-        MainModule::class
-//        AlbumDetailsModule::class,
-//        ArtistsSearchModule::class,
-//        TopAlbumsModule::class
+        MainModule::class,
+        GameSetupModule::class,
+        GameSettingsModule::class,
+        TeamsModule::class
     ]
 )
 
