@@ -1,4 +1,4 @@
-package app.sargis.khlopuzyan.alias.ui.classicGame
+package app.sargis.khlopuzyan.alias.ui.game
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,19 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentClassicGameBinding
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class ClassicGameFragment : DaggerFragment() {
+class GameFragment : DaggerFragment() {
 
     companion object {
-        fun newInstance() = ClassicGameFragment()
+        fun newInstance() = GameFragment()
     }
 
     @Inject
-    lateinit var viewModel: ClassicGameViewModel
+    lateinit var viewModel: GameViewModel
 
     private lateinit var binding: FragmentClassicGameBinding
 
@@ -39,7 +40,17 @@ class ClassicGameFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
+        setupRecyclerView()
         setupObservers()
+    }
+
+    private fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(context)
+
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.hasFixedSize()
+        val adapter = GameAdapter(viewModel)
+        binding.recyclerView.adapter = adapter
     }
 
     private fun setupObservers() {

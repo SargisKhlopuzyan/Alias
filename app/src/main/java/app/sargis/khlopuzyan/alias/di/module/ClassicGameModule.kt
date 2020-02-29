@@ -3,8 +3,8 @@ package app.sargis.khlopuzyan.alias.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import app.sargis.khlopuzyan.alias.di.annotation.ViewModelKey
-import app.sargis.khlopuzyan.alias.ui.classicGame.ClassicGameFragment
-import app.sargis.khlopuzyan.alias.ui.classicGame.ClassicGameViewModel
+import app.sargis.khlopuzyan.alias.ui.game.GameFragment
+import app.sargis.khlopuzyan.alias.ui.game.GameViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -20,15 +20,15 @@ import dagger.multibindings.IntoMap
 interface ClassicGameModule {
 
     @ContributesAndroidInjector(modules = [InjectViewModel::class])
-    fun bind(): ClassicGameFragment
+    fun bind(): GameFragment
 
     @Module
     class InjectViewModel {
         @Provides
         fun provideClassicGameViewModel(
             factory: ViewModelProvider.Factory,
-            target: ClassicGameFragment
-        ) = ViewModelProvider(target, factory)[ClassicGameViewModel::class.java]
+            target: GameFragment
+        ) = ViewModelProvider(target, factory)[GameViewModel::class.java]
     }
 
     @Module
@@ -36,10 +36,10 @@ interface ClassicGameModule {
 
         @Provides
         @IntoMap
-        @ViewModelKey(ClassicGameViewModel::class)
+        @ViewModelKey(GameViewModel::class)
         fun provideClassicGameViewModel(
 //            classicGameRepository: ClassicGameRepository
-        ): ViewModel = ClassicGameViewModel(/*classicGameRepository*/)
+        ): ViewModel = GameViewModel(/*classicGameRepository*/)
 
     }
 }

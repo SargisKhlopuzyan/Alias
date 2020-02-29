@@ -10,7 +10,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentStartGameBinding
-import app.sargis.khlopuzyan.alias.ui.classicGame.ClassicGameFragment
+import app.sargis.khlopuzyan.alias.ui.game.GameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -63,7 +63,7 @@ class StartGameFragment : DaggerFragment() {
         activity?.supportFragmentManager?.commit {
             replace(
                 android.R.id.content,
-                ClassicGameFragment.newInstance(),
+                GameFragment.newInstance(),
                 "fragment_classic_game"
             )
             addToBackStack("classic_game")

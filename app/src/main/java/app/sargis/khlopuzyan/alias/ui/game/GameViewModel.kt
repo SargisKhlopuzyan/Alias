@@ -1,4 +1,4 @@
-package app.sargis.khlopuzyan.alias.ui.classicGame
+package app.sargis.khlopuzyan.alias.ui.game
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
 import app.sargis.khlopuzyan.alias.model.Game
 
-class ClassicGameViewModel : ViewModel() {
+class GameViewModel : ViewModel() {
 
     val closeLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val skipLiveData: SingleLiveEvent<View> = SingleLiveEvent()
@@ -24,6 +24,13 @@ class ClassicGameViewModel : ViewModel() {
      * Handles New Game icon click
      * */
     fun onSkipClick(v: View) {
+        skipLiveData.value = v
+    }
+
+    /**
+     * Handles New Game icon click
+     * */
+    fun onDoneClick(v: View) {
         skipLiveData.value = v
     }
 

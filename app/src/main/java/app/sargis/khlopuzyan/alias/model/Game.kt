@@ -10,5 +10,6 @@ data class Game(
     var currentTeamName: String = "",
 
     var totalScore: Int = 0,
-    var roundScore: Int = 0
+    var roundScore: Int = 0,
+    var roundTimeRemaining: Int = 0
 )

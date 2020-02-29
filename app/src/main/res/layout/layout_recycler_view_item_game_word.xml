@@ -7,18 +7,19 @@
 
         <variable
             name="viewModel"
-            type="app.sargis.khlopuzyan.alias.ui.classicGame.ClassicGameViewModel" />
+            type="app.sargis.khlopuzyan.alias.ui.game.GameViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/layer_list_game_words_divider_background"
         android:clickable="true"
         android:focusable="true"
-        android:minHeight="100dp"
-        android:padding="@dimen/padding_20">
+        android:minHeight="60dp"
+        android:paddingVertical="@dimen/padding_12"
+        android:paddingHorizontal="@dimen/padding_20">
 
         <TextView
             android:id="@+id/textViewWordTranslateName"
@@ -26,16 +27,17 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/padding_4"
             android:fontFamily="sans-serif-medium"
-            android:textSize="20sp"
-            tools:text="Translate"
-            android:visibility="visible"
-            android:textStyle="italic"
             android:gravity="end"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:visibility="visible"
+            android:text="Translate"
             app:layout_constraintBottom_toTopOf="@+id/textViewWordName"
             app:layout_constraintEnd_toEndOf="@+id/textViewWordName"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Translate" />
 
         <TextView
             android:id="@+id/textViewWordName"
@@ -43,25 +45,27 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/padding_4"
             android:fontFamily="sans-serif-medium"
-            android:textSize="20sp"
-            tools:text="Word"
-            app:layout_constraintTop_toBottomOf="@+id/textViewWordTranslateName"
+            android:textSize="24sp"
+            android:text="Word"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewWordTranslateName"
+            tools:text="Word" />
 
         <ImageButton
             android:id="@+id/buttonDelete"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/padding_20"
+            android:padding="@dimen/padding_12"
             android:background="@null"
             android:foreground="?attr/selectableItemBackground"
             android:scaleType="fitXY"
-            app:layout_constraintStart_toEndOf="@+id/textViewWordName"
-            android:layout_marginStart="@dimen/padding_20"
             android:src="@drawable/ic_translate"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewWordName"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

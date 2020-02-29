@@ -28,7 +28,7 @@
             android:background="@color/colorBlue"
             android:gravity="center_vertical"
             android:padding="@dimen/horizontal_padding"
-            android:text="@string/settings" />
+            android:text="@string/default_settings" />
 
         <ScrollView
             android:layout_width="match_parent"
