@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.sargis.khlopuzyan.alias.R
-import app.sargis.khlopuzyan.alias.databinding.LayoutRecyclerViewItemTeamBinding
+import app.sargis.khlopuzyan.alias.databinding.LayoutRecyclerViewItemTeamNameBinding
 import app.sargis.khlopuzyan.alias.model.TeamName
 import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
 
@@ -21,9 +21,9 @@ class TeamsAdapter(
     private var teams = mutableListOf<TeamName>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: LayoutRecyclerViewItemTeamBinding = DataBindingUtil.inflate(
+        val binding: LayoutRecyclerViewItemTeamNameBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.layout_recycler_view_item_team,
+            R.layout.layout_recycler_view_item_team_name,
             parent, false
         )
         return ViewHolder(
@@ -48,10 +48,10 @@ class TeamsAdapter(
         }
     }
 
-    class ViewHolder(binding: LayoutRecyclerViewItemTeamBinding) :
+    class ViewHolder(binding: LayoutRecyclerViewItemTeamNameBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        var binding: LayoutRecyclerViewItemTeamBinding = binding
+        var binding: LayoutRecyclerViewItemTeamNameBinding = binding
 
         fun bindData(teamName: TeamName, viewModel: TeamsViewModel) {
             binding.viewModel = viewModel

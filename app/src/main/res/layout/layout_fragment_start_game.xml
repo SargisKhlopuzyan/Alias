@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="app.sargis.khlopuzyan.alias.ui.startGame.StartGameViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textViewRound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_20"
+            android:fontFamily="sans-serif-black"
+            android:text="@{`Round ` + viewModel.game.round}"
+            android:textAllCaps="true"
+            android:textColor="@color/colorSettingsSeekBarThumb"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewTeamName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/textViewTeamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_20"
+            android:fontFamily="sans-serif-black"
+            android:text="@{`Team ` + viewModel.game.currentTeamName}"
+            android:textAllCaps="true"
+            android:textColor="@color/colorSettingsSeekBarThumb"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewScore"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRound" />
+
+        <ImageView
+            android:id="@+id/imageViewScore"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{v -> viewModel.onShowScoreClick(v)}"
+            android:padding="10dp"
+            android:src="@drawable/ic_scoreboard"
+            app:layout_constraintBottom_toTopOf="@+id/buttonStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTeamName" />
+
+        <Button
+            android:id="@+id/buttonStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlue"
+            android:fontFamily="sans-serif-medium"
+            android:foreground="?attr/selectableItemBackground"
+            android:minHeight="?actionBarSize"
+            android:onClick="@{(v) -> viewModel.onStartClick(v)}"
+            android:text="@string/start"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="app.sargis.khlopuzyan.alias.ui.classicGame.ClassicGameViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:minHeight="100dp"
+        android:padding="@dimen/padding_20">
+
+        <TextView
+            android:id="@+id/textViewWordTranslateName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_4"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="20sp"
+            tools:text="Translate"
+            android:visibility="visible"
+            android:textStyle="italic"
+            android:gravity="end"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textViewWordName"
+            app:layout_constraintEnd_toEndOf="@+id/textViewWordName"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewWordName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_4"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="20sp"
+            tools:text="Word"
+            app:layout_constraintTop_toBottomOf="@+id/textViewWordTranslateName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/buttonDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:foreground="?attr/selectableItemBackground"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toEndOf="@+id/textViewWordName"
+            android:layout_marginStart="@dimen/padding_20"
+            android:src="@drawable/ic_translate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

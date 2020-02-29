@@ -35,7 +35,7 @@
             android:fontFamily="sans-serif-medium"
             android:foreground="?attr/selectableItemBackground"
             android:minHeight="?actionBarSize"
-            android:onClick="@{viewModel.onAddTeamClick}"
+            android:onClick="@{viewModel::onAddTeamClick}"
             android:text="+"
             android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.commit
+import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameSetupBinding
+import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -44,13 +47,36 @@ class GameSetupFragment : DaggerFragment() {
     }
 
     private fun setupObservers() {
-//        viewModel.openSettingsLiveData.observe(viewLifecycleOwner) {
-//            openSettings()
-//        }
-//
-//        viewModel.newGameLiveData.observe(viewLifecycleOwner) {
-//            openNewGameFragment()
-//        }
+
+        viewModel.startClassGameLiveData.observe(viewLifecycleOwner) {
+            startClassGame()
+        }
+
+        viewModel.startArcadeGameLiveData.observe(viewLifecycleOwner) {
+            startArcadeGame()
+        }
+    }
+
+    private fun startClassGame() {
+        activity?.supportFragmentManager?.commit {
+            replace(
+                android.R.id.content,
+                StartGameFragment.newInstance(),
+                "fragment_start_game"
+            )
+            addToBackStack("start_game")
+        }
+    }
+
+    private fun startArcadeGame() {
+        activity?.supportFragmentManager?.commit {
+            replace(
+                android.R.id.content,
+                StartGameFragment.newInstance(),
+                "fragment_start_game"
+            )
+            addToBackStack("start_game")
+        }
     }
 
 }

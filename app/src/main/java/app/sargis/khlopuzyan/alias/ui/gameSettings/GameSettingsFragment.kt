@@ -61,9 +61,9 @@ class GameSettingsFragment : DaggerFragment() {
             replace(
                 android.R.id.content,
                 GameSetupFragment.newInstance(),
-                "fragment_select_game_type"
+                "fragment_game_setup"
             )
-            addToBackStack("select_game_type")
+            addToBackStack("game_setup")
         }
     }
 

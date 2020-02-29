@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/toolsl">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="app.sargis.khlopuzyan.alias.ui.startGame.StartGameViewModel" />
+
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+
+        <include
+            android:id="@+id/layout_fragment_main"
+            layout="@layout/layout_fragment_start_game"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:viewModel="@{viewModel}" />
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:nestedScrollingEnabled="true">
+
+            <include
+                android:id="@+id/layout_nav_settings"
+                layout="@layout/layout_nav_score"
+                bind:viewModel="@{viewModel}" />
+
+        </com.google.android.material.navigation.NavigationView>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</layout>
