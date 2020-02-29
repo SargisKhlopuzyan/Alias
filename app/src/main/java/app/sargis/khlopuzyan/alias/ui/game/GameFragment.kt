@@ -9,13 +9,21 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentClassicGameBinding
+import app.sargis.khlopuzyan.alias.model.Game
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 class GameFragment : DaggerFragment() {
 
     companion object {
-        fun newInstance() = GameFragment()
+
+        private const val ARG_GAME = "arg_game"
+
+        fun newInstance(game: Game?) = GameFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(ARG_GAME, game)
+            }
+        }
     }
 
     @Inject
@@ -40,6 +48,9 @@ class GameFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
+        val game: Game? = arguments?.getParcelable(ARG_GAME)
+        viewModel.game.value = game
+
         setupRecyclerView()
         setupObservers()
     }
@@ -64,7 +75,7 @@ class GameFragment : DaggerFragment() {
     }
 
     private fun showFinishGameDialog() {
-
+        println("${viewModel.game.value?.gameType}")
     }
 
 }

@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="app.sargis.khlopuzyan.alias.model.GameType" />
+
         <variable
             name="viewModel"
             type="app.sargis.khlopuzyan.alias.ui.game.GameViewModel" />
@@ -154,6 +156,7 @@
             android:minHeight="?actionBarSize"
             android:onClick="@{(v) -> viewModel.onDoneClick(v)}"
             android:src="@drawable/ic_check_mark"
+            android:visibility="@{viewModel.game.gameType == GameType.Classic ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/buttonSkip" />

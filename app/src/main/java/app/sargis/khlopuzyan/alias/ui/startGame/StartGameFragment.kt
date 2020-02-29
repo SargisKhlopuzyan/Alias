@@ -10,6 +10,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentStartGameBinding
+import app.sargis.khlopuzyan.alias.model.Game
 import app.sargis.khlopuzyan.alias.ui.game.GameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -17,7 +18,14 @@ import javax.inject.Inject
 class StartGameFragment : DaggerFragment() {
 
     companion object {
-        fun newInstance() = StartGameFragment()
+
+        private const val ARG_GAME = "arg_game"
+
+        fun newInstance(game: Game?) = StartGameFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(ARG_GAME, game)
+            }
+        }
     }
 
     @Inject
@@ -42,6 +50,8 @@ class StartGameFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
+        val game: Game? = arguments?.getParcelable(ARG_GAME)
+        viewModel.game.value = game
         setupObservers()
     }
 
@@ -63,10 +73,10 @@ class StartGameFragment : DaggerFragment() {
         activity?.supportFragmentManager?.commit {
             replace(
                 android.R.id.content,
-                GameFragment.newInstance(),
-                "fragment_classic_game"
+                GameFragment.newInstance(viewModel.game.value),
+                "fragment_game"
             )
-            addToBackStack("classic_game")
+            addToBackStack("game")
         }
     }
 

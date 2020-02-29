@@ -9,6 +9,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameSetupBinding
+import app.sargis.khlopuzyan.alias.model.GameType
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -58,25 +59,26 @@ class GameSetupFragment : DaggerFragment() {
     }
 
     private fun startClassGame() {
-        activity?.supportFragmentManager?.commit {
-            replace(
-                android.R.id.content,
-                StartGameFragment.newInstance(),
-                "fragment_start_game"
-            )
-            addToBackStack("start_game")
-        }
+        startGame(GameType.Classic)
     }
 
     private fun startArcadeGame() {
+        startGame(GameType.Arcade)
+    }
+
+    private fun startGame(gameType: GameType) {
+
+        viewModel.game.value?.let {
+            it.gameType = gameType
+        }
+
         activity?.supportFragmentManager?.commit {
             replace(
                 android.R.id.content,
-                StartGameFragment.newInstance(),
+                StartGameFragment.newInstance(viewModel.game.value),
                 "fragment_start_game"
             )
             addToBackStack("start_game")
         }
     }
-
 }
