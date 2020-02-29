@@ -44,6 +44,17 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
 
 
     /**SeekBar : Progress Changed */
+
+    fun onNumberOfWordsProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+        if (fromUser) {
+            settings.value?.numberOfWords = progress
+            settings.value?.let {
+                settingsRepository.storeNumberOfWords(it)
+            }
+            settings.value = settings.value
+        }
+    }
+
     fun onRoundTimeProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (fromUser) {
             settings.value?.roundTime = progress

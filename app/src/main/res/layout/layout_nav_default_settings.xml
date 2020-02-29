@@ -18,8 +18,8 @@
         android:id="@+id/nav_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@android:color/white"
+        android:orientation="vertical"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <TextView
@@ -38,6 +38,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutNumberOfWords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layer_list_settings_divider_background"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/padding_12">
+
+                    <TextView
+                        android:id="@+id/textViewNumberOfWords"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/horizontal_padding"
+                        android:maxLines="1"
+                        android:text="@string/number_of_words"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintEnd_toStartOf="@+id/textViewNumberOfWordsValue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewNumberOfWordsValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{`` + viewModel.settings.numberOfWords}"
+                        android:textColor="@color/colorBlue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <SeekBar
+                        android:id="@+id/seekBarNumberOfWords"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/padding_12"
+                        android:max="200"
+                        android:min="10"
+                        android:onProgressChanged="@{viewModel::onNumberOfWordsProgressChanged}"
+                        android:progress="@{viewModel.settings.numberOfWords}"
+                        android:progressDrawable="@drawable/shape_seek_bar_progress"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/shape_seek_bar_thumb"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewNumberOfWords" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayoutRoundTime"
@@ -386,9 +431,9 @@
                         android:layout_marginTop="@dimen/padding_12"
                         android:layout_marginRight="@dimen/padding_20"
                         android:layout_marginBottom="@dimen/padding_12"
-                        app:bindWordTranslateLanguageCheckedButton="@{viewModel.settings}"
                         android:onCheckedChanged="@{viewModel::onTranslateLanguageCheckChanged}"
                         android:orientation="horizontal"
+                        app:bindWordTranslateLanguageCheckedButton="@{viewModel.settings}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

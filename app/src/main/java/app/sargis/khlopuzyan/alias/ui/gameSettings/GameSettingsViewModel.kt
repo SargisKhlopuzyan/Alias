@@ -12,7 +12,8 @@ import app.sargis.khlopuzyan.alias.model.Language
 import app.sargis.khlopuzyan.alias.model.Settings
 import app.sargis.khlopuzyan.alias.repository.GameSettingsRepository
 
-class GameSettingsViewModel constructor(private val gameSettingsRepository: GameSettingsRepository) : ViewModel() {
+class GameSettingsViewModel constructor(private val gameSettingsRepository: GameSettingsRepository) :
+    ViewModel() {
 
     val openSettingsLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val newGameLiveData: SingleLiveEvent<View> = SingleLiveEvent()
@@ -39,6 +40,16 @@ class GameSettingsViewModel constructor(private val gameSettingsRepository: Game
 
 
     /**SeekBar : Progress Changed */
+    fun onNumberOfWordsProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+        if (fromUser) {
+            settings.value?.numberOfWords = progress
+            settings.value?.let {
+                gameSettingsRepository.storeNumberOfWords(it)
+            }
+            settings.value = settings.value
+        }
+    }
+
     fun onRoundTimeProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (fromUser) {
             settings.value?.roundTime = progress

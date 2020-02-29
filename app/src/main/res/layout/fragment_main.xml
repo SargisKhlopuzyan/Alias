@@ -33,7 +33,7 @@
 
             <include
                 android:id="@+id/layout_nav_settings"
-                layout="@layout/layout_nav_settings"
+                layout="@layout/layout_nav_default_settings"
                 bind:viewModel="@{viewModel}" />
 
         </com.google.android.material.navigation.NavigationView>

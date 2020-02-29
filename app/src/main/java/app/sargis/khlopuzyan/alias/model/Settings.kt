@@ -6,6 +6,7 @@ package app.sargis.khlopuzyan.alias.model
  * @author Sargis Khlopuzyan (sargis.khlopuzyan@fcc.am)
  */
 data class Settings(
+    var numberOfWords: Int = 60,
     var roundTime: Int = 20,
     var defaultTeamsCount: Int = 2,
     var isGameSoundEnabled: Boolean = true,
