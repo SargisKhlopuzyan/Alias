@@ -20,6 +20,8 @@ class GameSettingsViewModel constructor(private val gameSettingsRepository: Game
 
     val settings = MutableLiveData<Settings>()
 
+    lateinit var gameSettingsChangedListener: GameSettingsFragment.GameSettingsChangedListener
+
     init {
         settings.value = gameSettingsRepository.loadSettings()
     }
@@ -44,7 +46,7 @@ class GameSettingsViewModel constructor(private val gameSettingsRepository: Game
         if (fromUser) {
             settings.value?.numberOfWords = progress
             settings.value?.let {
-                gameSettingsRepository.storeNumberOfWords(it)
+                gameSettingsChangedListener.setNumberOfWords(progress)
             }
             settings.value = settings.value
         }
@@ -54,61 +56,31 @@ class GameSettingsViewModel constructor(private val gameSettingsRepository: Game
         if (fromUser) {
             settings.value?.roundTime = progress
             settings.value?.let {
-                gameSettingsRepository.storeRoundTime(it)
+                gameSettingsChangedListener.setRoundTime(progress)
             }
             settings.value = settings.value
         }
     }
-
-    fun onDefaultTeamsCountProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-        if (fromUser) {
-            settings.value?.defaultTeamsCount = progress
-            settings.value?.let {
-                gameSettingsRepository.storeDefaultTeamsCount(it)
-            }
-            settings.value = settings.value
-        }
-    }
-
 
     /** Checkbox : Checked Change */
     fun onGameSoundCheckedChange(button: CompoundButton, check: Boolean) {
         settings.value?.isGameSoundEnabled = check
         settings.value?.let {
-            gameSettingsRepository.storeGameSoundState(it)
+            gameSettingsChangedListener.setGameSoundState(check)
         }
     }
 
     fun onMissedWordPenaltyCheckedChange(button: CompoundButton, check: Boolean) {
         settings.value?.isMissedWordPenaltyEnabled = check
         settings.value?.let {
-            gameSettingsRepository.storeMissedWordPenaltyState(it)
+            gameSettingsChangedListener.setMissedWordPenaltyState(check)
         }
     }
 
     fun onEnableTranslateCheckedChange(button: CompoundButton, check: Boolean) {
         settings.value?.isWordTranslateEnabled = check
         settings.value?.let {
-            gameSettingsRepository.storeWordTranslateState(it)
-        }
-    }
-
-    /** Radio Group : Check Changed */
-    fun onAppLanguageCheckChanged(radioGroup: RadioGroup, id: Int) {
-        when (id) {
-            R.id.radioButtonAppLanguageEnglish -> {
-                settings.value?.appLanguage = Language.EN
-            }
-            R.id.radioButtonAppLanguageArmenian -> {
-                settings.value?.appLanguage = Language.AM
-            }
-            R.id.radioButtonAppLanguageRussian -> {
-                settings.value?.appLanguage = Language.RU
-            }
-        }
-
-        settings.value?.let {
-            gameSettingsRepository.storeAppLanguage(it)
+            gameSettingsChangedListener.setTranslateEnabledState(check)
         }
     }
 
@@ -126,7 +98,7 @@ class GameSettingsViewModel constructor(private val gameSettingsRepository: Game
         }
 
         settings.value?.let {
-            gameSettingsRepository.storeGameWordsLanguage(it)
+            gameSettingsChangedListener.setGameWordsLanguage(it.gameWordLanguage)
         }
     }
 
@@ -144,7 +116,7 @@ class GameSettingsViewModel constructor(private val gameSettingsRepository: Game
         }
 
         settings.value?.let {
-            gameSettingsRepository.storeWordTranslateLanguage(it)
+            gameSettingsChangedListener.setTranslateLanguage(it.wordTranslateLanguage)
         }
     }
 

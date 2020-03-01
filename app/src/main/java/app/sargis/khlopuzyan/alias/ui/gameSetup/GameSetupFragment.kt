@@ -1,6 +1,7 @@
 package app.sargis.khlopuzyan.alias.ui.gameSetup
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +11,15 @@ import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameSetupBinding
 import app.sargis.khlopuzyan.alias.model.GameType
+import app.sargis.khlopuzyan.alias.model.TeamName
+import app.sargis.khlopuzyan.alias.ui.gameSettings.GameSettingsFragment
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
+import app.sargis.khlopuzyan.alias.ui.teams.TeamsFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class GameSetupFragment : DaggerFragment() {
+class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsChangedListener,
+    TeamsFragment.GameTeamsChangeListener {
 
     companion object {
         fun newInstance() = GameSetupFragment()
@@ -36,7 +41,7 @@ class GameSetupFragment : DaggerFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        gameSetupPagerAdapter = GameSetupPagerAdapter(childFragmentManager)
+        gameSetupPagerAdapter = GameSetupPagerAdapter(childFragmentManager, this, this)
         binding.viewPager.adapter = gameSetupPagerAdapter
         binding.viewPager.setCurrentItem(1, false)
     }
@@ -80,5 +85,50 @@ class GameSetupFragment : DaggerFragment() {
             )
             addToBackStack("start_game")
         }
+    }
+
+
+    //
+
+    override fun setNumberOfWords(numberOfWords: Int) {
+        Log.e("LOG_TAG", "setNumberOfWords")
+    }
+
+    override fun setRoundTime(roundTime: Int) {
+        Log.e("LOG_TAG", "setRoundTime")
+    }
+
+    override fun setGameSoundState(isEnabled: Boolean) {
+        Log.e("LOG_TAG", "setGameSoundState")
+    }
+
+    override fun setMissedWordPenaltyState(isEnabled: Boolean) {
+        Log.e("LOG_TAG", "setMissedWordPenaltyState")
+    }
+
+    override fun setGameWordsLanguage(language: String) {
+        Log.e("LOG_TAG", "setGameWordsLanguage")
+    }
+
+    override fun setTranslateEnabledState(isEnabled: Boolean) {
+        Log.e("LOG_TAG", "setTranslateEnabledState")
+    }
+
+    override fun setTranslateLanguage(language: String) {
+        Log.e("LOG_TAG", "setTranslateLanguage")
+    }
+
+    //
+
+    override fun addTeamName(teamName: TeamName) {
+        Log.e("LOG_TAG", "addTeamName")
+    }
+
+    override fun removeTeam(teamName: TeamName) {
+        Log.e("LOG_TAG", "removeTeam")
+    }
+
+    override fun changeTeamName(oldName: String, newName: String) {
+        Log.e("LOG_TAG", "changeTeamName")
     }
 }

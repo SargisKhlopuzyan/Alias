@@ -1,12 +1,10 @@
 package app.sargis.khlopuzyan.alias.ui.gameSettings
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
@@ -19,13 +17,30 @@ import javax.inject.Inject
 class GameSettingsFragment : DaggerFragment() {
 
     companion object {
-        fun newInstance() = GameSettingsFragment()
+//        fun newInstance() = GameSettingsFragment()
+
+        fun newInstance(listener: GameSettingsChangedListener) = run {
+            val teamsFragment = GameSettingsFragment()
+            teamsFragment.gameSettingsChangedListener = listener
+            teamsFragment
+        }
+    }
+
+    interface GameSettingsChangedListener {
+        fun setNumberOfWords(numberOfWords: Int)
+        fun setRoundTime(roundTime: Int)
+        fun setGameSoundState(isEnabled: Boolean)
+        fun setMissedWordPenaltyState(isEnabled: Boolean)
+        fun setGameWordsLanguage(language: String)
+        fun setTranslateEnabledState(isEnabled: Boolean)
+        fun setTranslateLanguage(language: String)
     }
 
     @Inject
     lateinit var viewModel: GameSettingsViewModel
 
     private lateinit var binding: FragmentGameSettingsBinding
+    private lateinit var gameSettingsChangedListener: GameSettingsChangedListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +69,8 @@ class GameSettingsFragment : DaggerFragment() {
         viewModel.newGameLiveData.observe(viewLifecycleOwner) {
             openNewGameFragment()
         }
+
+        viewModel.gameSettingsChangedListener = gameSettingsChangedListener
     }
 
     private fun openNewGameFragment() {

@@ -1,7 +1,6 @@
-package app.sargis.khlopuzyan.alias.ui
+package app.sargis.khlopuzyan.alias
 
 import android.content.Context
-import app.sargis.khlopuzyan.alias.BuildConfig
 import app.sargis.khlopuzyan.alias.di.component.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication

@@ -1,4 +1,4 @@
-package app.sargis.khlopuzyan.alias
+package app.sargis.khlopuzyan.alias.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -4,23 +4,22 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
-import app.sargis.khlopuzyan.alias.model.Settings
 import app.sargis.khlopuzyan.alias.model.TeamName
 import app.sargis.khlopuzyan.alias.repository.TeamsRepository
 
-class TeamsViewModel constructor(private val teamsRepository: TeamsRepository) : ViewModel() {
+class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel() {
 
-    val openSettingsLiveData: SingleLiveEvent<View> = SingleLiveEvent()
-    val newGameLiveData: SingleLiveEvent<View> = SingleLiveEvent()
+    val changeTeamNameCLiveData: SingleLiveEvent<TeamName> = SingleLiveEvent()
 
-    val settings = MutableLiveData<Settings>()
-    val teamNames: List<TeamName>
+    lateinit var gameTeamsChangeListener: TeamsFragment.GameTeamsChangeListener
+
 
     val addNewTeamLiveData = MutableLiveData<TeamName>()
 
-    init {
-        settings.value = teamsRepository.loadSettings()
+    private val teamNames: List<TeamName>
 
+
+    init {
         teamNames = teamsRepository.loadTeamNames().toMutableList()
     }
 
@@ -29,15 +28,25 @@ class TeamsViewModel constructor(private val teamsRepository: TeamsRepository) :
      * Handles Settings icon click
      * */
     fun onAddTeamClick(v: View) {
-        if (teamsCount < teamNames.size - 1)
-            addNewTeamLiveData.value = teamNames[++teamsCount]
+        if (teamsCount < teamNames.size - 1) {
+            val newTeamName = teamNames[++teamsCount]
+            gameTeamsChangeListener.addTeamName(newTeamName)
+            addNewTeamLiveData.value = newTeamName
+        }
     }
 
     /**
      * Handles New Game icon click
      * */
-    fun onNewGameClick(v: View) {
-        newGameLiveData.value = v
+    fun onRemoveTeamClick(teamName: TeamName) {
+
+    }
+
+    /**
+     * Handles New Game icon click
+     * */
+    fun onChangeTeamNameClick(oldTeamName: TeamName, newTeamName: TeamName) {
+        changeTeamNameCLiveData.value = newTeamName
     }
 
 }
