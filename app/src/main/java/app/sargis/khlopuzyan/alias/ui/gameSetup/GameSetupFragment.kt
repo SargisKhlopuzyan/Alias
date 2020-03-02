@@ -10,7 +10,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameSetupBinding
-import app.sargis.khlopuzyan.alias.model.GameType
+import app.sargis.khlopuzyan.alias.model.Game
 import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.ui.gameSettings.GameSettingsFragment
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
@@ -53,40 +53,21 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
     }
 
     private fun setupObservers() {
-
-        viewModel.startClassGameLiveData.observe(viewLifecycleOwner) {
-            startClassGame()
-        }
-
-        viewModel.startArcadeGameLiveData.observe(viewLifecycleOwner) {
-            startArcadeGame()
+        viewModel.startGameLiveData.observe(viewLifecycleOwner) {
+            startGame(it)
         }
     }
 
-    private fun startClassGame() {
-        startGame(GameType.Classic)
-    }
-
-    private fun startArcadeGame() {
-        startGame(GameType.Arcade)
-    }
-
-    private fun startGame(gameType: GameType) {
-
-        viewModel.game.value?.let {
-            it.gameType = gameType
-        }
-
+    private fun startGame(game: Game) {
         activity?.supportFragmentManager?.commit {
             replace(
                 android.R.id.content,
-                StartGameFragment.newInstance(viewModel.game.value),
+                StartGameFragment.newInstance(game),
                 "fragment_start_game"
             )
             addToBackStack("start_game")
         }
     }
-
 
     //
 
@@ -118,12 +99,11 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
         Log.e("LOG_TAG", "setTranslateLanguage")
     }
 
+    //
+
     override fun setTeam(teams: List<Team>) {
         Log.e("LOG_TAG", "setTeam")
 
     }
-
-    //
-
 
 }

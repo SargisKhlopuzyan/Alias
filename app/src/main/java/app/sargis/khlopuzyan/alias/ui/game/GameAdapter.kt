@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.LayoutRecyclerViewItemGameWordBinding
 import app.sargis.khlopuzyan.alias.model.Game
+import app.sargis.khlopuzyan.alias.model.GameType
 import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
 
 /**
@@ -32,20 +33,18 @@ class GameAdapter(
     }
 
     override fun getItemCount(): Int {
-        return 5 /*teams.size*/
+        return if (game.gameType == GameType.Classic) 5
+        else 1
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindData(game, viewModel)
     }
 
-    override fun setItems(items: List<Game>?) {
-//        items?.let {
-//            if (!teams.contains(it)) {
-//                teams.add(it)
-//                notifyItemInserted(teams.size - 1)
-//            }
-//        }
+    override fun setItem(data: Game?) {
+        data?.let {
+            game = it
+        }
     }
 
     class ViewHolder(binding: LayoutRecyclerViewItemGameWordBinding) :

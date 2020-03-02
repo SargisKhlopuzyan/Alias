@@ -1,6 +1,5 @@
 package app.sargis.khlopuzyan.alias.ui.teams
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -17,7 +16,7 @@ import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
  */
 class TeamsAdapter(
     val viewModel: TeamsViewModel
-) : RecyclerView.Adapter<TeamsAdapter.ViewHolder>(), BindableAdapter<Team> {
+) : RecyclerView.Adapter<TeamsAdapter.ViewHolder>(), BindableAdapter<List<Team>> {
 
     private var teams = mutableListOf<Team>()
 
@@ -40,9 +39,9 @@ class TeamsAdapter(
         holder.bindData(teams[position], viewModel)
     }
 
-    override fun setItems(items: List<Team>?) {
+    override fun setItem(data: List<Team>?) {
         teams.clear()
-        items?.let {
+        data?.let {
             for (team in it) {
                 if (!teams.contains(team)) {
                     teams.add(team)

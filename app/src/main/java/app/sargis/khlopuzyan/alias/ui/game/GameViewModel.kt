@@ -11,7 +11,7 @@ class GameViewModel : ViewModel() {
     val closeLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val skipLiveData: SingleLiveEvent<View> = SingleLiveEvent()
 
-    val game = MutableLiveData<Game>()
+    val game = MutableLiveData<Game>(Game())
 
     /**
      * Handles Settings icon click
@@ -32,6 +32,10 @@ class GameViewModel : ViewModel() {
      * */
     fun onDoneClick(v: View) {
         skipLiveData.value = v
+    }
+
+    fun setGame(_game: Game) {
+        game.value = _game
     }
 
 }

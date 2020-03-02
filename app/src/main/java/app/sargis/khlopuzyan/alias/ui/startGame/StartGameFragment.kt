@@ -21,7 +21,7 @@ class StartGameFragment : DaggerFragment() {
 
         private const val ARG_GAME = "arg_game"
 
-        fun newInstance(game: Game?) = StartGameFragment().apply {
+        fun newInstance(game: Game) = StartGameFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(ARG_GAME, game)
             }
