@@ -15,7 +15,7 @@ import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
  */
 
 @BindingAdapter("data")
-fun <T> RecyclerView.setRecyclerViewData(items: T?) {
+fun <T> RecyclerView.setRecyclerViewData(items: List<T>?) {
     if (adapter is BindableAdapter<*>) {
         @Suppress("UNCHECKED_CAST")
         (adapter as BindableAdapter<T>).setItems(items)

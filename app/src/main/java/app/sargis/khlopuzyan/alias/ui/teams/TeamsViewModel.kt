@@ -1,6 +1,5 @@
 package app.sargis.khlopuzyan.alias.ui.teams
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,52 +9,75 @@ import app.sargis.khlopuzyan.alias.repository.TeamsRepository
 
 class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel() {
 
-    val changeTeamCLiveData: SingleLiveEvent<Team> = SingleLiveEvent()
+    val changeTeamLiveData: SingleLiveEvent<Team> = SingleLiveEvent()
+    val teamsChangedLiveData: SingleLiveEvent<List<Team>> = SingleLiveEvent()
 
-    lateinit var gameTeamsChangeListener: TeamsFragment.GameTeamsChangeListener
+    val teamsLiveData = MutableLiveData<MutableList<Team>>(mutableListOf())
 
-    val addNewTeamLiveData = MutableLiveData<Team>()
-
-    private val teams: List<Team>
-
+    private val allAvailableTeams: List<Team> = teamsRepository.loadTeamNames()
+    var teams = mutableListOf<Team>()
 
     init {
-        teams = teamsRepository.loadTeamNames().toMutableList()
+        when {
+            allAvailableTeams.size > 1 -> {
+                teams.add(allAvailableTeams[0])
+                teams.add(allAvailableTeams[1])
+                2
+            }
+            allAvailableTeams.isNotEmpty() -> {
+                teams.add(allAvailableTeams[0])
+                1
+            }
+            else -> {
+                0
+            }
+        }
+
+        teamsLiveData.value = teams
     }
 
-    var teamsCount = 0
     /**
      * Handles Settings icon click
      * */
     fun onAddTeamClick(v: View) {
-        if (teamsCount < teams.size - 1) {
-            val newTeamName = teams[++teamsCount]
-            gameTeamsChangeListener.addTeamName(newTeamName)
-            addNewTeamLiveData.value = newTeamName
+        if (teams.size < allAvailableTeams.size) {
+
+            val newTeam = allAvailableTeams[teams.size]
+            teams.add(newTeam)
+            teamsLiveData.value = teams
+
+            teamsChangedLiveData.value = teams
         }
     }
 
     /**
      * Handles New Game icon click
      * */
-    fun onRemoveTeamClick(team: Team) {
-        gameTeamsChangeListener.removeTeam(team)
-    }
-
-    /**
-     * Handles New Game icon click
-     * */
     fun onDeleteTeamClick(team: Team) {
-        Log.e("LOG_TAG", "onDeleteTeamClick")
+        if (teams.contains(team)) {
+            val position = teams.indexOf(team)
+            teams.removeAt(position)
+            teamsLiveData.value = teams
+
+            teamsChangedLiveData.value = teams
+        }
     }
 
     /**
      * Handles New Game icon click
      * */
     fun onChangeTeamNameClick(team: Team) {
-        changeTeamCLiveData.value = team
+        changeTeamLiveData.value = team
     }
 
+    fun changeTeamName(team: Team, newTeamName: String) {
+        if (teams.contains(team)) {
+            val position = teams.indexOf(team)
+            teams[position].name = newTeamName
+            teamsLiveData.value = teams
 
+            teamsChangedLiveData.value = teams
+        }
+    }
 
 }

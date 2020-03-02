@@ -26,7 +26,7 @@ class ChangeTeamNameDialogFragment private constructor(
     }
 
     interface ChangeTeamNameDialogListener {
-        fun onTeamNameChanged(oldName: String?, newName: String)
+        fun onTeamNameChanged(team: Team, newTeamName: String)
     }
 
     private lateinit var binding: DialogFragmentChangeTeamNameBinding
@@ -77,7 +77,7 @@ class ChangeTeamNameDialogFragment private constructor(
             if (teamName.isEmpty()) {
                 showErrorMessage(getString(R.string.error_message_empty_team_name))
             } else {
-                changeTeamNameDialogListener.onTeamNameChanged(team.name, teamName)
+                changeTeamNameDialogListener.onTeamNameChanged(team, teamName)
                 dismiss()
             }
         }

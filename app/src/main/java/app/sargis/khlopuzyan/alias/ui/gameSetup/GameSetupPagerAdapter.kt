@@ -13,8 +13,8 @@ import app.sargis.khlopuzyan.alias.ui.teams.TeamsFragment
  */
 class GameSetupPagerAdapter(
     fm: FragmentManager,
-    var gameSettingsChangedListener: GameSettingsFragment.GameSettingsChangedListener,
-    var gameTeamsChangeListener: TeamsFragment.GameTeamsChangeListener
+    private var gameSettingsChangedListener: GameSettingsFragment.GameSettingsChangedListener,
+    private var gameTeamsChangeListener: TeamsFragment.GameTeamsChangeListener
 ) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 

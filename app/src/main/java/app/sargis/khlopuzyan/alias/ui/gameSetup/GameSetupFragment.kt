@@ -118,17 +118,12 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
         Log.e("LOG_TAG", "setTranslateLanguage")
     }
 
+    override fun setTeam(teams: List<Team>) {
+        Log.e("LOG_TAG", "setTeam")
+
+    }
+
     //
 
-    override fun addTeamName(team: Team) {
-        Log.e("LOG_TAG", "addTeamName")
-    }
 
-    override fun removeTeam(team: Team) {
-        Log.e("LOG_TAG", "removeTeam")
-    }
-
-    override fun changeTeamName(oldName: String, newName: String) {
-        Log.e("LOG_TAG", "changeTeamName")
-    }
 }

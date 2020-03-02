@@ -17,8 +17,6 @@ import javax.inject.Inject
 class GameSettingsFragment : DaggerFragment() {
 
     companion object {
-//        fun newInstance() = GameSettingsFragment()
-
         fun newInstance(listener: GameSettingsChangedListener) = run {
             val teamsFragment = GameSettingsFragment()
             teamsFragment.gameSettingsChangedListener = listener

@@ -6,5 +6,5 @@ package app.sargis.khlopuzyan.alias.ui.common
  * @author Sargis Khlopuzyan (sargis.khlopuzyan@fcc.am)
  */
 interface BindableAdapter<T> {
-    fun setItems(items: T?)
+    fun setItems(items: List<T>?)
 }

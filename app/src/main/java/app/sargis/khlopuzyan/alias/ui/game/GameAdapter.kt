@@ -39,7 +39,7 @@ class GameAdapter(
         holder.bindData(game, viewModel)
     }
 
-    override fun setItems(items: Game?) {
+    override fun setItems(items: List<Game>?) {
 //        items?.let {
 //            if (!teams.contains(it)) {
 //                teams.add(it)

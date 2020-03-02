@@ -1,5 +1,6 @@
 package app.sargis.khlopuzyan.alias.ui.teams
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -39,11 +40,14 @@ class TeamsAdapter(
         holder.bindData(teams[position], viewModel)
     }
 
-    override fun setItems(items: Team?) {
+    override fun setItems(items: List<Team>?) {
+        teams.clear()
         items?.let {
-            if (!teams.contains(it)) {
-                teams.add(it)
-                notifyItemInserted(teams.size - 1)
+            for (team in it) {
+                if (!teams.contains(team)) {
+                    teams.add(team)
+                    notifyDataSetChanged()
+                }
             }
         }
     }

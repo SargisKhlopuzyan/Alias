@@ -27,9 +27,7 @@ class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamN
     }
 
     interface GameTeamsChangeListener {
-        fun addTeamName(team: Team)
-        fun removeTeam(team: Team)
-        fun changeTeamName(oldName: String, newName: String)
+        fun setTeam(teams: List<Team>)
     }
 
     @Inject
@@ -61,20 +59,22 @@ class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamN
 
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
-
         binding.recyclerView.layoutManager = layoutManager
+
         binding.recyclerView.hasFixedSize()
+
         val adapter = TeamsAdapter(viewModel)
         binding.recyclerView.adapter = adapter
     }
 
     private fun setupObservers() {
-        viewModel.changeTeamCLiveData.observe(viewLifecycleOwner) {
+        viewModel.changeTeamLiveData.observe(viewLifecycleOwner) {
             showChangeTeamNameDialog(it)
         }
 
-        viewModel.gameTeamsChangeListener = gameTeamsChangeListener
-
+        viewModel.teamsChangedLiveData.observe(viewLifecycleOwner) {
+            gameTeamsChangeListener.setTeam(it)
+        }
     }
 
     private fun showChangeTeamNameDialog(team: Team) {
@@ -92,8 +92,9 @@ class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamN
         dialogFragment.show(fragmentTransaction, "changeTeamNameDialog")
     }
 
-    override fun onTeamNameChanged(oldName: String?, newName: String) {
-        Log.e("LOG_TAG", "oldName: $oldName | newName: $newName")
+    override fun onTeamNameChanged(team: Team, newTeamName: String) {
+        viewModel.changeTeamName(team, newTeamName)
+        Log.e("LOG_TAG", "team: $team | newTeamName: $newTeamName")
     }
 
 }
