@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.LayoutRecyclerViewItemTeamNameBinding
-import app.sargis.khlopuzyan.alias.model.TeamName
+import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
 
 /**
@@ -16,9 +16,9 @@ import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
  */
 class TeamsAdapter(
     val viewModel: TeamsViewModel
-) : RecyclerView.Adapter<TeamsAdapter.ViewHolder>(), BindableAdapter<TeamName> {
+) : RecyclerView.Adapter<TeamsAdapter.ViewHolder>(), BindableAdapter<Team> {
 
-    private var teams = mutableListOf<TeamName>()
+    private var teams = mutableListOf<Team>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: LayoutRecyclerViewItemTeamNameBinding = DataBindingUtil.inflate(
@@ -39,7 +39,7 @@ class TeamsAdapter(
         holder.bindData(teams[position], viewModel)
     }
 
-    override fun setItems(items: TeamName?) {
+    override fun setItems(items: Team?) {
         items?.let {
             if (!teams.contains(it)) {
                 teams.add(it)
@@ -53,9 +53,9 @@ class TeamsAdapter(
 
         var binding: LayoutRecyclerViewItemTeamNameBinding = binding
 
-        fun bindData(teamName: TeamName, viewModel: TeamsViewModel) {
+        fun bindData(team: Team, viewModel: TeamsViewModel) {
             binding.viewModel = viewModel
-            binding.textViewName.text = teamName.teamName
+            binding.textViewName.text = team.name
         }
     }
 

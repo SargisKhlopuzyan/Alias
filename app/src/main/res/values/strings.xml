@@ -17,4 +17,8 @@
     <string name="start">Start</string>
     <string name="skip">Skip</string>
     <string name="done">Done</string>
+    <string name="alert_dialog_ok">OK</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="team_new_name">Team new name</string>
+    <string name="error_message_empty_team_name">Team name can not be empty</string>
 </resources>

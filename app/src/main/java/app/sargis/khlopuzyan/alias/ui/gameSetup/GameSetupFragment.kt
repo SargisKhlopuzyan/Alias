@@ -11,7 +11,7 @@ import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameSetupBinding
 import app.sargis.khlopuzyan.alias.model.GameType
-import app.sargis.khlopuzyan.alias.model.TeamName
+import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.ui.gameSettings.GameSettingsFragment
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
 import app.sargis.khlopuzyan.alias.ui.teams.TeamsFragment
@@ -120,11 +120,11 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
 
     //
 
-    override fun addTeamName(teamName: TeamName) {
+    override fun addTeamName(team: Team) {
         Log.e("LOG_TAG", "addTeamName")
     }
 
-    override fun removeTeam(teamName: TeamName) {
+    override fun removeTeam(team: Team) {
         Log.e("LOG_TAG", "removeTeam")
     }
 

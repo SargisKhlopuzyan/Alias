@@ -3,7 +3,9 @@
     <color name="colorPrimary">#2867B2</color>
     <color name="colorPrimaryDark">#2867B2</color>
     <color name="colorAccent">#2867B2</color>
+
     <color name="colorBlue">#2867B2</color>
+    <color name="colorDarkBlue">#142A45</color>
     <color name="colorStealBlue">#DDE7F0</color>
     <color name="colorSettingsSeekBarThumb">#1C5396</color>
 </resources>

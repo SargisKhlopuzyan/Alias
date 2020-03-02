@@ -12,10 +12,10 @@ import kotlinx.android.parcel.Parcelize
  *
  * @author Sargis Khlopuzyan (sargis.khlopuzyan@fcc.am)
  */
-@Entity(tableName = "teamNames")
+@Entity(tableName = "teams")
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class TeamName(
+data class Team(
 
     @PrimaryKey(autoGenerate = true)
     var dbRowId: Long = 0.toLong(),
@@ -23,7 +23,7 @@ data class TeamName(
     @Json(name = "uuid")
     var uuid: String? = null,
 
-    @Json(name = "team_name")
-    var teamName: String? = null
+    @Json(name = "name")
+    var name: String? = null
 
 ) : Parcelable

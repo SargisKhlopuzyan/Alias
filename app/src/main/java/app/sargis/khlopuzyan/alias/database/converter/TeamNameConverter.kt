@@ -1,7 +1,7 @@
 package app.sargis.khlopuzyan.alias.database.converter
 
 import androidx.room.TypeConverter
-import app.sargis.khlopuzyan.alias.model.TeamName
+import app.sargis.khlopuzyan.alias.model.Team
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -15,19 +15,19 @@ class TeamNameConverter {
     private val gson = Gson()
 
     @TypeConverter
-    fun stringToTeamName(data: String?): TeamName {
+    fun stringToTeamName(data: String?): Team {
 
         if (data == null) {
-            return TeamName()
+            return Team()
         }
 
-        val type = object : TypeToken<TeamName>() {}.type
+        val type = object : TypeToken<Team>() {}.type
 
-        return gson.fromJson<TeamName>(data, type)
+        return gson.fromJson<Team>(data, type)
     }
 
     @TypeConverter
-    fun teamNameToString(teamName: TeamName): String {
-        return gson.toJson(teamName)
+    fun teamNameToString(team: Team): String {
+        return gson.toJson(team)
     }
 }

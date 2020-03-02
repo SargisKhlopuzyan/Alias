@@ -19,7 +19,7 @@ data class Game(
     var roundTimeRemaining: Int = 0,
     var gameType: GameType = GameType.Classic,
 
-    val teamNames: List<TeamName> = listOf(),
+    val teams: List<Team> = listOf(),
     var settings: Settings = Settings()
 
 ) : Parcelable

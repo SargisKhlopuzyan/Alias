@@ -2,7 +2,7 @@ package app.sargis.khlopuzyan.alias.repository
 
 import app.sargis.khlopuzyan.alias.database.TeamNamesDatabaseManager
 import app.sargis.khlopuzyan.alias.model.Settings
-import app.sargis.khlopuzyan.alias.model.TeamName
+import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
 import app.sargis.khlopuzyan.alias.utils.constant.SharedPref
 
@@ -25,7 +25,7 @@ interface TeamsRepository {
 
     fun loadSettings(): Settings
 
-    fun loadTeamNames(): List<TeamName>
+    fun loadTeamNames(): List<Team>
 }
 
 class TeamsRepositoryImpl(
@@ -149,7 +149,7 @@ class TeamsRepositoryImpl(
         return settings
     }
 
-    override fun loadTeamNames(): List<TeamName> {
+    override fun loadTeamNames(): List<Team> {
         return teamNamesDatabaseManager.getAllTeamNamesFromDatabase()
     }
 

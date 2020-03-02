@@ -2,7 +2,7 @@ package app.sargis.khlopuzyan.alias.repository
 
 import app.sargis.khlopuzyan.alias.database.TeamNamesDatabaseManager
 import app.sargis.khlopuzyan.alias.model.Settings
-import app.sargis.khlopuzyan.alias.model.TeamName
+import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
 import app.sargis.khlopuzyan.alias.utils.constant.SharedPref
 
@@ -172,7 +172,7 @@ class SettingsRepositoryImpl(
         )
 
         for ((index: Int, e: String) in names.withIndex()) {
-            databaseManager.saveTeamNameInDatabase(TeamName(uuid = index.toString(), teamName = e))
+            databaseManager.saveTeamNameInDatabase(Team(uuid = index.toString(), name = e))
         }
     }
 }

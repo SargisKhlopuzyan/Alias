@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextWatcher" />
+
+        <variable
+            name="onCancelClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="onOkClickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_20"
+        tools:context=".ui.changeTeamNameDialog.ChangeTeamNameDialogFragment">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="340dp"
+            android:text="@string/team_new_name"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="@dimen/textHeaderSize"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/editTextTeamName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextTeamName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_28"
+            android:background="@drawable/layer_edit_text_under_line_blue_background"
+            android:hint="Team name"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:textCursorDrawable="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorStealBlue"
+            app:layout_constraintBottom_toTopOf="@id/textViewErrorMessage"
+            app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
+            app:layout_constraintStart_toStartOf="@+id/textViewTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+        <TextView
+            android:id="@+id/textViewErrorMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_12"
+            android:layout_marginBottom="@dimen/padding_28"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/textViewSmall"
+            app:layout_constraintBottom_toTopOf="@id/buttonCancel"
+            app:layout_constraintEnd_toStartOf="@+id/textViewTeamNameLettersCount"
+            app:layout_constraintStart_toStartOf="@+id/editTextTeamName"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTeamName"
+            tools:text="@string/team_new_name" />
+
+        <TextView
+            android:id="@+id/textViewTeamNameLettersCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/30"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/textViewSmall"
+            app:layout_constraintBottom_toBottomOf="@id/textViewErrorMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewErrorMessage"
+            app:layout_constraintTop_toTopOf="@+id/textViewErrorMessage" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_12"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif-medium"
+            android:foreground="?attr/selectableItemBackground"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:onClick="@{(v) -> onCancelClickListener.onClick(v)}"
+            android:padding="@dimen/padding_12"
+            android:text="@string/alert_dialog_cancel"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonOk"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewErrorMessage" />
+
+        <Button
+            android:id="@+id/buttonOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif-medium"
+            android:foreground="?attr/selectableItemBackground"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:onClick="@{(v) -> onOkClickListener.onClick(v)}"
+            android:padding="@dimen/padding_12"
+            android:text="OK"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonCancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/buttonCancel"
+            app:layout_constraintTop_toTopOf="@+id/buttonCancel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

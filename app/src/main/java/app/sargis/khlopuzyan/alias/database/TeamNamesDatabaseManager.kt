@@ -2,7 +2,7 @@ package app.sargis.khlopuzyan.alias.database
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import app.sargis.khlopuzyan.alias.model.TeamName
+import app.sargis.khlopuzyan.alias.model.Team
 import javax.inject.Inject
 
 /**
@@ -13,27 +13,27 @@ import javax.inject.Inject
 
 class TeamNamesDatabaseManager @Inject constructor(var context: Context) {
 
-    fun saveTeamNameInDatabase(teamName: TeamName): Long {
-        return AliasDb.getInstance(context).getTeamNamesDAO().insertTeamName(teamName)
+    fun saveTeamNameInDatabase(team: Team): Long {
+        return AliasDb.getInstance(context).getTeamNamesDAO().insertTeamName(team)
     }
 
-    fun deleteTeamNameFromDatabase(teamName: TeamName): Int {
-        return AliasDb.getInstance(context).getTeamNamesDAO().deleteTeamName(teamName.uuid)
+    fun deleteTeamNameFromDatabase(team: Team): Int {
+        return AliasDb.getInstance(context).getTeamNamesDAO().deleteTeamName(team.uuid)
     }
 
-    fun getTeamNameFromDatabase(nameEn: String): TeamName? {
+    fun getTeamNameFromDatabase(nameEn: String): Team? {
         return AliasDb.getInstance(context).getTeamNamesDAO().getTeamNameByName(nameEn)
     }
 
-    fun getAllMatchedTeamNamesFromDatabase(nameEn: String): List<TeamName> {
+    fun getAllMatchedTeamNamesFromDatabase(nameEn: String): List<Team> {
         return AliasDb.getInstance(context).getTeamNamesDAO().getAllMatchedTeamNames(nameEn)
     }
 
-    fun getAllTeamNamesFromDatabase(): List<TeamName> {
+    fun getAllTeamNamesFromDatabase(): List<Team> {
         return AliasDb.getInstance(context).getTeamNamesDAO().getAllTeamNames()
     }
 
-    fun getAllTeamNamesLiveDataFromDatabase(): LiveData<List<TeamName>?> {
+    fun getAllTeamNamesLiveDataFromDatabase(): LiveData<List<Team>?> {
         return AliasDb.getInstance(context).getTeamNamesDAO().getAllTeamNamesLiveData()
     }
 

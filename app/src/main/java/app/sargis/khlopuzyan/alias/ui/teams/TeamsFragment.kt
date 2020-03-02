@@ -1,26 +1,23 @@
 package app.sargis.khlopuzyan.alias.ui.teams
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentTeamsBinding
-import app.sargis.khlopuzyan.alias.model.TeamName
-import app.sargis.khlopuzyan.alias.ui.gameSettings.GameSettingsFragment
-import app.sargis.khlopuzyan.alias.ui.gameSetup.GameSetupFragment
+import app.sargis.khlopuzyan.alias.model.Team
+import app.sargis.khlopuzyan.alias.ui.changeTeamNameDialog.ChangeTeamNameDialogFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class TeamsFragment : DaggerFragment() {
+class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamNameDialogListener {
 
     companion object {
         fun newInstance(listener: GameTeamsChangeListener) = run {
@@ -28,12 +25,11 @@ class TeamsFragment : DaggerFragment() {
             teamsFragment.gameTeamsChangeListener = listener
             teamsFragment
         }
-
     }
 
     interface GameTeamsChangeListener {
-        fun addTeamName(teamName: TeamName)
-        fun removeTeam(teamName: TeamName)
+        fun addTeamName(team: Team)
+        fun removeTeam(team: Team)
         fun changeTeamName(oldName: String, newName: String)
     }
 
@@ -74,7 +70,7 @@ class TeamsFragment : DaggerFragment() {
     }
 
     private fun setupObservers() {
-        viewModel.changeTeamNameCLiveData.observe(viewLifecycleOwner) {
+        viewModel.changeTeamCLiveData.observe(viewLifecycleOwner) {
             Log.e("LOG_TAG", "Change Team Name: $it")
             showRenameDialog()
         }
@@ -84,14 +80,22 @@ class TeamsFragment : DaggerFragment() {
     }
 
     private fun showRenameDialog() {
-//        val dialogFragment: MyDialogFragment = MyDialogFragment()
-//        val ft: FragmentTransaction = fragmentManager?.beginTransaction();
-//        var prev: Fragment? = getSupportFragmentManager().findFragmentByTag("dialog");
-//            prev?.let {
-//                ft.remove(prev);
-//            }
-//        ft.addToBackStack(null);
-//        dialogFragment.show(ft, "dialog");
+
+        val fragmentTransaction = childFragmentManager?.beginTransaction()
+        val prev = childFragmentManager.findFragmentByTag("dialog")
+        if (prev != null) {
+            fragmentTransaction.remove(prev)
+        }
+        fragmentTransaction.addToBackStack(null)
+        val dialogFragment =
+            ChangeTeamNameDialogFragment.newInstance(
+                Team(name = "Dialog Name"), this
+            )
+        dialogFragment.show(fragmentTransaction, "dialog")
+    }
+
+    override fun onTeamNameChanged(oldName: String?, newName: String) {
+        Log.e("LOG_TAG", "oldName: $oldName | newName: $newName")
     }
 
 }

@@ -4,23 +4,23 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
-import app.sargis.khlopuzyan.alias.model.TeamName
+import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.repository.TeamsRepository
 
 class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel() {
 
-    val changeTeamNameCLiveData: SingleLiveEvent<TeamName> = SingleLiveEvent()
+    val changeTeamCLiveData: SingleLiveEvent<Team> = SingleLiveEvent()
 
     lateinit var gameTeamsChangeListener: TeamsFragment.GameTeamsChangeListener
 
 
-    val addNewTeamLiveData = MutableLiveData<TeamName>()
+    val addNewTeamLiveData = MutableLiveData<Team>()
 
-    private val teamNames: List<TeamName>
+    private val teams: List<Team>
 
 
     init {
-        teamNames = teamsRepository.loadTeamNames().toMutableList()
+        teams = teamsRepository.loadTeamNames().toMutableList()
     }
 
     var teamsCount = 0
@@ -28,8 +28,11 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
      * Handles Settings icon click
      * */
     fun onAddTeamClick(v: View) {
-        if (teamsCount < teamNames.size - 1) {
-            val newTeamName = teamNames[++teamsCount]
+
+        changeTeamCLiveData.value = Team()
+
+        if (teamsCount < teams.size - 1) {
+            val newTeamName = teams[++teamsCount]
             gameTeamsChangeListener.addTeamName(newTeamName)
             addNewTeamLiveData.value = newTeamName
         }
@@ -38,15 +41,15 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
     /**
      * Handles New Game icon click
      * */
-    fun onRemoveTeamClick(teamName: TeamName) {
-
+    fun onRemoveTeamClick(team: Team) {
+        gameTeamsChangeListener.removeTeam(team)
     }
 
     /**
      * Handles New Game icon click
      * */
-    fun onChangeTeamNameClick(oldTeamName: TeamName, newTeamName: TeamName) {
-        changeTeamNameCLiveData.value = newTeamName
+    fun onChangeTeamNameClick(oldTeam: Team, newTeam: Team) {
+        changeTeamCLiveData.value = newTeam
     }
 
 }
