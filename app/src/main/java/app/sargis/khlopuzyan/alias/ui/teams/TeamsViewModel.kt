@@ -14,18 +14,21 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
 
     val teamsLiveData = MutableLiveData<MutableList<Team>>(mutableListOf())
 
-    private val allAvailableTeams: List<Team> = teamsRepository.loadTeamNames()
+    private val availableTeams: MutableList<Team> = teamsRepository.loadTeamNames().toMutableList()
     var teams = mutableListOf<Team>()
 
     init {
         when {
-            allAvailableTeams.size > 1 -> {
-                teams.add(allAvailableTeams[0])
-                teams.add(allAvailableTeams[1])
+            availableTeams.size > 1 -> {
+                teams.add(availableTeams[0])
+                teams.add(availableTeams[1])
+                availableTeams.removeAt(0)
+                availableTeams.removeAt(0)
                 2
             }
-            allAvailableTeams.isNotEmpty() -> {
-                teams.add(allAvailableTeams[0])
+            availableTeams.isNotEmpty() -> {
+                teams.add(availableTeams[0])
+                availableTeams.removeAt(0)
                 1
             }
             else -> {
@@ -40,10 +43,11 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
      * Handles Settings icon click
      * */
     fun onAddTeamClick(v: View) {
-        if (teams.size < allAvailableTeams.size) {
-
-            val newTeam = allAvailableTeams[teams.size]
+        if (availableTeams.isNotEmpty()) {
+            val newTeam = availableTeams[teams.size]
             teams.add(newTeam)
+            availableTeams.removeAt(teams.size) // TODO
+
             teamsLiveData.value = teams
 
             teamsChangedLiveData.value = teams
@@ -56,7 +60,9 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
     fun onDeleteTeamClick(team: Team) {
         if (teams.contains(team)) {
             val position = teams.indexOf(team)
-            teams.removeAt(position)
+            val deletedTeam = teams.removeAt(position)
+            availableTeams.add(deletedTeam) // TODO
+
             teamsLiveData.value = teams
 
             teamsChangedLiveData.value = teams
