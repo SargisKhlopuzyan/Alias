@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_28"
             android:background="@drawable/layer_edit_text_under_line_blue_background"
-            android:hint="Team name"
+            tools:hint="Team name"
             android:maxLength="30"
             android:maxLines="1"
             android:textCursorDrawable="@null"

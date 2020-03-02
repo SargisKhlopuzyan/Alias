@@ -56,6 +56,15 @@ class TeamsAdapter(
         fun bindData(team: Team, viewModel: TeamsViewModel) {
             binding.viewModel = viewModel
             binding.textViewName.text = team.name
+
+            itemView.setOnLongClickListener {
+                viewModel.onChangeTeamNameClick(team)
+                return@setOnLongClickListener true
+            }
+
+            binding.buttonDelete.setOnClickListener {
+                viewModel.onDeleteTeamClick(team)
+            }
         }
     }
 

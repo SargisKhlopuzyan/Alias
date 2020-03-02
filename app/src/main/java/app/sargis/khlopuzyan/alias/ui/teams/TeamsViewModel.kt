@@ -1,5 +1,6 @@
 package app.sargis.khlopuzyan.alias.ui.teams
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,6 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
     val changeTeamCLiveData: SingleLiveEvent<Team> = SingleLiveEvent()
 
     lateinit var gameTeamsChangeListener: TeamsFragment.GameTeamsChangeListener
-
 
     val addNewTeamLiveData = MutableLiveData<Team>()
 
@@ -28,9 +28,6 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
      * Handles Settings icon click
      * */
     fun onAddTeamClick(v: View) {
-
-        changeTeamCLiveData.value = Team()
-
         if (teamsCount < teams.size - 1) {
             val newTeamName = teams[++teamsCount]
             gameTeamsChangeListener.addTeamName(newTeamName)
@@ -48,8 +45,17 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
     /**
      * Handles New Game icon click
      * */
-    fun onChangeTeamNameClick(oldTeam: Team, newTeam: Team) {
-        changeTeamCLiveData.value = newTeam
+    fun onDeleteTeamClick(team: Team) {
+        Log.e("LOG_TAG", "onDeleteTeamClick")
     }
+
+    /**
+     * Handles New Game icon click
+     * */
+    fun onChangeTeamNameClick(team: Team) {
+        changeTeamCLiveData.value = team
+    }
+
+
 
 }

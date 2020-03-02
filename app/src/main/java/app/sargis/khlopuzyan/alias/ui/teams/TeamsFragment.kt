@@ -1,6 +1,5 @@
 package app.sargis.khlopuzyan.alias.ui.teams
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -71,27 +70,26 @@ class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamN
 
     private fun setupObservers() {
         viewModel.changeTeamCLiveData.observe(viewLifecycleOwner) {
-            Log.e("LOG_TAG", "Change Team Name: $it")
-            showRenameDialog()
+            showChangeTeamNameDialog(it)
         }
 
         viewModel.gameTeamsChangeListener = gameTeamsChangeListener
 
     }
 
-    private fun showRenameDialog() {
+    private fun showChangeTeamNameDialog(team: Team) {
 
         val fragmentTransaction = childFragmentManager?.beginTransaction()
-        val prev = childFragmentManager.findFragmentByTag("dialog")
+        val prev = childFragmentManager.findFragmentByTag("changeTeamNameDialog")
         if (prev != null) {
             fragmentTransaction.remove(prev)
         }
         fragmentTransaction.addToBackStack(null)
         val dialogFragment =
             ChangeTeamNameDialogFragment.newInstance(
-                Team(name = "Dialog Name"), this
+                team, this
             )
-        dialogFragment.show(fragmentTransaction, "dialog")
+        dialogFragment.show(fragmentTransaction, "changeTeamNameDialog")
     }
 
     override fun onTeamNameChanged(oldName: String?, newName: String) {
