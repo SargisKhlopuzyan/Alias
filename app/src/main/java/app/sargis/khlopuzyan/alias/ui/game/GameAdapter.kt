@@ -8,7 +8,10 @@ import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.LayoutRecyclerViewItemGameWordBinding
 import app.sargis.khlopuzyan.alias.model.Game
 import app.sargis.khlopuzyan.alias.model.GameType
+import app.sargis.khlopuzyan.alias.model.Word
 import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
+import java.util.*
+
 
 /**
  * Created by Sargis Khlopuzyan, on 2/28/2020.
@@ -20,6 +23,23 @@ class GameAdapter(
 ) : RecyclerView.Adapter<GameAdapter.ViewHolder>(), BindableAdapter<Game> {
 
     private var game = Game()
+
+    private var words = mutableListOf<Word>()
+
+    init {
+        generateWordsList()
+    }
+
+    private fun generateWordsList() {
+        words.clear()
+        val wordsCount = if (game.gameType == GameType.Classic) 5 else 1
+        for (i in 0 until wordsCount) {
+            val rand = Random()
+            val word: Word = game.words[rand.nextInt(game.words.size)]
+            words.add(word)
+        }
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: LayoutRecyclerViewItemGameWordBinding = DataBindingUtil.inflate(
@@ -45,6 +65,10 @@ class GameAdapter(
         data?.let {
             game = it
         }
+    }
+
+    fun showNextRandomElements() {
+        game
     }
 
     class ViewHolder(binding: LayoutRecyclerViewItemGameWordBinding) :
