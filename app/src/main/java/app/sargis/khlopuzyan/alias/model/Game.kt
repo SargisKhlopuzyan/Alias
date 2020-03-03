@@ -18,6 +18,7 @@ data class Game(
     var gameType: GameType = GameType.Classic,
 
     var teams: List<Team> = listOf(),
-    var settings: Settings = Settings()
+    var settings: Settings = Settings(),
+    var words: List<Word> = listOf()
 
 ) : Parcelable

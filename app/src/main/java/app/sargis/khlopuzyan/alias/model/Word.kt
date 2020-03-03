@@ -2,6 +2,7 @@ package app.sargis.khlopuzyan.alias.model
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -30,6 +31,9 @@ data class Word(
     var wordAm: String? = null,
 
     @Json(name = "word_ru")
-    var wordRu: String? = null
+    var wordRu: String? = null,
+
+    @Ignore
+    var isWordTranslateVisible: Boolean = false
 
 ) : Parcelable
