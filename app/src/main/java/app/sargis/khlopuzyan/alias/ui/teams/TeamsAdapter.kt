@@ -1,6 +1,7 @@
 package app.sargis.khlopuzyan.alias.ui.teams
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,7 @@ class TeamsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindData(teams[position], viewModel)
+        holder.bindData(teams[position], teams.size, viewModel)
     }
 
     override fun setItem(data: List<Team>?) {
@@ -56,7 +57,7 @@ class TeamsAdapter(
 
         var binding: LayoutRecyclerViewItemTeamNameBinding = binding
 
-        fun bindData(team: Team, viewModel: TeamsViewModel) {
+        fun bindData(team: Team, size: Int, viewModel: TeamsViewModel) {
             binding.viewModel = viewModel
             binding.textViewName.text = team.name
 
@@ -65,8 +66,14 @@ class TeamsAdapter(
                 return@setOnLongClickListener true
             }
 
-            binding.buttonDelete.setOnClickListener {
-                viewModel.onDeleteTeamClick(team)
+
+            if (size > 2) {
+                binding.buttonDelete.visibility = View.VISIBLE
+                binding.buttonDelete.setOnClickListener {
+                    viewModel.onDeleteTeamClick(team)
+                }
+            } else {
+                binding.buttonDelete.visibility = View.INVISIBLE
             }
         }
     }
