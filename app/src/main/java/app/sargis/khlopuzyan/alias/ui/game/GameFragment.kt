@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
-import app.sargis.khlopuzyan.alias.databinding.FragmentClassicGameBinding
+import app.sargis.khlopuzyan.alias.databinding.FragmentGameBinding
 import app.sargis.khlopuzyan.alias.model.Game
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -29,7 +29,7 @@ class GameFragment : DaggerFragment() {
     @Inject
     lateinit var viewModel: GameViewModel
 
-    private lateinit var binding: FragmentClassicGameBinding
+    private lateinit var binding: FragmentGameBinding
 
 
     override fun onCreateView(
@@ -38,7 +38,7 @@ class GameFragment : DaggerFragment() {
     ): View? {
 
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_classic_game, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_game, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -49,6 +49,7 @@ class GameFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
 
         binding.viewModel = viewModel
+
         val game: Game? = arguments?.getParcelable(ARG_GAME)
         game?.let {
             viewModel.setGame(it)

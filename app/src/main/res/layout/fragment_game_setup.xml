@@ -40,7 +40,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:minHeight="?actionBarSize"
             android:text="@string/classic"
-            android:layout_marginRight="1dp"
+            android:layout_marginRight="0.1dp"
             android:textSize="16sp"
             android:onClick="@{viewModel::onClassicClick}"
             app:layout_constraintBottom_toBottomOf="parent"

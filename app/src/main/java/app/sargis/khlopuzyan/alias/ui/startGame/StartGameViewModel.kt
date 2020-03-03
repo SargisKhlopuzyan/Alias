@@ -9,9 +9,9 @@ import app.sargis.khlopuzyan.alias.model.Game
 class StartGameViewModel : ViewModel() {
 
     val showScoreLiveData: SingleLiveEvent<View> = SingleLiveEvent()
-    val startLiveData: SingleLiveEvent<View> = SingleLiveEvent()
+    val startLiveData: SingleLiveEvent<Game> = SingleLiveEvent()
 
-    val game = MutableLiveData<Game>()
+    val gameLiveData = MutableLiveData<Game>()
 
     /**
      * Handles Settings icon click
@@ -24,7 +24,17 @@ class StartGameViewModel : ViewModel() {
      * Handles New Game icon click
      * */
     fun onStartClick(v: View) {
-        startLiveData.value = v
+        startLiveData.value = gameLiveData.value
+    }
+
+    fun setGame(game: Game) {
+        if (game.teams.isNotEmpty()) {
+            game.currentPlayingTeam = game.teams[0]
+        }
+        game.round = 1
+        game.roundTimeRemaining = game.settings.roundTime
+
+        gameLiveData.value = game
     }
 
 }

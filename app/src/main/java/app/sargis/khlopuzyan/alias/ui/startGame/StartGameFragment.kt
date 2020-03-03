@@ -46,12 +46,16 @@ class StartGameFragment : DaggerFragment() {
         return binding.root
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         binding.viewModel = viewModel
+
         val game: Game? = arguments?.getParcelable(ARG_GAME)
-        viewModel.game.value = game
+        game?.let {
+            viewModel.setGame(it)
+        }
+
         setupObservers()
     }
 
@@ -61,7 +65,7 @@ class StartGameFragment : DaggerFragment() {
         }
 
         viewModel.startLiveData.observe(viewLifecycleOwner) {
-            startGameFragment()
+            startGameFragment(it)
         }
     }
 
@@ -69,11 +73,11 @@ class StartGameFragment : DaggerFragment() {
         binding.drawerLayout.openDrawer(Gravity.LEFT);
     }
 
-    private fun startGameFragment() {
+    private fun startGameFragment(game: Game) {
         activity?.supportFragmentManager?.commit {
             replace(
                 android.R.id.content,
-                GameFragment.newInstance(viewModel.game.value),
+                GameFragment.newInstance(game),
                 "fragment_game"
             )
             addToBackStack("game")

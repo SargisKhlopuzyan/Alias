@@ -19,6 +19,12 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:src="@drawable/ic_background_4"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ImageView
             android:id="@+id/imageViewSettings"
             android:layout_width="60dp"
             android:layout_height="60dp"

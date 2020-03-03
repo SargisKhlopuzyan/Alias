@@ -2,6 +2,7 @@ package app.sargis.khlopuzyan.alias.model
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -24,6 +25,12 @@ data class Team(
     var uuid: String? = null,
 
     @Json(name = "name")
-    var name: String? = null
+    var name: String? = null,
+
+    @Ignore
+    var totalScore: Int = 0,
+
+    @Ignore
+    var roundScore: Int = 0
 
 ) : Parcelable

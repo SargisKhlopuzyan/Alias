@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
+import app.sargis.khlopuzyan.alias.model.Settings
 import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.repository.TeamsRepository
 
@@ -15,24 +16,17 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
     val teamsLiveData = MutableLiveData<MutableList<Team>>(mutableListOf())
 
     private val availableTeams: MutableList<Team> = teamsRepository.loadTeamNames().toMutableList()
+
+    val settings: Settings = teamsRepository.loadSettings()
+
     var teams = mutableListOf<Team>()
 
     init {
-        when {
-            availableTeams.size > 1 -> {
-                teams.add(availableTeams[0])
-                teams.add(availableTeams[1])
-                availableTeams.removeAt(0)
-                availableTeams.removeAt(0)
-                2
-            }
-            availableTeams.isNotEmpty() -> {
+
+        for (i in 0..settings.defaultTeamsCount) {
+            if (availableTeams.isNotEmpty()) {
                 teams.add(availableTeams[0])
                 availableTeams.removeAt(0)
-                1
-            }
-            else -> {
-                0
             }
         }
 

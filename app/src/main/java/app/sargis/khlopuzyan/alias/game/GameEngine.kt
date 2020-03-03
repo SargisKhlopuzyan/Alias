@@ -1,4 +1,4 @@
-package app.sargis.khlopuzyan.alias.game.classic
+package app.sargis.khlopuzyan.alias.game
 
 import android.os.CountDownTimer
 

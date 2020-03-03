@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.commit
-import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameSettingsBinding
-import app.sargis.khlopuzyan.alias.ui.gameSetup.GameSetupFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -60,26 +57,6 @@ class GameSettingsFragment : DaggerFragment() {
     }
 
     private fun setupObservers() {
-        viewModel.openSettingsLiveData.observe(viewLifecycleOwner) {
-
-        }
-
-        viewModel.newGameLiveData.observe(viewLifecycleOwner) {
-            openNewGameFragment()
-        }
-
         viewModel.gameSettingsChangedListener = gameSettingsChangedListener
     }
-
-    private fun openNewGameFragment() {
-        activity?.supportFragmentManager?.commit {
-            replace(
-                android.R.id.content,
-                GameSetupFragment.newInstance(),
-                "fragment_game_setup"
-            )
-            addToBackStack("game_setup")
-        }
-    }
-
 }

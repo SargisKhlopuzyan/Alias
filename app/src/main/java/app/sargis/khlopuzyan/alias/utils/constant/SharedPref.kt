@@ -3,6 +3,7 @@ package app.sargis.khlopuzyan.alias.utils.constant
 interface SharedPref {
 
     companion object {
+        const val SHARED_PREF_APP_NOT_FIRST_TIME = "APP_FIRST_TIME"
         const val SHARED_PREF_NUMBER_OF_WORDS = "NUMBER_OF_WORDS"
         const val SHARED_PREF_ROUND_TIME = "ROUND_TIME"
         const val SHARED_PREF_DEFAULT_TEAM_COUNT = "DEFAULT_TEAM_COUNT"

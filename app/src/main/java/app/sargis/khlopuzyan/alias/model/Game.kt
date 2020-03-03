@@ -12,14 +12,12 @@ import kotlinx.android.parcel.Parcelize
 data class Game(
 
     var round: Int = 1,
-    var currentTeamName: String = "",
+    var currentPlayingTeam: Team? = null,
 
-    var totalScore: Int = 0,
-    var roundScore: Int = 0,
     var roundTimeRemaining: Int = 0,
     var gameType: GameType = GameType.Classic,
 
-    val teams: List<Team> = listOf(),
+    var teams: List<Team> = listOf(),
     var settings: Settings = Settings()
 
 ) : Parcelable

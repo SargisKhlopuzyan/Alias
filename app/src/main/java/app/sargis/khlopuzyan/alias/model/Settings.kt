@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Settings(
     var numberOfWords: Int = 60,
-    var roundTime: Int = 20,
+    var roundTime: Int = 60,
     var defaultTeamsCount: Int = 2,
     var isGameSoundEnabled: Boolean = true,
     var isMissedWordPenaltyEnabled: Boolean = true,

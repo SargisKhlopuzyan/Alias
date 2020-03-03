@@ -159,20 +159,44 @@ class SettingsRepositoryImpl(
 
     override fun storeDefaultTeamNames() {
 
-        val names = listOf(
-            "Mad Men",
-            "No Chance",
-            "Men of Genius",
-            "Team No. 1",
-            "The Best of The Best",
-            "The Bosses",
-            "The Capitalist",
-            "The Leaders",
-            "The Managers"
-        )
+        if (!sharedPrefManager.loadBooleanFromSharedPref(SharedPref.SHARED_PREF_APP_NOT_FIRST_TIME)) {
+            sharedPrefManager.storeBooleanInSharedPref(
+                SharedPref.SHARED_PREF_APP_NOT_FIRST_TIME,
+                true
+            )
 
-        for ((index: Int, e: String) in names.withIndex()) {
-            databaseManager.saveTeamNameInDatabase(Team(uuid = index.toString(), name = e))
+            val names = listOf(
+                "No Chance",
+                "Bad Boys",
+                "Coffee Lovers",
+                "Men of Genius",
+                "The Bosses",
+                "The Best of The Best",
+                "The Capitalist",
+                "Mad Men",
+                "The Leaders",
+                "Your Bosses",
+                "Super Girls",
+                "Ladies in Scarlet",
+                "Pussy Cats",
+                "Gazelles",
+                "Hugs",
+                "Minions",
+                "The Managers",
+                "Team No. 1",
+                "Pups",
+                "Rainbows",
+                "Romantics",
+                "Kiss My Boots",
+                "Robins",
+                "Unbeatable",
+                "Alpha Team",
+                "Drifters"
+            )
+
+            for ((index: Int, e: String) in names.withIndex()) {
+                databaseManager.saveTeamNameInDatabase(Team(uuid = index.toString(), name = e))
+            }
         }
     }
 }

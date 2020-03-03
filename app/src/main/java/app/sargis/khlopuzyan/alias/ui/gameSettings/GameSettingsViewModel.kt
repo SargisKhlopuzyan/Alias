@@ -15,31 +15,13 @@ import app.sargis.khlopuzyan.alias.repository.GameSettingsRepository
 class GameSettingsViewModel constructor(private val gameSettingsRepository: GameSettingsRepository) :
     ViewModel() {
 
-    val openSettingsLiveData: SingleLiveEvent<View> = SingleLiveEvent()
-    val newGameLiveData: SingleLiveEvent<View> = SingleLiveEvent()
-
-    val settings = MutableLiveData<Settings>()
+    val settings = MutableLiveData<Settings>(Settings())
 
     lateinit var gameSettingsChangedListener: GameSettingsFragment.GameSettingsChangedListener
 
     init {
         settings.value = gameSettingsRepository.loadSettings()
     }
-
-    /**
-     * Handles Settings icon click
-     * */
-    fun onOpenSettingsClick(v: View) {
-        openSettingsLiveData.value = v
-    }
-
-    /**
-     * Handles New Game icon click
-     * */
-    fun onNewGameClick(v: View) {
-        newGameLiveData.value = v
-    }
-
 
     /**SeekBar : Progress Changed */
     fun onNumberOfWordsProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {

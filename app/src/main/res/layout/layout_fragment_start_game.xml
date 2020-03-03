@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/padding_20"
             android:fontFamily="sans-serif-black"
-            android:text="@{`Round ` + viewModel.game.round}"
+            android:text="@{`Round ` + viewModel.gameLiveData.round}"
             android:textAllCaps="true"
             android:textColor="@color/colorSettingsSeekBarThumb"
             android:textSize="20sp"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/padding_20"
             android:fontFamily="sans-serif-black"
-            android:text="@{`Team ` + viewModel.game.currentTeamName}"
+            android:text="@{`Team ` + viewModel.gameLiveData.currentPlayingTeam.name}"
             android:textAllCaps="true"
             android:textColor="@color/colorSettingsSeekBarThumb"
             android:textSize="20sp"
@@ -50,8 +50,8 @@
 
         <ImageView
             android:id="@+id/imageViewScore"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:foreground="?attr/selectableItemBackground"
             android:onClick="@{v -> viewModel.onShowScoreClick(v)}"
             android:padding="10dp"

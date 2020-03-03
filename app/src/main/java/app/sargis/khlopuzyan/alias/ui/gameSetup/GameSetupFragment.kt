@@ -72,38 +72,35 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
     //
 
     override fun setNumberOfWords(numberOfWords: Int) {
-        Log.e("LOG_TAG", "setNumberOfWords")
+        viewModel.setNumberOfWords(numberOfWords)
     }
 
     override fun setRoundTime(roundTime: Int) {
-        Log.e("LOG_TAG", "setRoundTime")
+        viewModel.setRoundTime(roundTime)
     }
 
     override fun setGameSoundState(isEnabled: Boolean) {
-        Log.e("LOG_TAG", "setGameSoundState")
+        viewModel.setGameSoundState(isEnabled)
     }
 
     override fun setMissedWordPenaltyState(isEnabled: Boolean) {
-        Log.e("LOG_TAG", "setMissedWordPenaltyState")
+        viewModel.setMissedWordPenaltyState(isEnabled)
     }
 
     override fun setGameWordsLanguage(language: String) {
-        Log.e("LOG_TAG", "setGameWordsLanguage")
+        viewModel.setGameWordsLanguage(language)
     }
 
     override fun setTranslateEnabledState(isEnabled: Boolean) {
-        Log.e("LOG_TAG", "setTranslateEnabledState")
+        viewModel.setTranslateEnabledState(isEnabled)
     }
 
     override fun setTranslateLanguage(language: String) {
-        Log.e("LOG_TAG", "setTranslateLanguage")
+        viewModel.setTranslateLanguage(language)
     }
 
-    //
-
     override fun setTeam(teams: List<Team>) {
-        Log.e("LOG_TAG", "setTeam")
-
+        viewModel.setTeam(teams)
     }
 
 }
