@@ -44,9 +44,9 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
      * */
     fun onAddTeamClick(v: View) {
         if (availableTeams.isNotEmpty()) {
-            val newTeam = availableTeams[teams.size]
+            val newTeam = availableTeams[0]
             teams.add(newTeam)
-            availableTeams.removeAt(teams.size) // TODO
+            availableTeams.removeAt(0) // TODO
 
             teamsLiveData.value = teams
 
@@ -85,5 +85,4 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
             teamsChangedLiveData.value = teams
         }
     }
-
 }
