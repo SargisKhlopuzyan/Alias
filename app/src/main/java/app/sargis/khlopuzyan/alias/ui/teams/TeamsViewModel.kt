@@ -23,7 +23,7 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
 
     init {
 
-        for (i in 0..settings.defaultTeamsCount) {
+        for (i in 0 until settings.defaultTeamsCount) {
             if (availableTeams.isNotEmpty()) {
                 teams.add(availableTeams[0])
                 availableTeams.removeAt(0)
