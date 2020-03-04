@@ -5,13 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
 import app.sargis.khlopuzyan.alias.model.Game
+import app.sargis.khlopuzyan.alias.model.Team
+import app.sargis.khlopuzyan.alias.model.Word
+import app.sargis.khlopuzyan.alias.repository.StartGameRepository
 
-class StartGameViewModel : ViewModel() {
+class StartGameViewModel constructor(private val startGameRepository: StartGameRepository) : ViewModel() {
 
     val showScoreLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val startLiveData: SingleLiveEvent<Game> = SingleLiveEvent()
 
     val gameLiveData = MutableLiveData<Game>()
+
+    var words: List<Word> = startGameRepository.loadWords()
 
     /**
      * Handles Settings icon click
@@ -33,6 +38,13 @@ class StartGameViewModel : ViewModel() {
         }
         game.round = 1
         game.roundTimeRemaining = game.settings.roundTime
+
+        for (word in words) {
+            word.uuid = word.toString()
+            for (team in game.teams) {
+                team.words.add(word)
+            }
+        }
 
         gameLiveData.value = game
     }

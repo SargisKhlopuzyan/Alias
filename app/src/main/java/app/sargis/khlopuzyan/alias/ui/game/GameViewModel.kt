@@ -1,5 +1,7 @@
 package app.sargis.khlopuzyan.alias.ui.game
 
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +13,9 @@ class GameViewModel : ViewModel() {
     val closeLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val skipLiveData: SingleLiveEvent<View> = SingleLiveEvent()
 
-    val game = MutableLiveData<Game>(Game())
+    val gameLiveData = MutableLiveData<Game>(Game())
+
+    lateinit var timer: CountDownTimer
 
     /**
      * Handles Settings icon click
@@ -40,7 +44,23 @@ class GameViewModel : ViewModel() {
         }
         _game.round = 1
         _game.roundTimeRemaining = _game.settings.roundTime
-        game.value = _game
+        gameLiveData.value = _game
+
+
+        timer = object: CountDownTimer(_game.settings.roundTime.toLong(), 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                Log.e("LOG_TAG", "onTick")
+                gameLiveData.value?.roundTimeRemaining = millisUntilFinished.toInt()
+                gameLiveData.value = gameLiveData.value
+            }
+
+            override fun onFinish() {
+                Log.e("LOG_TAG", "onFinish")
+            }
+        }
+
+        timer.start()
     }
 
 }

@@ -100,6 +100,7 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
     }
 
     override fun setTeam(teams: List<Team>) {
+        Log.e("LOG_TAG", "setTeam")
         viewModel.setTeam(teams)
     }
 

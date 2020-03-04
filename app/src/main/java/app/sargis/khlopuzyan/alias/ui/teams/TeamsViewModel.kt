@@ -29,8 +29,9 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
                 availableTeams.removeAt(0)
             }
         }
-
         teamsLiveData.value = teams
+
+        teamsChangedLiveData.value = teams
     }
 
     /**
@@ -41,7 +42,6 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
             val newTeam = availableTeams[0]
             teams.add(newTeam)
             availableTeams.removeAt(0) // TODO
-
             teamsLiveData.value = teams
 
             teamsChangedLiveData.value = teams
@@ -56,7 +56,6 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
             val position = teams.indexOf(team)
             val deletedTeam = teams.removeAt(position)
             availableTeams.add(deletedTeam) // TODO
-
             teamsLiveData.value = teams
 
             teamsChangedLiveData.value = teams

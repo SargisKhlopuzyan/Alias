@@ -25,7 +25,7 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
 
     //TODO
     fun storeDefaultTeamNames() {
-        settingsRepository.storeDefaultTeamNames()
+        settingsRepository.storeDefaultParameters()
     }
 
     /**

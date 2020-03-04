@@ -31,6 +31,9 @@ data class Team(
     var totalScore: Int = 0,
 
     @Ignore
-    var roundScore: Int = 0
+    var roundScore: Int = 0,
+
+    @Ignore
+    var words: MutableList<Word> = mutableListOf()
 
 ) : Parcelable

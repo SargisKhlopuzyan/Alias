@@ -16,8 +16,8 @@ import dagger.multibindings.IntoMap
  * @author Sargis Khlopuzyan (sargis.khlopuzyan@fcc.am)
  */
 
-@Module(includes = [ClassicGameModule.ProvideViewModel::class])
-interface ClassicGameModule {
+@Module(includes = [GameModule.ProvideViewModel::class])
+interface GameModule {
 
     @ContributesAndroidInjector(modules = [InjectViewModel::class])
     fun bind(): GameFragment

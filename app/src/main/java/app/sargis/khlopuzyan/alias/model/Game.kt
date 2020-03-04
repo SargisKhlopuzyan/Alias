@@ -13,12 +13,10 @@ data class Game(
 
     var round: Int = 1,
     var currentPlayingTeam: Team? = null,
-
-    var roundTimeRemaining: Int = 0,
     var gameType: GameType = GameType.Classic,
 
-    var teams: List<Team> = listOf(),
-    var settings: Settings = Settings(),
-    var words: List<Word> = listOf()
+    var roundTimeRemaining: Int = 0,
 
+    var teams: List<Team> = listOf(),
+    var settings: Settings = Settings()
 ) : Parcelable

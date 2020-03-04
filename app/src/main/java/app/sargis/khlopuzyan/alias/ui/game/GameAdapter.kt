@@ -26,24 +26,33 @@ class GameAdapter(
     private var game = Game()
 
     private var words = mutableListOf<Word>()
+    private var usedWords = mutableListOf<Word>()
 
     init {
         generateRandomWordsList()
     }
 
-    fun generateRandomWordsList() {
+    fun getUsedWords() = usedWords
+
+    private fun generateRandomWordsList() {
 
         words.clear()
         val wordsCount = if (game.gameType == GameType.Classic) 5 else 1
 
-        if (game.words.isEmpty()) {
+        if (game.currentPlayingTeam?.words.isNullOrEmpty()) {
             return
         }
 
+        val rand = Random()
+
         for (i in 0 until wordsCount) {
-            val rand = Random()
-            val word: Word = game.words[rand.nextInt(game.words.size)]
-            words.add(word)
+            game.currentPlayingTeam?.words?.let {
+                val word: Word = it[rand.nextInt(it.size)]
+                game.currentPlayingTeam?.words?.remove(word)
+
+                words.add(word)
+                usedWords.add(word)
+            }
         }
 
         notifyDataSetChanged()
@@ -74,6 +83,7 @@ class GameAdapter(
     override fun setItem(data: Game?) {
         data?.let {
             game = it
+            generateRandomWordsList()
         }
     }
 
@@ -84,7 +94,7 @@ class GameAdapter(
 
         fun bindData(game: Game, word: Word, viewModel: GameViewModel) {
             binding.viewModel = viewModel
-            binding.textViewWordTranslateName.text = getWord(word, game.settings.gameWordLanguage)
+            binding.textViewWordName.text = getWord(word, game.settings.gameWordLanguage)
 
             if (game.settings.isWordTranslateEnabled) {
                 binding.textViewWordTranslateName.text =

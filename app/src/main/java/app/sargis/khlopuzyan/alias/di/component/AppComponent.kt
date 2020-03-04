@@ -25,7 +25,7 @@ import javax.inject.Singleton
         GameSettingsModule::class,
         TeamsModule::class,
         StartGameModule::class,
-        ClassicGameModule::class
+        GameModule::class
     ]
 )
 

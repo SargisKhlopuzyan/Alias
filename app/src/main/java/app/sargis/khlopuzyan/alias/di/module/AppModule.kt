@@ -50,10 +50,12 @@ abstract class AppModule {
         @Singleton
         fun provideSettingsRepository(
             databaseManager: TeamNamesDatabaseManager,
+            wordsDatabaseManager: WordsDatabaseManager,
             sharedPrefManager: SharedPrefManager
         ): SettingsRepository =
             SettingsRepositoryImpl(
                 databaseManager,
+                wordsDatabaseManager,
                 sharedPrefManager
             )
 
@@ -83,6 +85,19 @@ abstract class AppModule {
         ): TeamsRepository =
             TeamsRepositoryImpl(
                 teamNamesDatabaseManager,
+                sharedPrefManager
+            )
+
+        @Provides
+        @Singleton
+        fun provideStartGameRepository(
+            teamNamesDatabaseManager: TeamNamesDatabaseManager,
+            wordsDatabaseManager: WordsDatabaseManager,
+            sharedPrefManager: SharedPrefManager
+        ): StartGameRepository =
+            StartGameRepositoryImpl(
+                teamNamesDatabaseManager,
+                wordsDatabaseManager,
                 sharedPrefManager
             )
 

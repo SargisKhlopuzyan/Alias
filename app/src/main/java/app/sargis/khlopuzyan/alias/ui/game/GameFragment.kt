@@ -79,7 +79,7 @@ class GameFragment : DaggerFragment() {
     }
 
     private fun showFinishGameDialog() {
-        println("${viewModel.game.value?.gameType}")
+        println("${viewModel.gameLiveData.value?.gameType}")
     }
 
 }

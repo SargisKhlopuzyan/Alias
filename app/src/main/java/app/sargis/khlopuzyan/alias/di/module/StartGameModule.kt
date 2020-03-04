@@ -3,6 +3,7 @@ package app.sargis.khlopuzyan.alias.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import app.sargis.khlopuzyan.alias.di.annotation.ViewModelKey
+import app.sargis.khlopuzyan.alias.repository.StartGameRepository
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameViewModel
 import dagger.Module
@@ -38,8 +39,8 @@ interface StartGameModule {
         @IntoMap
         @ViewModelKey(StartGameViewModel::class)
         fun provideStartGameViewModel(
-//            settingsRepository: SettingsRepository
-        ): ViewModel = StartGameViewModel(/*settingsRepository*/)
+            startGameRepository: StartGameRepository
+        ): ViewModel = StartGameViewModel(startGameRepository)
 
     }
 }

@@ -1,8 +1,10 @@
 package app.sargis.khlopuzyan.alias.repository
 
 import app.sargis.khlopuzyan.alias.database.TeamNamesDatabaseManager
+import app.sargis.khlopuzyan.alias.database.WordsDatabaseManager
 import app.sargis.khlopuzyan.alias.model.Settings
 import app.sargis.khlopuzyan.alias.model.Team
+import app.sargis.khlopuzyan.alias.model.Word
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
 import app.sargis.khlopuzyan.alias.utils.constant.SharedPref
 
@@ -24,13 +26,14 @@ interface SettingsRepository {
     fun storeWordTranslateState(settings: Settings)
 
     fun loadSettings(): Settings
+    fun loadWords(): List<Word>
 
-
-    fun storeDefaultTeamNames()
+    fun storeDefaultParameters()
 }
 
 class SettingsRepositoryImpl(
-    private val databaseManager: TeamNamesDatabaseManager,
+    private val teamNamesDatabaseManager: TeamNamesDatabaseManager,
+    private val wordsDatabaseManager: WordsDatabaseManager,
     private val sharedPrefManager: SharedPrefManager
 ) : SettingsRepository {
 
@@ -61,7 +64,6 @@ class SettingsRepositoryImpl(
             settings.isGameSoundEnabled
         )
     }
-
 
     override fun storeMissedWordPenaltyState(settings: Settings) {
         sharedPrefManager.storeBooleanInSharedPref(
@@ -157,7 +159,8 @@ class SettingsRepositoryImpl(
         return settings
     }
 
-    override fun storeDefaultTeamNames() {
+
+    override fun storeDefaultParameters() {
 
         if (!sharedPrefManager.loadBooleanFromSharedPref(SharedPref.SHARED_PREF_APP_NOT_FIRST_TIME)) {
             sharedPrefManager.storeBooleanInSharedPref(
@@ -165,38 +168,74 @@ class SettingsRepositoryImpl(
                 true
             )
 
-            val names = listOf(
-                "No Chance",
-                "Bad Boys",
-                "Coffee Lovers",
-                "Men of Genius",
-                "The Bosses",
-                "The Best of The Best",
-                "The Capitalist",
-                "Mad Men",
-                "The Leaders",
-                "Your Bosses",
-                "Super Girls",
-                "Ladies in Scarlet",
-                "Pussy Cats",
-                "Gazelles",
-                "Hugs",
-                "Minions",
-                "The Managers",
-                "Team No. 1",
-                "Pups",
-                "Rainbows",
-                "Romantics",
-                "Kiss My Boots",
-                "Robins",
-                "Unbeatable",
-                "Alpha Team",
-                "Drifters"
-            )
+            storeDefaultTeamNames()
+            storeDefaultWords()
+        }
+    }
 
-            for ((index: Int, e: String) in names.withIndex()) {
-                databaseManager.saveTeamNameInDatabase(Team(uuid = index.toString(), name = e))
-            }
+    private fun storeDefaultTeamNames() {
+        val names = listOf(
+            "No Chance",
+            "Bad Boys",
+            "Coffee Lovers",
+            "Men of Genius",
+            "The Bosses",
+            "The Best of The Best",
+            "The Capitalist",
+            "Mad Men",
+            "The Leaders",
+            "Your Bosses",
+            "Super Girls",
+            "Ladies in Scarlet",
+            "Pussy Cats",
+            "Gazelles",
+            "Hugs",
+            "Minions",
+            "The Managers",
+            "Team No. 1",
+            "Pups",
+            "Rainbows",
+            "Romantics",
+            "Kiss My Boots",
+            "Robins",
+            "Unbeatable",
+            "Alpha Team",
+            "Drifters"
+        )
+
+        for ((index: Int, e: String) in names.withIndex()) {
+            teamNamesDatabaseManager.saveTeamNameInDatabase(Team(uuid = index.toString(), name = e))
+        }
+    }
+
+    override fun loadWords(): List<Word> {
+        return wordsDatabaseManager.getAllWordsFromDatabase()
+    }
+
+    private fun storeDefaultWords() {
+        val names = listOf(
+            Word(wordEn = "truck", wordAm = "բեռնատար", wordRu = "грузовик"),
+            Word(wordEn = "octopus", wordAm = "ութոտնուկ", wordRu = "осьминог"),
+            Word(wordEn = "square", wordAm = "քառակուսի", wordRu = "квадрат"),
+            Word(wordEn = "hamburger", wordAm = "համբուրգեր", wordRu = "гамбургер"),
+            Word(wordEn = "ring", wordAm = "մատանի", wordRu = "кольцо"),
+            Word(wordEn = "boat", wordAm = "նավակ", wordRu = "лодка"),
+            Word(wordEn = "moon", wordAm = "լուսին", wordRu = "луна"),
+            Word(wordEn = "lamp", wordAm = "лампа", wordRu = "լամպ"),
+            Word(wordEn = "camera", wordAm = "камера", wordRu = "տեսախցիկ"),
+            Word(wordEn = "fish", wordAm = "ձուկ", wordRu = "рыбы"),
+            Word(wordEn = "zebra", wordAm = "զեբրա", wordRu = "зебра"),
+            Word(wordEn = "pillow", wordAm = "подушка", wordRu = "բարձ"),
+            Word(wordEn = "feet", wordAm = "ноги", wordRu = "ոտքեր"),
+            Word(wordEn = "pen", wordAm = "ручка", wordRu = "գրիչ"),
+            Word(wordEn = "bus", wordAm = "автобус", wordRu = "ավտոբուս"),
+            Word(wordEn = "mouse", wordAm = "мышь", wordRu = "մուկ"),
+            Word(wordEn = "dinosaur", wordAm = "динозавр", wordRu = "դինոզավր")
+        )
+
+        for (w in names) {
+            w.uuid = w.toString()
+            wordsDatabaseManager.saveWordInDatabase(w)
         }
     }
 }
