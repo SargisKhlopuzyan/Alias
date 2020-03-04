@@ -37,7 +37,6 @@ class StartGameViewModel constructor(private val startGameRepository: StartGameR
             game.currentPlayingTeam = game.teams[0]
         }
         game.round = 1
-        game.roundTimeRemaining = game.settings.roundTime
 
         for (word in words) {
             word.uuid = word.toString()

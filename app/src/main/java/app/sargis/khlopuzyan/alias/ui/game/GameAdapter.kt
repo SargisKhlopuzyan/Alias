@@ -1,5 +1,6 @@
 package app.sargis.khlopuzyan.alias.ui.game
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -46,7 +47,13 @@ class GameAdapter(
         val rand = Random()
 
         for (i in 0 until wordsCount) {
+
+            if (game.currentPlayingTeam?.words.isNullOrEmpty()) {
+                break
+            }
+
             game.currentPlayingTeam?.words?.let {
+
                 val word: Word = it[rand.nextInt(it.size)]
                 game.currentPlayingTeam?.words?.remove(word)
 
@@ -85,6 +92,10 @@ class GameAdapter(
             game = it
             generateRandomWordsList()
         }
+    }
+
+    fun skipWords() {
+        Log.e("LOG_TAG", "skipWords")
     }
 
     class ViewHolder(binding: LayoutRecyclerViewItemGameWordBinding) :

@@ -74,7 +74,7 @@ class GameFragment : DaggerFragment() {
         }
 
         viewModel.skipLiveData.observe(viewLifecycleOwner) {
-            showFinishGameDialog()
+            skipWords()
         }
     }
 
@@ -82,4 +82,12 @@ class GameFragment : DaggerFragment() {
         println("${viewModel.gameLiveData.value?.gameType}")
     }
 
+    private fun skipWords() {
+        val adapter = binding.recyclerView.adapter
+        if(adapter is GameAdapter) {
+            adapter.skipWords()
+        }
+
+        println("${viewModel.gameLiveData.value?.gameType}")
+    }
 }

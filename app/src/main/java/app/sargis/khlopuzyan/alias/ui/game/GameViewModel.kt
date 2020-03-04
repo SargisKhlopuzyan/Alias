@@ -15,7 +15,11 @@ class GameViewModel : ViewModel() {
 
     val gameLiveData = MutableLiveData<Game>(Game())
 
-    lateinit var timer: CountDownTimer
+    val remainingRoundTimeLiveData = MutableLiveData(60)
+    val roundScoreLiveData = MutableLiveData(0)
+    val totalScoreLiveData = MutableLiveData(0)
+
+    private lateinit var timer: CountDownTimer
 
     /**
      * Handles Settings icon click
@@ -29,6 +33,7 @@ class GameViewModel : ViewModel() {
      * */
     fun onSkipClick(v: View) {
         skipLiveData.value = v
+        decreaseRoundScore()
     }
 
     /**
@@ -38,21 +43,21 @@ class GameViewModel : ViewModel() {
         skipLiveData.value = v
     }
 
-    fun setGame(_game: Game) {
-        if (_game.teams.isNotEmpty()) {
-            _game.currentPlayingTeam = _game.teams[0]
+    fun setGame(game: Game) {
+        if (game.teams.isNotEmpty()) {
+            game.currentPlayingTeam = game.teams[0]
         }
-        _game.round = 1
-        _game.roundTimeRemaining = _game.settings.roundTime
-        gameLiveData.value = _game
+        game.round = 1
+        gameLiveData.value = game
 
+        remainingRoundTimeLiveData.value = game.settings.roundTime
+        totalScoreLiveData.value = game.currentPlayingTeam?.totalScore
 
-        timer = object: CountDownTimer(_game.settings.roundTime.toLong(), 1000) {
+        timer = object : CountDownTimer(game.settings.roundTime * 1000L, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 Log.e("LOG_TAG", "onTick")
-                gameLiveData.value?.roundTimeRemaining = millisUntilFinished.toInt()
-                gameLiveData.value = gameLiveData.value
+                remainingRoundTimeLiveData.value = (millisUntilFinished.toInt() / 1000 + 1)
             }
 
             override fun onFinish() {
@@ -61,6 +66,31 @@ class GameViewModel : ViewModel() {
         }
 
         timer.start()
+    }
+
+    fun increaseRoundScore() {
+        var roundTotalScore = roundScoreLiveData.value ?: 0
+        ++roundTotalScore
+        roundScoreLiveData.value = roundTotalScore
+
+        var totalTotalScore = totalScoreLiveData.value ?: 0
+        ++totalTotalScore
+        roundScoreLiveData.value = totalTotalScore
+    }
+
+    fun decreaseRoundScore() {
+        var roundTotalScore = roundScoreLiveData.value ?: 0
+        --roundTotalScore
+
+//        gameLiveData.value?.currentPlayingTeam?.roundScore?.let {
+//            gameLiveData.value?.currentPlayingTeam?.roundScore = it - 1
+//        }
+
+        roundScoreLiveData.value = roundTotalScore
+
+        var totalTotalScore = totalScoreLiveData.value ?: 0
+        --totalTotalScore
+        roundScoreLiveData.value = totalTotalScore
     }
 
 }

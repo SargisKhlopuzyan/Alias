@@ -15,8 +15,7 @@ data class Game(
     var currentPlayingTeam: Team? = null,
     var gameType: GameType = GameType.Classic,
 
-    var roundTimeRemaining: Int = 0,
-
     var teams: List<Team> = listOf(),
     var settings: Settings = Settings()
+
 ) : Parcelable
