@@ -3,6 +3,7 @@ package app.sargis.khlopuzyan.alias.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import app.sargis.khlopuzyan.alias.ui.common.OnBackPressed
 import app.sargis.khlopuzyan.alias.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +18,17 @@ class MainActivity : AppCompatActivity() {
                     "fragment_main"
                 )
             }
+        }
+    }
+
+
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.findFragmentById(android.R.id.content)
+
+        if (fragment is OnBackPressed) {
+            fragment.onBackPressed()
+        } else {
+            super.onBackPressed()
         }
     }
 }

@@ -1,6 +1,7 @@
 package app.sargis.khlopuzyan.alias.ui.game
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameBinding
 import app.sargis.khlopuzyan.alias.model.Game
+import app.sargis.khlopuzyan.alias.ui.common.OnBackPressed
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class GameFragment : DaggerFragment() {
+class GameFragment : DaggerFragment(), OnBackPressed {
 
     companion object {
 
@@ -61,6 +63,9 @@ class GameFragment : DaggerFragment() {
         setupObservers()
     }
 
+
+
+
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
 
@@ -103,5 +108,9 @@ class GameFragment : DaggerFragment() {
         }
 
         println("${viewModel.gameLiveData.value?.gameType}")
+    }
+
+    override fun onBackPressed() {
+        Log.e("LOG_TAG", "onBackPressed")
     }
 }
