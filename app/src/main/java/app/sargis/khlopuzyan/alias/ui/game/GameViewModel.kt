@@ -45,6 +45,7 @@ class GameViewModel : ViewModel() {
     }
 
     fun setGame(game: Game) {
+
         if (game.currentPlayingTeam == null && game.teams.isNotEmpty()) {
             game.currentPlayingTeam = game.teams[0]
             game.round = 1

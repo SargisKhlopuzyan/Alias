@@ -11,9 +11,8 @@ import app.sargis.khlopuzyan.alias.repository.GameSetupRepository
 class GameSetupViewModel constructor(private val gameSetupRepository: GameSetupRepository) :
     ViewModel() {
 
-    val startGameLiveData: SingleLiveEvent<Game> = SingleLiveEvent()
-
     val game = Game()
+    val startGameLiveData: SingleLiveEvent<Game> = SingleLiveEvent()
 
     init {
         val settings = gameSetupRepository.loadSettings()

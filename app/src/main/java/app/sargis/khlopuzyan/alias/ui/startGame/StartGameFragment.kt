@@ -57,7 +57,6 @@ class StartGameFragment : DaggerFragment() {
         game?.let {
             if (it.currentPlayingTeam == null) {
                 viewModel.handleRoundFinish(it)
-//            viewModel.setGame(it)
             }
         }
 
@@ -94,7 +93,6 @@ class StartGameFragment : DaggerFragment() {
     }
 
     fun handleGameRoundResult(game: Game) {
-
         viewModel.handleRoundFinish(game)
 
         Log.e("LOG_TAG", "handleGameRoundResult")

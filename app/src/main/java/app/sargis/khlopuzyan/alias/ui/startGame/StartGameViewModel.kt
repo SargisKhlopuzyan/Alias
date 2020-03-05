@@ -14,7 +14,7 @@ class StartGameViewModel constructor(private val startGameRepository: StartGameR
     val showScoreLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val startLiveData: SingleLiveEvent<Game> = SingleLiveEvent()
 
-    val gameLiveData = MutableLiveData<Game>()
+    val gameLiveData = MutableLiveData<Game>(Game())
 
     var words: List<Word> = startGameRepository.loadWords()
 
@@ -34,8 +34,18 @@ class StartGameViewModel constructor(private val startGameRepository: StartGameR
 
     fun handleRoundFinish(game: Game) {
         if (game.teams.isNotEmpty()) {
+
             var nextPlayerIndex = game.teams.indexOf(game.currentPlayingTeam)
+
             if (nextPlayerIndex < 0) {
+
+                    for (word in words) {
+                        word.uuid = word.toString()
+                        for (team in game.teams) {
+                            team.words.add(word)
+                        }
+                    }
+
                 nextPlayerIndex = 0
                 game.round = 1
             } else {
@@ -51,5 +61,4 @@ class StartGameViewModel constructor(private val startGameRepository: StartGameR
             gameLiveData.value = game
         }
     }
-
 }
