@@ -55,8 +55,8 @@ class GameViewModel : ViewModel() {
         remainingRoundTimeLiveData.value = game.settings.roundTime
         totalScoreLiveData.value = game.currentPlayingTeam?.totalScore
 
-//        timer = object : CountDownTimer(game.settings.roundTime * 1000L, 1000) {
-        timer = object : CountDownTimer(3 * 1000L, 1000) {
+        timer = object : CountDownTimer(game.settings.roundTime * 1000L, 1000) {
+//        timer = object : CountDownTimer(3 * 1000L, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 Log.e("LOG_TAG", "onTick")
