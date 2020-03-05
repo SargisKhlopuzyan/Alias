@@ -93,7 +93,7 @@ class GameFragment : DaggerFragment(), OnBackPressed {
         val invoker = targetFragment
         if (invoker is StartGameFragment) {
             invoker.handleGameRoundResult(game)
-            parentFragmentManager.popBackStack("game", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            parentFragmentManager.popBackStack("game", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 
@@ -112,5 +112,6 @@ class GameFragment : DaggerFragment(), OnBackPressed {
 
     override fun onBackPressed() {
         Log.e("LOG_TAG", "onBackPressed")
+        activity?.supportFragmentManager?.popBackStack()
     }
 }
