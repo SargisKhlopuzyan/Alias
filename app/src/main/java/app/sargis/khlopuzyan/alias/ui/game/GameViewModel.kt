@@ -45,16 +45,18 @@ class GameViewModel : ViewModel() {
     }
 
     fun setGame(game: Game) {
-        if (game.teams.isNotEmpty()) {
+        if (game.currentPlayingTeam == null && game.teams.isNotEmpty()) {
             game.currentPlayingTeam = game.teams[0]
+            game.round = 1
         }
-        game.round = 1
+
         gameLiveData.value = game
 
         remainingRoundTimeLiveData.value = game.settings.roundTime
         totalScoreLiveData.value = game.currentPlayingTeam?.totalScore
 
-        timer = object : CountDownTimer(game.settings.roundTime * 1000L, 1000) {
+//        timer = object : CountDownTimer(game.settings.roundTime * 1000L, 1000) {
+        timer = object : CountDownTimer(3 * 1000L, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 Log.e("LOG_TAG", "onTick")
@@ -62,6 +64,12 @@ class GameViewModel : ViewModel() {
             }
 
             override fun onFinish() {
+                val roundScore = roundScoreLiveData.value ?: 0
+                gameLiveData.value?.currentPlayingTeam?.roundScore = roundScore
+
+                var totalScore = gameLiveData.value?.currentPlayingTeam?.totalScore ?: 0
+                totalScore += roundScore
+                gameLiveData.value?.currentPlayingTeam?.totalScore = totalScore
                 roundFinishedLiveData.value = gameLiveData.value
                 timer = null
                 Log.e("LOG_TAG", "onFinish")
@@ -84,7 +92,7 @@ class GameViewModel : ViewModel() {
         roundScoreLiveData.value = roundScore
 
         var totalScore = totalScoreLiveData.value ?: 0
-        ++totalScore
+        --totalScore
         gameLiveData.value?.currentPlayingTeam?.totalScore = totalScore
         totalScoreLiveData.value = totalScore
     }

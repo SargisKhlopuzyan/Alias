@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
 import app.sargis.khlopuzyan.alias.model.Game
-import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.model.Word
 import app.sargis.khlopuzyan.alias.repository.StartGameRepository
 
-class StartGameViewModel constructor(private val startGameRepository: StartGameRepository) : ViewModel() {
+class StartGameViewModel constructor(private val startGameRepository: StartGameRepository) :
+    ViewModel() {
 
     val showScoreLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val startLiveData: SingleLiveEvent<Game> = SingleLiveEvent()
@@ -32,20 +32,24 @@ class StartGameViewModel constructor(private val startGameRepository: StartGameR
         startLiveData.value = gameLiveData.value
     }
 
-    fun setGame(game: Game) {
+    fun handleRoundFinish(game: Game) {
         if (game.teams.isNotEmpty()) {
-            game.currentPlayingTeam = game.teams[0]
-        }
-        game.round = 1
-
-        for (word in words) {
-            word.uuid = word.toString()
-            for (team in game.teams) {
-                team.words.add(word)
+            var nextPlayerIndex = game.teams.indexOf(game.currentPlayingTeam)
+            if (nextPlayerIndex < 0) {
+                nextPlayerIndex = 0
+                game.round = 1
+            } else {
+                ++nextPlayerIndex
             }
-        }
 
-        gameLiveData.value = game
+            if (nextPlayerIndex == game.teams.size) {
+                nextPlayerIndex = 0
+                game.round = game.round + 1
+            }
+
+            game.currentPlayingTeam = game.teams[nextPlayerIndex]
+            gameLiveData.value = game
+        }
     }
 
 }

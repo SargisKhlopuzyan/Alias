@@ -55,7 +55,10 @@ class StartGameFragment : DaggerFragment() {
 
         val game: Game? = arguments?.getParcelable(ARG_GAME)
         game?.let {
-            viewModel.setGame(it)
+            if (it.currentPlayingTeam == null) {
+                viewModel.handleRoundFinish(it)
+//            viewModel.setGame(it)
+            }
         }
 
         setupObservers()
@@ -91,6 +94,9 @@ class StartGameFragment : DaggerFragment() {
     }
 
     fun handleGameRoundResult(game: Game) {
+
+        viewModel.handleRoundFinish(game)
+
         Log.e("LOG_TAG", "handleGameRoundResult")
     }
 
