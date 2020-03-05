@@ -34,6 +34,9 @@ data class Word(
     var wordRu: String? = null,
 
     @Ignore
+    var isGuessed: Boolean = false,
+
+    @Ignore
     var isWordTranslateVisible: Boolean = false
 
 ) : Parcelable

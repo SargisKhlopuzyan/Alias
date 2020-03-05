@@ -15,11 +15,12 @@ class GameViewModel : ViewModel() {
 
     val gameLiveData = MutableLiveData<Game>(Game())
 
+    val roundFinishedLiveData = MutableLiveData<Game>()
     val remainingRoundTimeLiveData = MutableLiveData(60)
     val roundScoreLiveData = MutableLiveData(0)
     val totalScoreLiveData = MutableLiveData(0)
 
-    private lateinit var timer: CountDownTimer
+    private var timer: CountDownTimer? = null
 
     /**
      * Handles Settings icon click
@@ -33,7 +34,7 @@ class GameViewModel : ViewModel() {
      * */
     fun onSkipClick(v: View) {
         skipLiveData.value = v
-        decreaseRoundScore()
+        increaseDecreaseRoundScore(false)
     }
 
     /**
@@ -61,36 +62,31 @@ class GameViewModel : ViewModel() {
             }
 
             override fun onFinish() {
+                roundFinishedLiveData.value = gameLiveData.value
+                timer = null
                 Log.e("LOG_TAG", "onFinish")
             }
         }
 
-        timer.start()
+        timer?.start()
     }
 
-    fun increaseRoundScore() {
-        var roundTotalScore = roundScoreLiveData.value ?: 0
-        ++roundTotalScore
-        roundScoreLiveData.value = roundTotalScore
+    private fun increaseDecreaseRoundScore(isIncrease: Boolean) {
+        var roundScore = roundScoreLiveData.value ?: 0
 
-        var totalTotalScore = totalScoreLiveData.value ?: 0
-        ++totalTotalScore
-        roundScoreLiveData.value = totalTotalScore
-    }
+        if (isIncrease) {
+            ++roundScore
+        } else {
+            --roundScore
+        }
 
-    fun decreaseRoundScore() {
-        var roundTotalScore = roundScoreLiveData.value ?: 0
-        --roundTotalScore
+        gameLiveData.value?.currentPlayingTeam?.roundScore = roundScore
+        roundScoreLiveData.value = roundScore
 
-//        gameLiveData.value?.currentPlayingTeam?.roundScore?.let {
-//            gameLiveData.value?.currentPlayingTeam?.roundScore = it - 1
-//        }
-
-        roundScoreLiveData.value = roundTotalScore
-
-        var totalTotalScore = totalScoreLiveData.value ?: 0
-        --totalTotalScore
-        roundScoreLiveData.value = totalTotalScore
+        var totalScore = totalScoreLiveData.value ?: 0
+        ++totalScore
+        gameLiveData.value?.currentPlayingTeam?.totalScore = totalScore
+        totalScoreLiveData.value = totalScore
     }
 
 }

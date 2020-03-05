@@ -1,6 +1,7 @@
 package app.sargis.khlopuzyan.alias.ui.startGame
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ class StartGameFragment : DaggerFragment() {
     companion object {
 
         private const val ARG_GAME = "arg_game"
+        private const val REQUEST_CODE_TARGET_FRAGMENT = 100
 
         fun newInstance(game: Game) = StartGameFragment().apply {
             arguments = Bundle().apply {
@@ -74,14 +76,22 @@ class StartGameFragment : DaggerFragment() {
     }
 
     private fun startGameFragment(game: Game) {
+
+        val gameFragment = GameFragment.newInstance(game)
+        gameFragment.setTargetFragment(this@StartGameFragment, REQUEST_CODE_TARGET_FRAGMENT)
+
         activity?.supportFragmentManager?.commit {
             replace(
                 android.R.id.content,
-                GameFragment.newInstance(game),
+                gameFragment,
                 "fragment_game"
             )
             addToBackStack("game")
         }
+    }
+
+    fun handleGameRoundResult(game: Game) {
+        Log.e("LOG_TAG", "handleGameRoundResult")
     }
 
 }

@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameBinding
 import app.sargis.khlopuzyan.alias.model.Game
+import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -73,8 +75,20 @@ class GameFragment : DaggerFragment() {
             showFinishGameDialog()
         }
 
+        viewModel.roundFinishedLiveData.observe(viewLifecycleOwner) {
+            finishRound(it)
+        }
+
         viewModel.skipLiveData.observe(viewLifecycleOwner) {
             skipWords()
+        }
+    }
+
+    private fun finishRound(game: Game) {
+        val invoker = targetFragment
+        if (invoker is StartGameFragment) {
+            invoker.handleGameRoundResult(game)
+            parentFragmentManager.popBackStack("game", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 
@@ -84,7 +98,7 @@ class GameFragment : DaggerFragment() {
 
     private fun skipWords() {
         val adapter = binding.recyclerView.adapter
-        if(adapter is GameAdapter) {
+        if (adapter is GameAdapter) {
             adapter.skipWords()
         }
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import app.sargis.khlopuzyan.alias.App
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.LayoutRecyclerViewItemGameWordBinding
 import app.sargis.khlopuzyan.alias.model.Game
@@ -107,9 +108,25 @@ class GameAdapter(
             binding.viewModel = viewModel
             binding.textViewWordName.text = getWord(word, game.settings.gameWordLanguage)
 
+            setItemViewBackground(word)
+
             if (game.settings.isWordTranslateEnabled) {
                 binding.textViewWordTranslateName.text =
                     getWord(word, game.settings.gameWordLanguage)
+            }
+
+            itemView.setOnClickListener {
+                word.isGuessed = !word.isGuessed
+                setItemViewBackground(word)
+
+            }
+        }
+
+        private fun setItemViewBackground(word: Word) {
+            if (word.isGuessed) {
+                binding.constraintLayoutContainer.background = App.getContext().getDrawable(R.drawable.layer_list_background_gray_divider_gray)
+            } else {
+                binding.constraintLayoutContainer.background = App.getContext().getDrawable(R.drawable.layer_list_background_white_divider_grey)
             }
         }
 

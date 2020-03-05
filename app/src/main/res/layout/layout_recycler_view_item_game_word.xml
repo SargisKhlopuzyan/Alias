@@ -14,9 +14,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layer_list_game_words_divider_background"
+        android:background="@drawable/layer_list_background_white_divider_grey"
         android:clickable="true"
         android:focusable="true"
         android:minHeight="80dp"
