@@ -12,12 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameBinding
 import app.sargis.khlopuzyan.alias.model.Game
+import app.sargis.khlopuzyan.alias.model.Team
+import app.sargis.khlopuzyan.alias.ui.changeTeamNameDialog.ChangeTeamNameDialogFragment
+import app.sargis.khlopuzyan.alias.ui.changeTeamNameDialog.FinishCurrentRoundDialogFragment
 import app.sargis.khlopuzyan.alias.ui.common.OnBackPressed
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class GameFragment : DaggerFragment(), OnBackPressed {
+class GameFragment : DaggerFragment(), OnBackPressed,
+    FinishCurrentRoundDialogFragment.FinishCurrentRoundDialogListener {
 
     companion object {
 
@@ -62,8 +66,6 @@ class GameFragment : DaggerFragment(), OnBackPressed {
         setupRecyclerView()
         setupObservers()
     }
-
-
 
 
     private fun setupRecyclerView() {
@@ -112,6 +114,29 @@ class GameFragment : DaggerFragment(), OnBackPressed {
 
     override fun onBackPressed() {
         Log.e("LOG_TAG", "onBackPressed")
+
+        viewModel.gameLiveData.value?.currentPlayingTeam?.let {
+            showFinishCurrentRoundDialog(it)
+        }
+    }
+
+    private fun showFinishCurrentRoundDialog(team: Team) {
+
+        val fragmentTransaction = childFragmentManager.beginTransaction()
+        val prev = childFragmentManager.findFragmentByTag("finishCurrentRoundDialog")
+        if (prev != null) {
+            fragmentTransaction.remove(prev)
+        }
+        fragmentTransaction.addToBackStack(null)
+        val dialogFragment =
+            FinishCurrentRoundDialogFragment.newInstance(
+                team, this
+            )
+        dialogFragment.show(fragmentTransaction, "finishCurrentRoundDialog")
+    }
+
+    override fun onFinishCurrentRound(team: Team) {
+        Log.e("LOG_TAG", "onFinishCurrentRound")
         activity?.supportFragmentManager?.popBackStack()
     }
 }

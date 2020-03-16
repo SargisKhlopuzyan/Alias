@@ -22,4 +22,5 @@
     <string name="team_new_name">Team new name</string>
     <string name="error_message_empty_team_name">Team name can not be empty</string>
     <string name="_0_30">0/30</string>
+    <string name="ok">OK</string>
 </resources>

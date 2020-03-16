@@ -14,7 +14,7 @@ import app.sargis.khlopuzyan.alias.model.Team
 
 class ChangeTeamNameDialogFragment private constructor(
     val team: Team,
-    var changeTeamNameDialogListener: ChangeTeamNameDialogListener
+    private var changeTeamNameDialogListener: ChangeTeamNameDialogListener
 ) : DialogFragment() {
 
     companion object {
