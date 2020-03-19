@@ -1,7 +1,7 @@
 package app.sargis.khlopuzyan.alias.ui.gameSetup
 
 import androidx.lifecycle.ViewModel
-import app.sargis.khlopuzyan.alias.game.GameEngine
+import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
 import app.sargis.khlopuzyan.alias.model.GameType
 import app.sargis.khlopuzyan.alias.repository.GameSetupRepository

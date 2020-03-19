@@ -1,6 +1,5 @@
 package app.sargis.khlopuzyan.alias.ui.game
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.sargis.khlopuzyan.alias.App
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.LayoutRecyclerViewItemGameWordBinding
-import app.sargis.khlopuzyan.alias.game.GameEngine
+import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.model.GameType
 import app.sargis.khlopuzyan.alias.model.Language
 import app.sargis.khlopuzyan.alias.model.Word

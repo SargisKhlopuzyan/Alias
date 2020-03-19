@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import app.sargis.khlopuzyan.alias.game.GameEngine
+import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
 import app.sargis.khlopuzyan.alias.model.GameType
 import app.sargis.khlopuzyan.alias.model.Word

@@ -1,7 +1,6 @@
 package app.sargis.khlopuzyan.alias.ui.gameSetup
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,9 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameSetupBinding
-import app.sargis.khlopuzyan.alias.game.GameEngine
-import app.sargis.khlopuzyan.alias.model.Team
+import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.ui.gameSettings.GameSettingsFragment
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
-import app.sargis.khlopuzyan.alias.ui.teams.TeamsFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 

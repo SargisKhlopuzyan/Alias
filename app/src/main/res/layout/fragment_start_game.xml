@@ -32,7 +32,7 @@
             android:nestedScrollingEnabled="true">
 
             <include
-                android:id="@+id/layout_nav_settings"
+                android:id="@+id/layout_nav_score"
                 layout="@layout/layout_nav_score"
                 bind:viewModel="@{viewModel}" />
 

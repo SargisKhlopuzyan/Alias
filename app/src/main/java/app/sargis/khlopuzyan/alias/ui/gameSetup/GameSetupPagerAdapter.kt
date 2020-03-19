@@ -3,7 +3,7 @@ package app.sargis.khlopuzyan.alias.ui.gameSetup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import app.sargis.khlopuzyan.alias.game.GameEngine
+import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.ui.gameSettings.GameSettingsFragment
 import app.sargis.khlopuzyan.alias.ui.teams.TeamsFragment
 

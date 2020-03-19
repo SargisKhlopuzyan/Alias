@@ -1,7 +1,6 @@
 package app.sargis.khlopuzyan.alias.ui.startGame
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentStartGameBinding
-import app.sargis.khlopuzyan.alias.game.GameEngine
+import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.ui.game.GameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -45,6 +45,9 @@ class StartGameFragment : DaggerFragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_start_game, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
+
+        setupRecyclerView()
+
         return binding.root
     }
 
@@ -62,6 +65,15 @@ class StartGameFragment : DaggerFragment() {
         viewModel.setupGameEngine(gameEngine)
 
         setupObservers()
+    }
+
+    private fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        binding.layoutNavScore.recyclerView.layoutManager = layoutManager
+        binding.layoutNavScore.recyclerView.hasFixedSize()
+        val adapter = ScoreAdapter(viewModel)
+        binding.layoutNavScore.recyclerView.adapter = adapter
     }
 
     private fun setupObservers() {

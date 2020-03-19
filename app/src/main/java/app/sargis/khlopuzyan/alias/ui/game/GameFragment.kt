@@ -10,7 +10,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameBinding
-import app.sargis.khlopuzyan.alias.game.GameEngine
+import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.ui.changeTeamNameDialog.FinishCurrentRoundDialogFragment
 import app.sargis.khlopuzyan.alias.ui.common.OnBackPressed

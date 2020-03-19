@@ -4,7 +4,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import app.sargis.khlopuzyan.alias.game.GameEngine
+import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
 
 class StartGameViewModel : ViewModel() {
@@ -12,16 +12,17 @@ class StartGameViewModel : ViewModel() {
     val showScoreLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val startLiveData: SingleLiveEvent<GameEngine> = SingleLiveEvent()
 
-    val gameLiveData = MutableLiveData<GameEngine>()
+    val gameEngineLiveData = MutableLiveData<GameEngine>()
 
     fun setupGameEngine(gameEngine: GameEngine?) {
-        gameLiveData.value = gameEngine
+        gameEngineLiveData.value = gameEngine
     }
 
     /**
      * Handles Settings icon click
      * */
     fun onShowScoreClick(v: View) {
+        updateScore()
         showScoreLiveData.value = v
     }
 
@@ -29,7 +30,7 @@ class StartGameViewModel : ViewModel() {
      * Handles New Game icon click
      * */
     fun onStartClick() {
-        startLiveData.value = gameLiveData.value
+        startLiveData.value = gameEngineLiveData.value
     }
 
     fun handleRoundFinish(gameEngine: GameEngine) {
@@ -53,7 +54,19 @@ class StartGameViewModel : ViewModel() {
             }
 
             gameEngine.currentPlayingTeam = gameEngine.teams[nextPlayerIndex]
-            gameLiveData.value = gameEngine
+            gameEngineLiveData.value = gameEngine
         }
+    }
+
+    fun getRoundCount(): Int {
+        return gameEngineLiveData.value?.round ?: 1
+    }
+
+    fun getTeamsCount(): Int {
+        return gameEngineLiveData.value?.teams?.count() ?: 0
+    }
+
+    fun updateScore() {
+        gameEngineLiveData.value = gameEngineLiveData.value
     }
 }

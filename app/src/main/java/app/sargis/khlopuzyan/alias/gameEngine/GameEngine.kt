@@ -1,4 +1,4 @@
-package app.sargis.khlopuzyan.alias.game
+package app.sargis.khlopuzyan.alias.gameEngine
 
 import android.os.Parcelable
 import app.sargis.khlopuzyan.alias.model.GameType

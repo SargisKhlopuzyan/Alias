@@ -6,7 +6,7 @@ import android.widget.SeekBar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.R
-import app.sargis.khlopuzyan.alias.game.GameEngine
+import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.model.Language
 import app.sargis.khlopuzyan.alias.model.Settings
 
