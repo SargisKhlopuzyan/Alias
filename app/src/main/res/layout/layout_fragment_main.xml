@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="app.sargis.khlopuzyan.alias.ui.main.MainViewModel" />
+            type="app.sargis.khlopuzyan.alias.ui.main.MainAndDefaultSettingsViewModel" />
 
     </data>
 

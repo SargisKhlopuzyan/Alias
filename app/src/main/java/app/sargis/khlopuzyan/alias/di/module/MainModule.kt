@@ -3,9 +3,9 @@ package app.sargis.khlopuzyan.alias.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import app.sargis.khlopuzyan.alias.di.annotation.ViewModelKey
-import app.sargis.khlopuzyan.alias.repository.SettingsRepository
-import app.sargis.khlopuzyan.alias.ui.main.MainFragment
-import app.sargis.khlopuzyan.alias.ui.main.MainViewModel
+import app.sargis.khlopuzyan.alias.repository.DefaultSettingsRepository
+import app.sargis.khlopuzyan.alias.ui.main.MainAndDefaultSettingsFragment
+import app.sargis.khlopuzyan.alias.ui.main.MainAndDefaultSettingsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -21,15 +21,15 @@ import dagger.multibindings.IntoMap
 interface MainModule {
 
     @ContributesAndroidInjector(modules = [InjectViewModel::class])
-    fun bind(): MainFragment
+    fun bind(): MainAndDefaultSettingsFragment
 
     @Module
     class InjectViewModel {
         @Provides
         fun provideMainViewModel(
             factory: ViewModelProvider.Factory,
-            target: MainFragment
-        ) = ViewModelProvider(target, factory)[MainViewModel::class.java]
+            target: MainAndDefaultSettingsFragment
+        ) = ViewModelProvider(target, factory)[MainAndDefaultSettingsViewModel::class.java]
     }
 
     @Module
@@ -37,10 +37,10 @@ interface MainModule {
 
         @Provides
         @IntoMap
-        @ViewModelKey(MainViewModel::class)
+        @ViewModelKey(MainAndDefaultSettingsViewModel::class)
         fun provideMainViewModel(
-            settingsRepository: SettingsRepository
-        ): ViewModel = MainViewModel(settingsRepository)
+            defaultSettingsRepository: DefaultSettingsRepository
+        ): ViewModel = MainAndDefaultSettingsViewModel(defaultSettingsRepository)
 
     }
 }

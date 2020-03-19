@@ -1,22 +1,22 @@
 package app.sargis.khlopuzyan.alias.ui.startGame
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
-import app.sargis.khlopuzyan.alias.model.Game
-import app.sargis.khlopuzyan.alias.model.Word
-import app.sargis.khlopuzyan.alias.repository.StartGameRepository
 
-class StartGameViewModel constructor(private val startGameRepository: StartGameRepository) :
-    ViewModel() {
+class StartGameViewModel : ViewModel() {
 
     val showScoreLiveData: SingleLiveEvent<View> = SingleLiveEvent()
-    val startLiveData: SingleLiveEvent<Game> = SingleLiveEvent()
+    val startLiveData: SingleLiveEvent<GameEngine> = SingleLiveEvent()
 
-    val gameLiveData = MutableLiveData<Game>(Game())
+    val gameLiveData = MutableLiveData<GameEngine>()
 
-    var words: List<Word> = startGameRepository.loadWords()
+    fun setupGameEngine(gameEngine: GameEngine?) {
+        gameLiveData.value = gameEngine
+    }
 
     /**
      * Handles Settings icon click
@@ -28,37 +28,32 @@ class StartGameViewModel constructor(private val startGameRepository: StartGameR
     /**
      * Handles New Game icon click
      * */
-    fun onStartClick(v: View) {
+    fun onStartClick() {
         startLiveData.value = gameLiveData.value
     }
 
-    fun handleRoundFinish(game: Game) {
-        if (game.teams.isNotEmpty()) {
+    fun handleRoundFinish(gameEngine: GameEngine) {
 
-            var nextPlayerIndex = game.teams.indexOf(game.currentPlayingTeam)
+        Log.e("LOG_TAG", "handleRoundFinish")
+
+        if (gameEngine.teams.isNotEmpty()) {
+
+            var nextPlayerIndex = gameEngine.teams.indexOf(gameEngine.currentPlayingTeam)
 
             if (nextPlayerIndex < 0) {
-
-                    for (word in words) {
-                        word.uuid = word.toString()
-                        for (team in game.teams) {
-                            team.words.add(word)
-                        }
-                    }
-
                 nextPlayerIndex = 0
-                game.round = 1
+                gameEngine.round = 1
             } else {
                 ++nextPlayerIndex
             }
 
-            if (nextPlayerIndex == game.teams.size) {
+            if (nextPlayerIndex == gameEngine.teams.size) {
                 nextPlayerIndex = 0
-                game.round = game.round + 1
+                gameEngine.round = gameEngine.round + 1
             }
 
-            game.currentPlayingTeam = game.teams[nextPlayerIndex]
-            gameLiveData.value = game
+            gameEngine.currentPlayingTeam = gameEngine.teams[nextPlayerIndex]
+            gameLiveData.value = gameEngine
         }
     }
 }

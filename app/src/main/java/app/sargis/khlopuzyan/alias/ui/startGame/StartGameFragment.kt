@@ -11,7 +11,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentStartGameBinding
-import app.sargis.khlopuzyan.alias.model.Game
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import app.sargis.khlopuzyan.alias.ui.game.GameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -23,9 +23,9 @@ class StartGameFragment : DaggerFragment() {
         private const val ARG_GAME = "arg_game"
         private const val REQUEST_CODE_TARGET_FRAGMENT = 100
 
-        fun newInstance(game: Game) = StartGameFragment().apply {
+        fun newInstance(gameEngine: GameEngine) = StartGameFragment().apply {
             arguments = Bundle().apply {
-                putParcelable(ARG_GAME, game)
+                putParcelable(ARG_GAME, gameEngine)
             }
         }
     }
@@ -53,12 +53,13 @@ class StartGameFragment : DaggerFragment() {
 
         binding.viewModel = viewModel
 
-        val game: Game? = arguments?.getParcelable(ARG_GAME)
-        game?.let {
+        val gameEngine: GameEngine? = arguments?.getParcelable(ARG_GAME)
+        gameEngine?.let {
             if (it.currentPlayingTeam == null) {
                 viewModel.handleRoundFinish(it)
             }
         }
+        viewModel.setupGameEngine(gameEngine)
 
         setupObservers()
     }
@@ -77,9 +78,9 @@ class StartGameFragment : DaggerFragment() {
         binding.drawerLayout.openDrawer(Gravity.LEFT);
     }
 
-    private fun startGameFragment(game: Game) {
+    private fun startGameFragment(gameEngine: GameEngine) {
 
-        val gameFragment = GameFragment.newInstance(game)
+        val gameFragment = GameFragment.newInstance(gameEngine)
         gameFragment.setTargetFragment(this@StartGameFragment, REQUEST_CODE_TARGET_FRAGMENT)
 
         activity?.supportFragmentManager?.commit {
@@ -92,10 +93,8 @@ class StartGameFragment : DaggerFragment() {
         }
     }
 
-    fun handleGameRoundResult(game: Game) {
-        viewModel.handleRoundFinish(game)
-
-        Log.e("LOG_TAG", "handleGameRoundResult")
+    fun handleGameRoundResult(gameEngine: GameEngine) {
+        viewModel.handleRoundFinish(gameEngine)
     }
 
 }

@@ -1,26 +1,25 @@
 package app.sargis.khlopuzyan.alias.ui.gameSettings
 
-import android.view.View
 import android.widget.CompoundButton
 import android.widget.RadioGroup
 import android.widget.SeekBar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.R
-import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import app.sargis.khlopuzyan.alias.model.Language
 import app.sargis.khlopuzyan.alias.model.Settings
-import app.sargis.khlopuzyan.alias.repository.GameSettingsRepository
 
-class GameSettingsViewModel constructor(private val gameSettingsRepository: GameSettingsRepository) :
-    ViewModel() {
+class GameSettingsViewModel : ViewModel() {
 
-    val settings = MutableLiveData<Settings>(Settings())
+    lateinit var gameEngine: GameEngine
+    val settings = MutableLiveData<Settings>()
 
     lateinit var gameSettingsChangedListener: GameSettingsFragment.GameSettingsChangedListener
 
-    init {
-        settings.value = gameSettingsRepository.loadSettings()
+    fun setupGameEngine(gameEngine: GameEngine) {
+        this.gameEngine = gameEngine
+        settings.value = gameEngine.settings
     }
 
     /**SeekBar : Progress Changed */

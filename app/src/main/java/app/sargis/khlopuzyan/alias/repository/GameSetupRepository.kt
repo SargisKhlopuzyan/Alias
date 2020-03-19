@@ -1,6 +1,10 @@
 package app.sargis.khlopuzyan.alias.repository
 
+import app.sargis.khlopuzyan.alias.database.TeamNamesDatabaseManager
+import app.sargis.khlopuzyan.alias.database.WordsDatabaseManager
 import app.sargis.khlopuzyan.alias.model.Settings
+import app.sargis.khlopuzyan.alias.model.Team
+import app.sargis.khlopuzyan.alias.model.Word
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
 import app.sargis.khlopuzyan.alias.utils.constant.SharedPref
 
@@ -22,10 +26,14 @@ interface GameSetupRepository {
     fun storeWordTranslateState(settings: Settings)
 
     fun loadSettings(): Settings
+    fun loadTeamNames(): List<Team>
+    fun loadWords(): List<Word>
 }
 
 class GameSetupRepositoryImpl(
-    private val sharedPrefManager: SharedPrefManager
+    private val sharedPrefManager: SharedPrefManager,
+    private val teamNamesDatabaseManager: TeamNamesDatabaseManager,
+    private val wordsDatabaseManager: WordsDatabaseManager
 ) : GameSetupRepository {
 
     override fun storeNumberOfWords(settings: Settings) {
@@ -96,6 +104,13 @@ class GameSetupRepositoryImpl(
 
         val settings = Settings()
 
+        sharedPrefManager.loadIntFromSharedPref(SharedPref.SHARED_PREF_NUMBER_OF_WORDS).let {
+            if (it == 0)
+                settings.numberOfWords = 60
+            else
+                settings.numberOfWords = it
+        }
+
         sharedPrefManager.loadIntFromSharedPref(SharedPref.SHARED_PREF_ROUND_TIME).let {
             if (it == 0)
                 settings.roundTime = 10
@@ -142,6 +157,15 @@ class GameSetupRepositoryImpl(
             sharedPrefManager.loadBooleanFromSharedPref(SharedPref.SHARED_PREF_IS_WORD_TRANSLATE_ENABLED)
 
         return settings
+    }
+
+    override fun loadTeamNames(): List<Team> {
+        return teamNamesDatabaseManager.getAllTeamNamesFromDatabase()
+
+    }
+
+    override fun loadWords(): List<Word> {
+        return wordsDatabaseManager.getAllWordsFromDatabase()
     }
 
 }

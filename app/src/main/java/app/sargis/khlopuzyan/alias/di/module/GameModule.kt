@@ -25,7 +25,7 @@ interface GameModule {
     @Module
     class InjectViewModel {
         @Provides
-        fun provideClassicGameViewModel(
+        fun provideGameViewModel(
             factory: ViewModelProvider.Factory,
             target: GameFragment
         ) = ViewModelProvider(target, factory)[GameViewModel::class.java]
@@ -37,9 +37,8 @@ interface GameModule {
         @Provides
         @IntoMap
         @ViewModelKey(GameViewModel::class)
-        fun provideClassicGameViewModel(
-//            classicGameRepository: ClassicGameRepository
-        ): ViewModel = GameViewModel(/*classicGameRepository*/)
+        fun provideGameViewModel(
+        ): ViewModel = GameViewModel()
 
     }
 }

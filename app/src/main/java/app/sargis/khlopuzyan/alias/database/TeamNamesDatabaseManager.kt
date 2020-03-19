@@ -11,7 +11,7 @@ import javax.inject.Inject
  * @author Sargis Khlopuzyan (sargis.khlopuzyan@fcc.am)
  */
 
-class TeamNamesDatabaseManager @Inject constructor(var context: Context) {
+class TeamNamesDatabaseManager @Inject constructor(val context: Context) {
 
     fun saveTeamNameInDatabase(team: Team): Long {
         return AliasDb.getInstance(context).getTeamNamesDAO().insertTeamName(team)

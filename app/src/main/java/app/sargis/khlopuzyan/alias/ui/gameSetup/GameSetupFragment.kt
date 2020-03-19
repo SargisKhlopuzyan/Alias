@@ -10,7 +10,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameSetupBinding
-import app.sargis.khlopuzyan.alias.model.Game
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.ui.gameSettings.GameSettingsFragment
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
@@ -18,8 +18,8 @@ import app.sargis.khlopuzyan.alias.ui.teams.TeamsFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsChangedListener,
-    TeamsFragment.GameTeamsChangeListener {
+class GameSetupFragment : DaggerFragment(),
+    GameSettingsFragment.GameSettingsChangedListener {
 
     companion object {
         fun newInstance() = GameSetupFragment()
@@ -41,7 +41,7 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        gameSetupPagerAdapter = GameSetupPagerAdapter(childFragmentManager, this, this)
+        gameSetupPagerAdapter = GameSetupPagerAdapter(childFragmentManager, this, viewModel.gameEngine)
         binding.viewPager.adapter = gameSetupPagerAdapter
         binding.viewPager.setCurrentItem(1, false)
     }
@@ -49,6 +49,7 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
+        viewModel.setupGameEngine()
         setupObservers()
     }
 
@@ -58,11 +59,11 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
         }
     }
 
-    private fun startGame(game: Game) {
+    private fun startGame(gameEngine: GameEngine) {
         activity?.supportFragmentManager?.commit {
             replace(
                 android.R.id.content,
-                StartGameFragment.newInstance(game),
+                StartGameFragment.newInstance(gameEngine),
                 "fragment_start_game"
             )
             addToBackStack("start_game")
@@ -97,11 +98,6 @@ class GameSetupFragment : DaggerFragment(), GameSettingsFragment.GameSettingsCha
 
     override fun setTranslateLanguage(language: String) {
         viewModel.setTranslateLanguage(language)
-    }
-
-    override fun setTeam(teams: List<Team>) {
-        Log.e("LOG_TAG", "setTeam")
-        viewModel.setTeam(teams)
     }
 
 }

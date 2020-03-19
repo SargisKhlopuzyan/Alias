@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:overScrollMode="never"
-            app:data="@{viewModel.gameLiveData}"
+            app:data="@{viewModel.gameEngineLiveData}"
             app:layout_constraintBottom_toTopOf="@+id/space3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -157,7 +157,7 @@
             android:minHeight="?actionBarSize"
             android:onClick="@{(v) -> viewModel.onDoneClick(v)}"
             android:src="@drawable/ic_check_mark"
-            android:visibility="@{viewModel.gameLiveData.gameType == GameType.Classic ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.gameEngineLiveData.gameType == GameType.Classic ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/buttonSkip" />

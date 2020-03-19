@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import app.sargis.khlopuzyan.alias.ui.common.OnBackPressed
-import app.sargis.khlopuzyan.alias.ui.main.MainFragment
+import app.sargis.khlopuzyan.alias.ui.main.MainAndDefaultSettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,13 +14,12 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 replace(
                     android.R.id.content,
-                    MainFragment.newInstance(),
-                    "fragment_main"
+                    MainAndDefaultSettingsFragment.newInstance(),
+                    "fragment_main_and_default_settings"
                 )
             }
         }
     }
-
 
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentById(android.R.id.content)

@@ -10,6 +10,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentTeamsBinding
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import app.sargis.khlopuzyan.alias.model.Team
 import app.sargis.khlopuzyan.alias.ui.changeTeamNameDialog.ChangeTeamNameDialogFragment
 import dagger.android.support.DaggerFragment
@@ -19,22 +20,18 @@ import javax.inject.Inject
 class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamNameDialogListener {
 
     companion object {
-        fun newInstance(listener: GameTeamsChangeListener) = run {
+        fun newInstance(gameEngine: GameEngine) = run {
             val teamsFragment = TeamsFragment()
-            teamsFragment.gameTeamsChangeListener = listener
+            teamsFragment.gameEngine = gameEngine
             teamsFragment
         }
-    }
-
-    interface GameTeamsChangeListener {
-        fun setTeam(teams: List<Team>)
     }
 
     @Inject
     lateinit var viewModel: TeamsViewModel
 
     private lateinit var binding: FragmentTeamsBinding
-    private lateinit var gameTeamsChangeListener: GameTeamsChangeListener
+    private lateinit var gameEngine: GameEngine
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +49,7 @@ class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamN
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
+        viewModel.setupGameEngine(gameEngine)
 
         setupRecyclerView()
         setupObservers()
@@ -60,7 +58,6 @@ class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamN
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerView.layoutManager = layoutManager
-
         binding.recyclerView.hasFixedSize()
 
         val adapter = TeamsAdapter(viewModel)
@@ -70,10 +67,6 @@ class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamN
     private fun setupObservers() {
         viewModel.changeTeamLiveData.observe(viewLifecycleOwner) {
             showChangeTeamNameDialog(it)
-        }
-
-        viewModel.teamsChangedLiveData.observe(viewLifecycleOwner) {
-            gameTeamsChangeListener.setTeam(it)
         }
     }
 
@@ -94,7 +87,6 @@ class TeamsFragment : DaggerFragment(), ChangeTeamNameDialogFragment.ChangeTeamN
 
     override fun onTeamNameChanged(team: Team, newTeamName: String) {
         viewModel.changeTeamName(team, newTeamName)
-        Log.e("LOG_TAG", "team: $team | newTeamName: $newTeamName")
     }
 
 }

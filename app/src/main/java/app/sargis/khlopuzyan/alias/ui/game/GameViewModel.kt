@@ -5,21 +5,25 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
-import app.sargis.khlopuzyan.alias.model.Game
+import app.sargis.khlopuzyan.alias.model.GameType
+import app.sargis.khlopuzyan.alias.model.Word
 
 class GameViewModel : ViewModel() {
 
     val closeLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val skipLiveData: SingleLiveEvent<View> = SingleLiveEvent()
 
-    val gameLiveData = MutableLiveData<Game>(Game())
+    val gameEngineLiveData = MutableLiveData(GameEngine())
 
-    val roundFinishedLiveData = MutableLiveData<Game>()
-    val remainingRoundTimeLiveData = MutableLiveData(60)
+    val roundFinishedLiveData = MutableLiveData<GameEngine>()
+    val remainingRoundTimeLiveData = MutableLiveData(0)
     val roundScoreLiveData = MutableLiveData(0)
     val totalScoreLiveData = MutableLiveData(0)
 
+    var words = mutableListOf<Word>()
+    private var selectedCount = 0
     private var timer: CountDownTimer? = null
 
     /**
@@ -33,69 +37,167 @@ class GameViewModel : ViewModel() {
      * Handles New Game icon click
      * */
     fun onSkipClick(v: View) {
-        skipLiveData.value = v
-        increaseDecreaseRoundScore(false)
+        skipWords()
+    }
+
+    private fun skipWords() {
+
+        var roundScore = gameEngineLiveData.value?.currentPlayingTeam?.roundScore ?: 0
+        val itemCount = if (gameEngineLiveData.value?.gameType == GameType.Classic) 5 else 1
+        val skippedWordsCount = itemCount - selectedCount
+        roundScore -= skippedWordsCount
+
+        gameEngineLiveData.value?.currentPlayingTeam?.roundScore = roundScore
+        roundScoreLiveData.value = roundScore
+
+        var totalScore = gameEngineLiveData.value?.currentPlayingTeam?.totalScore ?: 0
+        totalScore -= skippedWordsCount
+
+        gameEngineLiveData.value?.currentPlayingTeam?.totalScore = totalScore
+        totalScoreLiveData.value = totalScore
+
+        generateRandomWordsList()
     }
 
     /**
      * Handles New Game icon click
      * */
     fun onDoneClick(v: View) {
-        skipLiveData.value = v
+//        skipLiveData.value = v
+        Log.e("LOG_TAG", "onDoneClick")
     }
 
-    fun setGame(game: Game) {
+    fun setupGameEngine(gameEngine: GameEngine) {
 
-        if (game.currentPlayingTeam == null && game.teams.isNotEmpty()) {
-            game.currentPlayingTeam = game.teams[0]
-            game.round = 1
+        if (gameEngine.currentPlayingTeam == null && gameEngine.teams.isNotEmpty()) {
+            gameEngine.currentPlayingTeam = gameEngine.teams[0]
+            gameEngine.round = 1
         }
 
-        gameLiveData.value = game
+        gameEngineLiveData.value = gameEngine
 
-        remainingRoundTimeLiveData.value = game.settings.roundTime
-        totalScoreLiveData.value = game.currentPlayingTeam?.totalScore
+        totalScoreLiveData.value = gameEngine.currentPlayingTeam?.totalScore
 
-        timer = object : CountDownTimer(game.settings.roundTime * 1000L, 1000) {
-//        timer = object : CountDownTimer(3 * 1000L, 1000) {
+        gameEngine.settings?.let {
 
-            override fun onTick(millisUntilFinished: Long) {
-                Log.e("LOG_TAG", "onTick")
-                remainingRoundTimeLiveData.value = (millisUntilFinished.toInt() / 1000 + 1)
+            remainingRoundTimeLiveData.value = it.roundTime
+
+            timer = object : CountDownTimer(it.roundTime * 1000L, 1000) {
+
+                override fun onTick(millisUntilFinished: Long) {
+                    remainingRoundTimeLiveData.value = (millisUntilFinished.toInt() / 1000 + 1)
+                }
+
+                override fun onFinish() {
+                    finishRound()
+                }
             }
 
-            override fun onFinish() {
-                val roundScore = roundScoreLiveData.value ?: 0
-                gameLiveData.value?.currentPlayingTeam?.roundScore = roundScore
-
-                var totalScore = gameLiveData.value?.currentPlayingTeam?.totalScore ?: 0
-                totalScore += roundScore
-                gameLiveData.value?.currentPlayingTeam?.totalScore = totalScore
-                roundFinishedLiveData.value = gameLiveData.value
-                timer = null
-                Log.e("LOG_TAG", "onFinish")
-            }
+            timer?.start()
         }
 
-        timer?.start()
+    }
+
+    fun finishRound() {
+        gameEngineLiveData.value?.currentPlayingTeam?.roundScore = 0
+        roundFinishedLiveData.value = gameEngineLiveData.value
+        timer?.cancel()
+        timer = null
     }
 
     private fun increaseDecreaseRoundScore(isIncrease: Boolean) {
-        var roundScore = roundScoreLiveData.value ?: 0
 
+        var roundScore = gameEngineLiveData.value?.currentPlayingTeam?.roundScore ?: 0
         if (isIncrease) {
             ++roundScore
         } else {
             --roundScore
         }
 
-        gameLiveData.value?.currentPlayingTeam?.roundScore = roundScore
+        gameEngineLiveData.value?.currentPlayingTeam?.roundScore = roundScore
         roundScoreLiveData.value = roundScore
 
-        var totalScore = totalScoreLiveData.value ?: 0
-        --totalScore
-        gameLiveData.value?.currentPlayingTeam?.totalScore = totalScore
+        var totalScore = gameEngineLiveData.value?.currentPlayingTeam?.totalScore ?: 0
+        if (isIncrease) {
+            ++totalScore
+        } else {
+            --totalScore
+        }
+
+        gameEngineLiveData.value?.currentPlayingTeam?.totalScore = totalScore
         totalScoreLiveData.value = totalScore
+    }
+
+    fun handleWordGuessed(word: Word) {
+
+        if (word.isGuessed) {
+            gameEngineLiveData.value?.currentPlayingTeam?.words?.remove(word)
+        } else {
+            gameEngineLiveData.value?.currentPlayingTeam?.words?.add(word)
+        }
+
+        increaseDecreaseRoundScore(word.isGuessed)
+    }
+
+    fun getGameType(): GameType? {
+        return gameEngineLiveData.value?.gameType
+    }
+
+    fun getGameWordLanguage(): String {
+        return gameEngineLiveData.value?.settings?.gameWordLanguage ?: ""
+    }
+
+    fun isWordTranslateEnabled(): Boolean {
+        return gameEngineLiveData.value?.settings?.isWordTranslateEnabled ?: false
+    }
+
+    fun wordGuessedStateChanged(isGuested: Boolean) {
+        if (isGuested) {
+            ++selectedCount
+        } else {
+            --selectedCount
+        }
+
+        val itemCount = if (gameEngineLiveData.value?.gameType == GameType.Classic) 5 else 1
+
+        if (selectedCount == itemCount) {
+            generateRandomWordsList()
+        }
+    }
+
+    fun generateRandomWordsList() {
+        selectedCount = 0
+        words = generateRandomWords()
+        gameEngineLiveData.value = gameEngineLiveData.value
+    }
+
+    private fun generateRandomWords(): MutableList<Word> {
+
+        val randomWords = mutableListOf<Word>()
+        val wordsCount = if (getGameType() == GameType.Classic) 5 else 1
+
+        gameEngineLiveData.value?.let { gameEngine ->
+
+            gameEngine.currentPlayingTeam?.let { currentPlayingTeam ->
+                if (wordsCount > currentPlayingTeam.words.size) {
+                    for (word in gameEngine.allAvailableWords) {
+                        gameEngine.currentPlayingTeam?.words?.add(word.copy())
+                    }
+                }
+            }
+
+            for (i in 0 until wordsCount) {
+                gameEngine.currentPlayingTeam?.words?.let { words ->
+                    while (randomWords.size != wordsCount) {
+                        val word: Word = words.random()
+                        if (!randomWords.contains(word)) {
+                            randomWords.add(word)
+                        }
+                    }
+                }
+            }
+        }
+        return randomWords
     }
 
 }

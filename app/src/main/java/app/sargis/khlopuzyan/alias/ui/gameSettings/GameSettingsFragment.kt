@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameSettingsBinding
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -14,10 +15,11 @@ import javax.inject.Inject
 class GameSettingsFragment : DaggerFragment() {
 
     companion object {
-        fun newInstance(listener: GameSettingsChangedListener) = run {
-            val teamsFragment = GameSettingsFragment()
-            teamsFragment.gameSettingsChangedListener = listener
-            teamsFragment
+        fun newInstance(listener: GameSettingsChangedListener, gameEngine: GameEngine) = run {
+            val gameSettingsFragment = GameSettingsFragment()
+            gameSettingsFragment.gameSettingsChangedListener = listener
+            gameSettingsFragment.gameEngine = gameEngine
+            gameSettingsFragment
         }
     }
 
@@ -37,6 +39,8 @@ class GameSettingsFragment : DaggerFragment() {
     private lateinit var binding: FragmentGameSettingsBinding
     private lateinit var gameSettingsChangedListener: GameSettingsChangedListener
 
+    private lateinit var gameEngine: GameEngine
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +56,7 @@ class GameSettingsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel.setupGameEngine(gameEngine)
         binding.viewModel = viewModel
         setupObservers()
     }

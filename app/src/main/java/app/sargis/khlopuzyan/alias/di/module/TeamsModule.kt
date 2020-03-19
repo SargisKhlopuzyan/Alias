@@ -3,10 +3,6 @@ package app.sargis.khlopuzyan.alias.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import app.sargis.khlopuzyan.alias.di.annotation.ViewModelKey
-import app.sargis.khlopuzyan.alias.repository.GameSetupRepository
-import app.sargis.khlopuzyan.alias.repository.TeamsRepository
-import app.sargis.khlopuzyan.alias.ui.gameSetup.GameSetupFragment
-import app.sargis.khlopuzyan.alias.ui.gameSetup.GameSetupViewModel
 import app.sargis.khlopuzyan.alias.ui.teams.TeamsFragment
 import app.sargis.khlopuzyan.alias.ui.teams.TeamsViewModel
 import dagger.Module
@@ -42,8 +38,7 @@ interface TeamsModule {
         @IntoMap
         @ViewModelKey(TeamsViewModel::class)
         fun provideTeamsViewModel(
-            teamsRepository: TeamsRepository
-        ): ViewModel = TeamsViewModel(teamsRepository)
+        ): ViewModel = TeamsViewModel()
 
     }
 }

@@ -3,6 +3,7 @@ package app.sargis.khlopuzyan.alias.ui.gameSetup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import app.sargis.khlopuzyan.alias.ui.gameSettings.GameSettingsFragment
 import app.sargis.khlopuzyan.alias.ui.teams.TeamsFragment
 
@@ -14,7 +15,7 @@ import app.sargis.khlopuzyan.alias.ui.teams.TeamsFragment
 class GameSetupPagerAdapter(
     fm: FragmentManager,
     private var gameSettingsChangedListener: GameSettingsFragment.GameSettingsChangedListener,
-    private var gameTeamsChangeListener: TeamsFragment.GameTeamsChangeListener
+    private var gameEngine: GameEngine
 ) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
@@ -22,10 +23,10 @@ class GameSetupPagerAdapter(
 
         when (position) {
             0 -> {
-                return GameSettingsFragment.newInstance(gameSettingsChangedListener)
+                return GameSettingsFragment.newInstance(gameSettingsChangedListener, gameEngine)
             }
             1 -> {
-                return TeamsFragment.newInstance(gameTeamsChangeListener)
+                return TeamsFragment.newInstance(gameEngine)
             }
         }
         throw (IllegalArgumentException())

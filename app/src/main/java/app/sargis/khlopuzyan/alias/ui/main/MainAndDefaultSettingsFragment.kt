@@ -10,22 +10,22 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import app.sargis.khlopuzyan.alias.R
-import app.sargis.khlopuzyan.alias.databinding.FragmentMainBinding
+import app.sargis.khlopuzyan.alias.databinding.FragmentMainAndDefaultSettingsBinding
 import app.sargis.khlopuzyan.alias.ui.gameSetup.GameSetupFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class MainFragment : DaggerFragment() {
+class MainAndDefaultSettingsFragment : DaggerFragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = MainAndDefaultSettingsFragment()
     }
 
     @Inject
-    lateinit var viewModel: MainViewModel
+    lateinit var mainAndDefaultSettingsViewModel: MainAndDefaultSettingsViewModel
 
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentMainAndDefaultSettingsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +33,12 @@ class MainFragment : DaggerFragment() {
     ): View? {
 
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_main_and_default_settings,
+                container,
+                false
+            )
 
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -41,11 +46,11 @@ class MainFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.viewModel = viewModel
+        binding.viewModel = mainAndDefaultSettingsViewModel
         setupNavigationDrawer()
         setupObservers()
 
-        viewModel.storeDefaultTeamNames()
+        mainAndDefaultSettingsViewModel.storeDefaultTeamNames()
     }
 
     private fun setupNavigationDrawer() {
@@ -53,11 +58,11 @@ class MainFragment : DaggerFragment() {
     }
 
     private fun setupObservers() {
-        viewModel.openSettingsLiveData.observe(viewLifecycleOwner) {
+        mainAndDefaultSettingsViewModel.openSettingsLiveData.observe(viewLifecycleOwner) {
             openSettings()
         }
 
-        viewModel.newGameLiveData.observe(viewLifecycleOwner) {
+        mainAndDefaultSettingsViewModel.newGameLiveData.observe(viewLifecycleOwner) {
             openNewGameFragment()
         }
     }

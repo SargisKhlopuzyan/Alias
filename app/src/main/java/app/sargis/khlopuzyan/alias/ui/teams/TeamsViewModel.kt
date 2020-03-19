@@ -3,48 +3,38 @@ package app.sargis.khlopuzyan.alias.ui.teams
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
-import app.sargis.khlopuzyan.alias.model.Settings
 import app.sargis.khlopuzyan.alias.model.Team
-import app.sargis.khlopuzyan.alias.repository.TeamsRepository
 
-class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel() {
+class TeamsViewModel : ViewModel() {
+
+    lateinit var gameEngine: GameEngine
 
     val changeTeamLiveData: SingleLiveEvent<Team> = SingleLiveEvent()
-    val teamsChangedLiveData: SingleLiveEvent<List<Team>> = SingleLiveEvent()
 
     val teamsLiveData = MutableLiveData<MutableList<Team>>(mutableListOf())
 
-    private val availableTeams: MutableList<Team> = teamsRepository.loadTeamNames().toMutableList()
+    fun setupGameEngine(gameEngine: GameEngine) {
+        this.gameEngine = gameEngine
 
-    val settings: Settings = teamsRepository.loadSettings()
-
-    var teams = mutableListOf<Team>()
-
-    init {
-
-        for (i in 0 until settings.defaultTeamsCount) {
-            if (availableTeams.isNotEmpty()) {
-                teams.add(availableTeams[0])
-                availableTeams.removeAt(0)
-            }
-        }
-        teamsLiveData.value = teams
-
-        teamsChangedLiveData.value = teams
+        teamsLiveData.value = gameEngine.teams
     }
 
     /**
      * Handles Settings icon click
      * */
     fun onAddTeamClick(v: View) {
-        if (availableTeams.isNotEmpty()) {
-            val newTeam = availableTeams[0]
-            teams.add(newTeam)
-            availableTeams.removeAt(0) // TODO
-            teamsLiveData.value = teams
+        if (gameEngine.availableTeams.isNotEmpty()) {
+            val team = gameEngine.availableTeams.removeAt(0)
 
-            teamsChangedLiveData.value = teams
+            team.words.clear()
+            for (word in gameEngine.allAvailableWords) {
+                team.words.add(word.copy())
+            }
+
+            gameEngine.teams.add(team)
+            teamsLiveData.value = gameEngine.teams
         }
     }
 
@@ -52,13 +42,11 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
      * Handles New Game icon click
      * */
     fun onDeleteTeamClick(team: Team) {
-        if (teams.contains(team)) {
-            val position = teams.indexOf(team)
-            val deletedTeam = teams.removeAt(position)
-            availableTeams.add(deletedTeam) // TODO
-            teamsLiveData.value = teams
-
-            teamsChangedLiveData.value = teams
+        if (gameEngine.teams.contains(team)) {
+            gameEngine.teams.remove(team)
+            team.words.clear()
+            gameEngine.availableTeams.add(team)
+            teamsLiveData.value = gameEngine.teams
         }
     }
 
@@ -70,12 +58,10 @@ class TeamsViewModel constructor(teamsRepository: TeamsRepository) : ViewModel()
     }
 
     fun changeTeamName(team: Team, newTeamName: String) {
-        if (teams.contains(team)) {
-            val position = teams.indexOf(team)
-            teams[position].name = newTeamName
-            teamsLiveData.value = teams
-
-            teamsChangedLiveData.value = teams
+        if (gameEngine.teams.contains(team)) {
+            val position = gameEngine.teams.indexOf(team)
+            gameEngine.teams[position].name = newTeamName
+            teamsLiveData.value = gameEngine.teams
         }
     }
 }

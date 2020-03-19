@@ -6,7 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 import app.sargis.khlopuzyan.alias.database.TeamNamesDatabaseManager
 import app.sargis.khlopuzyan.alias.database.WordsDatabaseManager
 import app.sargis.khlopuzyan.alias.di.factory.AppViewModelFactory
-import app.sargis.khlopuzyan.alias.repository.*
+import app.sargis.khlopuzyan.alias.repository.DefaultSettingsRepository
+import app.sargis.khlopuzyan.alias.repository.DefaultSettingsRepositoryImpl
+import app.sargis.khlopuzyan.alias.repository.GameSetupRepository
+import app.sargis.khlopuzyan.alias.repository.GameSetupRepositoryImpl
 import app.sargis.khlopuzyan.alias.sharedPref.SharedPrefManager
 import dagger.Module
 import dagger.Provides
@@ -52,8 +55,8 @@ abstract class AppModule {
             databaseManager: TeamNamesDatabaseManager,
             wordsDatabaseManager: WordsDatabaseManager,
             sharedPrefManager: SharedPrefManager
-        ): SettingsRepository =
-            SettingsRepositoryImpl(
+        ): DefaultSettingsRepository =
+            DefaultSettingsRepositoryImpl(
                 databaseManager,
                 wordsDatabaseManager,
                 sharedPrefManager
@@ -62,45 +65,14 @@ abstract class AppModule {
         @Provides
         @Singleton
         fun provideGameSetupRepository(
-            sharedPrefManager: SharedPrefManager
+            sharedPrefManager: SharedPrefManager,
+            teamNamesDatabaseManager: TeamNamesDatabaseManager,
+            wordsDatabaseManager: WordsDatabaseManager
         ): GameSetupRepository =
             GameSetupRepositoryImpl(
-                sharedPrefManager
-            )
-
-        @Provides
-        @Singleton
-        fun provideGameSettingsRepository(
-            sharedPrefManager: SharedPrefManager
-        ): GameSettingsRepository =
-            GameSettingsRepositoryImpl(
-                sharedPrefManager
-            )
-
-        @Provides
-        @Singleton
-        fun provideTeamsRepository(
-            teamNamesDatabaseManager: TeamNamesDatabaseManager,
-            sharedPrefManager: SharedPrefManager
-        ): TeamsRepository =
-            TeamsRepositoryImpl(
+                sharedPrefManager,
                 teamNamesDatabaseManager,
-                sharedPrefManager
+                wordsDatabaseManager
             )
-
-        @Provides
-        @Singleton
-        fun provideStartGameRepository(
-            teamNamesDatabaseManager: TeamNamesDatabaseManager,
-            wordsDatabaseManager: WordsDatabaseManager,
-            sharedPrefManager: SharedPrefManager
-        ): StartGameRepository =
-            StartGameRepositoryImpl(
-                teamNamesDatabaseManager,
-                wordsDatabaseManager,
-                sharedPrefManager
-            )
-
     }
-
 }

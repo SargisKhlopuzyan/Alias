@@ -10,9 +10,9 @@ import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
 import app.sargis.khlopuzyan.alias.model.Language
 import app.sargis.khlopuzyan.alias.model.Settings
-import app.sargis.khlopuzyan.alias.repository.SettingsRepository
+import app.sargis.khlopuzyan.alias.repository.DefaultSettingsRepository
 
-class MainViewModel constructor(private val settingsRepository: SettingsRepository) : ViewModel() {
+class MainAndDefaultSettingsViewModel constructor(private val defaultSettingsRepository: DefaultSettingsRepository) : ViewModel() {
 
     val openSettingsLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val newGameLiveData: SingleLiveEvent<View> = SingleLiveEvent()
@@ -20,12 +20,12 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
     val settings = MutableLiveData<Settings>()
 
     init {
-        settings.value = settingsRepository.loadSettings()
+        settings.value = defaultSettingsRepository.loadSettings()
     }
 
     //TODO
     fun storeDefaultTeamNames() {
-        settingsRepository.storeDefaultParameters()
+        defaultSettingsRepository.storeDefaultParameters()
     }
 
     /**
@@ -46,10 +46,12 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
     /**SeekBar : Progress Changed */
 
     fun onNumberOfWordsProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+
         if (fromUser) {
             settings.value?.numberOfWords = progress
             settings.value?.let {
-                settingsRepository.storeNumberOfWords(it)
+                defaultSettingsRepository.storeNumberOfWords(it)
             }
             settings.value = settings.value
         }
@@ -59,7 +61,7 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
         if (fromUser) {
             settings.value?.roundTime = progress
             settings.value?.let {
-                settingsRepository.storeRoundTime(it)
+                defaultSettingsRepository.storeRoundTime(it)
             }
             settings.value = settings.value
         }
@@ -69,7 +71,7 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
         if (fromUser) {
             settings.value?.defaultTeamsCount = progress
             settings.value?.let {
-                settingsRepository.storeDefaultTeamsCount(it)
+                defaultSettingsRepository.storeDefaultTeamsCount(it)
             }
             settings.value = settings.value
         }
@@ -80,21 +82,21 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
     fun onGameSoundCheckedChange(button: CompoundButton, check: Boolean) {
         settings.value?.isGameSoundEnabled = check
         settings.value?.let {
-            settingsRepository.storeGameSoundState(it)
+            defaultSettingsRepository.storeGameSoundState(it)
         }
     }
 
     fun onMissedWordPenaltyCheckedChange(button: CompoundButton, check: Boolean) {
         settings.value?.isMissedWordPenaltyEnabled = check
         settings.value?.let {
-            settingsRepository.storeMissedWordPenaltyState(it)
+            defaultSettingsRepository.storeMissedWordPenaltyState(it)
         }
     }
 
     fun onEnableTranslateCheckedChange(button: CompoundButton, check: Boolean) {
         settings.value?.isWordTranslateEnabled = check
         settings.value?.let {
-            settingsRepository.storeWordTranslateState(it)
+            defaultSettingsRepository.storeWordTranslateState(it)
         }
     }
 
@@ -113,7 +115,7 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
         }
 
         settings.value?.let {
-            settingsRepository.storeAppLanguage(it)
+            defaultSettingsRepository.storeAppLanguage(it)
         }
     }
 
@@ -131,7 +133,7 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
         }
 
         settings.value?.let {
-            settingsRepository.storeGameWordsLanguage(it)
+            defaultSettingsRepository.storeGameWordsLanguage(it)
         }
     }
 
@@ -149,7 +151,7 @@ class MainViewModel constructor(private val settingsRepository: SettingsReposito
         }
 
         settings.value?.let {
-            settingsRepository.storeWordTranslateLanguage(it)
+            defaultSettingsRepository.storeWordTranslateLanguage(it)
         }
     }
 

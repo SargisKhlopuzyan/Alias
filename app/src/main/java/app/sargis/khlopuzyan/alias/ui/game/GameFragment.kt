@@ -1,7 +1,6 @@
 package app.sargis.khlopuzyan.alias.ui.game
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,8 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentGameBinding
-import app.sargis.khlopuzyan.alias.model.Game
+import app.sargis.khlopuzyan.alias.game.GameEngine
 import app.sargis.khlopuzyan.alias.model.Team
-import app.sargis.khlopuzyan.alias.ui.changeTeamNameDialog.ChangeTeamNameDialogFragment
 import app.sargis.khlopuzyan.alias.ui.changeTeamNameDialog.FinishCurrentRoundDialogFragment
 import app.sargis.khlopuzyan.alias.ui.common.OnBackPressed
 import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
@@ -24,13 +22,10 @@ class GameFragment : DaggerFragment(), OnBackPressed,
     FinishCurrentRoundDialogFragment.FinishCurrentRoundDialogListener {
 
     companion object {
-
-        private const val ARG_GAME = "arg_game"
-
-        fun newInstance(game: Game?) = GameFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(ARG_GAME, game)
-            }
+        fun newInstance(gameEngine: GameEngine) = run {
+            val gameFragment = GameFragment()
+            gameFragment.gameEngine = gameEngine
+            gameFragment
         }
     }
 
@@ -39,6 +34,7 @@ class GameFragment : DaggerFragment(), OnBackPressed,
 
     private lateinit var binding: FragmentGameBinding
 
+    private lateinit var gameEngine: GameEngine
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,16 +48,11 @@ class GameFragment : DaggerFragment(), OnBackPressed,
         return binding.root
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.setupGameEngine(gameEngine)
         binding.viewModel = viewModel
-
-        val game: Game? = arguments?.getParcelable(ARG_GAME)
-        game?.let {
-            viewModel.setGame(it)
-        }
 
         setupRecyclerView()
         setupObservers()
@@ -79,43 +70,25 @@ class GameFragment : DaggerFragment(), OnBackPressed,
 
     private fun setupObservers() {
         viewModel.closeLiveData.observe(viewLifecycleOwner) {
-            showFinishGameDialog()
+            onBackPressed()
         }
 
         viewModel.roundFinishedLiveData.observe(viewLifecycleOwner) {
             finishRound(it)
         }
 
-        viewModel.skipLiveData.observe(viewLifecycleOwner) {
-            skipWords()
-        }
     }
 
-    private fun finishRound(game: Game) {
+    private fun finishRound(gameEngine: GameEngine) {
         val invoker = targetFragment
         if (invoker is StartGameFragment) {
-            invoker.handleGameRoundResult(game)
+            invoker.handleGameRoundResult(gameEngine)
             parentFragmentManager.popBackStack("game", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 
-    private fun showFinishGameDialog() {
-        println("${viewModel.gameLiveData.value?.gameType}")
-    }
-
-    private fun skipWords() {
-        val adapter = binding.recyclerView.adapter
-        if (adapter is GameAdapter) {
-            adapter.skipWords()
-        }
-
-        println("${viewModel.gameLiveData.value?.gameType}")
-    }
-
     override fun onBackPressed() {
-        Log.e("LOG_TAG", "onBackPressed")
-
-        viewModel.gameLiveData.value?.currentPlayingTeam?.let {
+        viewModel.gameEngineLiveData.value?.currentPlayingTeam?.let {
             showFinishCurrentRoundDialog(it)
         }
     }
@@ -136,7 +109,6 @@ class GameFragment : DaggerFragment(), OnBackPressed,
     }
 
     override fun onFinishCurrentRound(team: Team) {
-        Log.e("LOG_TAG", "onFinishCurrentRound")
-        activity?.supportFragmentManager?.popBackStack()
+        viewModel.finishRound()
     }
 }

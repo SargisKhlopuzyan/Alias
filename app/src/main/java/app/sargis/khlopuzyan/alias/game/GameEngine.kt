@@ -1,76 +1,28 @@
 package app.sargis.khlopuzyan.alias.game
 
-import android.os.CountDownTimer
+import android.os.Parcelable
+import app.sargis.khlopuzyan.alias.model.GameType
+import app.sargis.khlopuzyan.alias.model.Settings
+import app.sargis.khlopuzyan.alias.model.Team
+import app.sargis.khlopuzyan.alias.model.Word
+import kotlinx.android.parcel.Parcelize
 
-class GameEngine(
-    val numberOfWords: Int,
-    val roundTime: Int,
-    val teamCounts: Int,
-    val teamNames: List<String>,
-    val gameRoundListener: GameRoundInterface
-) {
+/**
+ * Created by Sargis Khlopuzyan, on 2/27/2020.
+ *
+ * @author Sargis Khlopuzyan (sargis.khlopuzyan@fcc.am)
+ */
+@Parcelize
+data class GameEngine(
 
+    var round: Int = 1,
+    var currentPlayingTeam: Team? = null,
+    var gameType: GameType? = null,
+    var allAvailableWords: MutableList<Word> = mutableListOf(),
 
-    interface GameRoundInterface {
-        fun roundEnded()
-        fun gameFinished()
-    }
+    var teams: MutableList<Team> = mutableListOf(),
+    var availableTeams: MutableList<Team> = mutableListOf(),
 
-    private var currentTeam: String = ""
-    private val scores = mutableMapOf<String, Int>()
+    var settings: Settings? = null
 
-    init {
-
-        if (teamNames.isNotEmpty()) {
-            currentTeam = teamNames.first()
-
-            for (teamName in teamNames) {
-                scores[teamName] = 0
-            }
-
-        }
-    }
-
-    private fun isEnded() {
-
-    }
-
-    private val countDownTimer = object : CountDownTimer(roundTime.toLong(), 1000.toLong()) {
-
-        override fun onFinish() {
-            changePlayer()
-            gameRoundListener.roundEnded()
-        }
-
-        override fun onTick(millisUntilFinished: Long) {
-
-        }
-    }
-
-    fun startRound() {
-        countDownTimer.start()
-    }
-
-
-    private fun changePlayer() {
-
-        var currentPlayerIndex = teamNames.indexOf(currentTeam)
-
-        ++currentPlayerIndex
-
-        if (currentPlayerIndex >= teamNames.size) {
-            currentPlayerIndex = 0
-        }
-
-        currentTeam = teamNames[currentPlayerIndex]
-
-    }
-
-    private fun isGameEnded() {
-//        if ()
-    }
-
-}
-
-
-
+) : Parcelable
