@@ -13,65 +13,69 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layer_list_background_white_divider_grey"
-        android:clickable="true"
-        android:focusable="true"
-        android:minHeight="80dp"
-        android:paddingHorizontal="@dimen/padding_20"
-        android:paddingVertical="@dimen/padding_12">
-
-        <TextView
-            android:id="@+id/textViewWordTranslateName"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/padding_4"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="end"
-            android:text="Translate"
-            android:textSize="18sp"
-            android:textStyle="italic"
-            android:visibility="@{viewModel.gameEngineLiveData.settings.isWordTranslateEnabled ? View.VISIBLE : View.GONE, default = gone }"
-            app:layout_constraintBottom_toTopOf="@+id/textViewWordName"
-            app:layout_constraintEnd_toEndOf="@+id/textViewWordName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="Translate" />
-
-        <TextView
-            android:id="@+id/textViewWordName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/padding_4"
-            android:fontFamily="sans-serif-medium"
-            android:text="Word"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewWordTranslateName"
-            tools:text="Word" />
-
-        <ImageButton
-            android:id="@+id/buttonDelete"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="@dimen/padding_20"
-            android:background="@null"
-            android:foreground="?attr/selectableItemBackground"
-            android:padding="@dimen/padding_12"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_translate"
-            android:visibility="@{!viewModel.gameEngineLiveData.settings.isWordTranslateEnabled ? View.GONE : View.VISIBLE, default = gone }"
+            android:background="@drawable/ripple_background_white_divider_gray"
+            android:clickable="true"
+            android:focusable="true"
+            android:minHeight="80dp"
+            android:paddingHorizontal="@dimen/padding_20"
+            android:paddingVertical="@dimen/padding_12"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewWordName"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textViewWordTranslateName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_4"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="end"
+                android:text="Translate"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                android:visibility="@{viewModel.gameEngineLiveData.settings.isWordTranslateEnabled ? View.VISIBLE : View.GONE, default = gone }"
+                app:layout_constraintBottom_toTopOf="@+id/textViewWordName"
+                app:layout_constraintEnd_toEndOf="@+id/textViewWordName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Translate" />
+
+            <TextView
+                android:id="@+id/textViewWordName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_4"
+                android:fontFamily="sans-serif-medium"
+                android:text="Word"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewWordTranslateName"
+                tools:text="Word" />
+
+            <ImageButton
+                android:id="@+id/buttonDelete"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="@dimen/padding_20"
+                android:background="@null"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="@dimen/padding_12"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_translate"
+                android:visibility="@{!viewModel.gameEngineLiveData.settings.isWordTranslateEnabled ? View.GONE : View.VISIBLE, default = gone }"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textViewWordName"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorBlueTransparent">
+
+    <item android:drawable="@drawable/layer_list_background_blue_divider_white" />
+
+</ripple>

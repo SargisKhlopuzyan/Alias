@@ -84,10 +84,10 @@ class GameAdapter(
         private fun setItemViewBackground(word: Word) {
             if (word.isGuessed) {
                 binding.constraintLayoutContainer.background =
-                    App.getContext().getDrawable(R.drawable.layer_list_background_gray_divider_gray)
+                    App.getContext().getDrawable(R.drawable.ripple_background_gray_divider_gray)
             } else {
                 binding.constraintLayoutContainer.background = App.getContext()
-                    .getDrawable(R.drawable.layer_list_background_white_divider_grey)
+                    .getDrawable(R.drawable.ripple_background_white_divider_gray)
             }
         }
 

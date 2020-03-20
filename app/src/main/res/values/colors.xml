@@ -5,7 +5,11 @@
     <color name="colorAccent">#2867B2</color>
 
     <color name="colorBlue">#2867B2</color>
+
     <color name="colorDarkBlue">#142A45</color>
     <color name="colorStealBlue">#DDE7F0</color>
     <color name="colorSettingsSeekBarThumb">#1C5396</color>
+
+    <color name="colorWhiteTransparent">#80DDE7F0</color>
+    <color name="colorBlueTransparent">#20142A45</color>
 </resources>

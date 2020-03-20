@@ -37,25 +37,27 @@ class GameViewModel : ViewModel() {
      * Handles New Game icon click
      * */
     fun onSkipClick(v: View) {
-        skipWords()
-    }
-
-    private fun skipWords() {
         gameEngineLiveData.value?.let {
 
-            var roundScore = it.currentPlayingTeam?.roundScores?.get(it.round) ?: 0
-            val itemCount = if (it.gameType == GameType.Classic) 5 else 1
-            val skippedWordsCount = itemCount - selectedCount
-            roundScore -= skippedWordsCount
+            it.settings?.let { setting ->
+                if (setting.isMissedWordPenaltyEnabled) {
 
-            it.currentPlayingTeam?.roundScores?.set(it.round, roundScore)
-            roundScoreLiveData.value = roundScore
+                    var roundScore = it.currentPlayingTeam?.roundScores?.get(it.round) ?: 0
+                    val itemCount = if (it.gameType == GameType.Classic) 5 else 1
+                    val skippedWordsCount = itemCount - selectedCount
 
-            var totalScore = it.currentPlayingTeam?.totalScore ?: 0
-            totalScore -= skippedWordsCount
+                    roundScore -= skippedWordsCount
 
-            it.currentPlayingTeam?.totalScore = totalScore
-            totalScoreLiveData.value = totalScore
+                    it.currentPlayingTeam?.roundScores?.set(it.round, roundScore)
+                    roundScoreLiveData.value = roundScore
+
+                    var totalScore = it.currentPlayingTeam?.totalScore ?: 0
+                    totalScore -= skippedWordsCount
+
+                    it.currentPlayingTeam?.totalScore = totalScore
+                    totalScoreLiveData.value = totalScore
+                }
+            }
 
             generateRandomWordsList()
         }
