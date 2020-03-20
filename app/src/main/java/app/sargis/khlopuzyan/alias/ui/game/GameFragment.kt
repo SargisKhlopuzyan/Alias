@@ -76,7 +76,6 @@ class GameFragment : DaggerFragment(), OnBackPressed,
         viewModel.roundFinishedLiveData.observe(viewLifecycleOwner) {
             finishRound(it)
         }
-
     }
 
     private fun finishRound(gameEngine: GameEngine) {

@@ -35,10 +35,10 @@
                 android:layout_marginEnd="@dimen/padding_4"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="end"
+                android:visibility="gone"
                 android:text="Translate"
                 android:textSize="18sp"
                 android:textStyle="italic"
-                android:visibility="@{viewModel.gameEngineLiveData.settings.isWordTranslateEnabled ? View.VISIBLE : View.GONE, default = gone }"
                 app:layout_constraintBottom_toTopOf="@+id/textViewWordName"
                 app:layout_constraintEnd_toEndOf="@+id/textViewWordName"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,13 +55,13 @@
                 android:text="Word"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
+                app:layout_constraintEnd_toStartOf="@+id/buttonShowHideTranslate"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewWordTranslateName"
                 tools:text="Word" />
 
             <ImageButton
-                android:id="@+id/buttonDelete"
+                android:id="@+id/buttonShowHideTranslate"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="@dimen/padding_20"

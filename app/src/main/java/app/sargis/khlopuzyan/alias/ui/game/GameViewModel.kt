@@ -154,6 +154,10 @@ class GameViewModel : ViewModel() {
         return gameEngineLiveData.value?.settings?.gameWordLanguage ?: ""
     }
 
+    fun getWordTranslateLanguage(): String {
+        return gameEngineLiveData.value?.settings?.wordTranslateLanguage ?: ""
+    }
+
     fun isWordTranslateEnabled(): Boolean {
         return gameEngineLiveData.value?.settings?.isWordTranslateEnabled ?: false
     }

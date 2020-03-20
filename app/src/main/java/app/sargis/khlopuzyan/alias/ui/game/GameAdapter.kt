@@ -1,6 +1,7 @@
 package app.sargis.khlopuzyan.alias.ui.game
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -63,13 +64,12 @@ class GameAdapter(
 
             setItemViewBackground(word)
 
-
             binding.textViewWordName.text = getWord(word, viewModel.getGameWordLanguage())
-
+            binding.textViewWordTranslateName.visibility = View.GONE
 
             if (viewModel.isWordTranslateEnabled()) {
                 binding.textViewWordTranslateName.text =
-                    getWord(word, viewModel.getGameWordLanguage())
+                    getWord(word, viewModel.getWordTranslateLanguage())
             }
 
             itemView.setOnClickListener {
@@ -78,6 +78,14 @@ class GameAdapter(
                 setItemViewBackground(word)
 
                 viewModel.wordGuessedStateChanged(word.isGuessed)
+            }
+
+            binding.buttonShowHideTranslate.setOnClickListener {
+                if (binding.textViewWordTranslateName.visibility == View.VISIBLE) {
+                    binding.textViewWordTranslateName.visibility = View.GONE
+                } else {
+                    binding.textViewWordTranslateName.visibility = View.VISIBLE
+                }
             }
         }
 
