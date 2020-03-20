@@ -1,4 +1,4 @@
-package app.sargis.khlopuzyan.alias.ui.changeTeamNameDialog
+package app.sargis.khlopuzyan.alias.ui.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

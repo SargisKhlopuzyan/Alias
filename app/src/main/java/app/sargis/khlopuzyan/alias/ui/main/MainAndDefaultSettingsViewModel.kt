@@ -12,7 +12,8 @@ import app.sargis.khlopuzyan.alias.model.Language
 import app.sargis.khlopuzyan.alias.model.Settings
 import app.sargis.khlopuzyan.alias.repository.DefaultSettingsRepository
 
-class MainAndDefaultSettingsViewModel constructor(private val defaultSettingsRepository: DefaultSettingsRepository) : ViewModel() {
+class MainAndDefaultSettingsViewModel constructor(private val defaultSettingsRepository: DefaultSettingsRepository) :
+    ViewModel() {
 
     val openSettingsLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val newGameLiveData: SingleLiveEvent<View> = SingleLiveEvent()
@@ -98,18 +99,19 @@ class MainAndDefaultSettingsViewModel constructor(private val defaultSettingsRep
         settings.value?.let {
             defaultSettingsRepository.storeWordTranslateState(it)
         }
+        settings.value = settings.value
     }
 
     /** Radio Group : Check Changed */
     fun onAppLanguageCheckChanged(radioGroup: RadioGroup, id: Int) {
         when (id) {
-            R.id.radioButtonAppLanguageEnglish -> {
+            R.id.radioButtonAppLanguageEn -> {
                 settings.value?.appLanguage = Language.EN
             }
-            R.id.radioButtonAppLanguageArmenian -> {
+            R.id.radioButtonAppLanguageAm -> {
                 settings.value?.appLanguage = Language.AM
             }
-            R.id.radioButtonAppLanguageRussian -> {
+            R.id.radioButtonAppLanguageRu -> {
                 settings.value?.appLanguage = Language.RU
             }
         }
@@ -121,13 +123,13 @@ class MainAndDefaultSettingsViewModel constructor(private val defaultSettingsRep
 
     fun onGameWordsLanguageCheckChanged(radioGroup: RadioGroup, id: Int) {
         when (id) {
-            R.id.radioButtonGameWordsLanguageEnglish -> {
+            R.id.radioButtonGameWordsLanguageEn -> {
                 settings.value?.gameWordLanguage = Language.EN
             }
-            R.id.radioButtonGameWordsLanguageArmenian -> {
+            R.id.radioButtonGameWordsLanguageAm -> {
                 settings.value?.gameWordLanguage = Language.AM
             }
-            R.id.radioButtonGameWordsLanguageRussian -> {
+            R.id.radioButtonGameWordsLanguageRu -> {
                 settings.value?.gameWordLanguage = Language.RU
             }
         }
@@ -135,17 +137,19 @@ class MainAndDefaultSettingsViewModel constructor(private val defaultSettingsRep
         settings.value?.let {
             defaultSettingsRepository.storeGameWordsLanguage(it)
         }
+
+        settings.value = settings.value
     }
 
     fun onTranslateLanguageCheckChanged(radioGroup: RadioGroup, id: Int) {
         when (id) {
-            R.id.radioButtonWordTranslateLanguageEnglish -> {
+            R.id.radioButtonWordTranslateLanguageEn -> {
                 settings.value?.wordTranslateLanguage = Language.EN
             }
-            R.id.radioButtonWordTranslateLanguageArmenian -> {
+            R.id.radioButtonWordTranslateLanguageAm -> {
                 settings.value?.wordTranslateLanguage = Language.AM
             }
-            R.id.radioButtonWordTranslateLanguageRussian -> {
+            R.id.radioButtonWordTranslateLanguageRu -> {
                 settings.value?.wordTranslateLanguage = Language.RU
             }
         }

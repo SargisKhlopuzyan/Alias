@@ -25,7 +25,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/padding_20"
         android:paddingVertical="@dimen/padding_8"
-        tools:context=".ui.changeTeamNameDialog.ChangeTeamNameDialogFragment">
+        tools:context=".ui.dialog.ChangeTeamNameDialogFragment">
 
         <TextView
             android:id="@+id/textViewTitle"

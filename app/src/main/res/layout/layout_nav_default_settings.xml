@@ -279,26 +279,30 @@
                         app:layout_constraintTop_toBottomOf="@+id/textViewLanguage">
 
                         <RadioButton
-                            android:id="@+id/radioButtonAppLanguageEnglish"
+                            android:id="@+id/radioButtonAppLanguageEn"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/selector_flag_usa"
+                            android:layout_marginLeft="@dimen/padding_12"
+                            android:layout_marginRight="@dimen/padding_12"
+                            android:background="@drawable/selector_flag_en"
                             android:button="@null" />
 
                         <RadioButton
-                            android:id="@+id/radioButtonAppLanguageArmenian"
+                            android:id="@+id/radioButtonAppLanguageAm"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginLeft="@dimen/padding_20"
-                            android:layout_marginRight="@dimen/padding_20"
-                            android:background="@drawable/selector_flag_armenia"
+                            android:layout_marginLeft="@dimen/padding_12"
+                            android:layout_marginRight="@dimen/padding_12"
+                            android:background="@drawable/selector_flag_am"
                             android:button="@null" />
 
                         <RadioButton
-                            android:id="@+id/radioButtonAppLanguageRussian"
+                            android:id="@+id/radioButtonAppLanguageRu"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/selector_flag_russian"
+                            android:layout_marginLeft="@dimen/padding_12"
+                            android:layout_marginRight="@dimen/padding_12"
+                            android:background="@drawable/selector_flag_ru"
                             android:button="@null" />
 
                     </RadioGroup>
@@ -333,7 +337,7 @@
                         android:layout_marginTop="@dimen/padding_12"
                         android:layout_marginRight="@dimen/padding_20"
                         android:layout_marginBottom="@dimen/padding_12"
-                        android:checkedButton="@id/radioButtonGameWordsLanguageArmenian"
+                        android:checkedButton="@id/radioButtonGameWordsLanguageAm"
                         android:onCheckedChanged="@{viewModel::onGameWordsLanguageCheckChanged}"
                         android:orientation="horizontal"
                         app:bindGameWordsLanguageCheckedButton="@{viewModel.settings}"
@@ -343,26 +347,30 @@
                         app:layout_constraintTop_toBottomOf="@+id/textViewGameWordsLanguage">
 
                         <RadioButton
-                            android:id="@+id/radioButtonGameWordsLanguageEnglish"
+                            android:id="@+id/radioButtonGameWordsLanguageEn"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/selector_flag_usa"
+                            android:layout_marginLeft="@dimen/padding_12"
+                            android:layout_marginRight="@dimen/padding_12"
+                            android:background="@drawable/selector_flag_en"
                             android:button="@null" />
 
                         <RadioButton
-                            android:id="@+id/radioButtonGameWordsLanguageArmenian"
+                            android:id="@+id/radioButtonGameWordsLanguageAm"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginLeft="@dimen/padding_20"
-                            android:layout_marginRight="@dimen/padding_20"
-                            android:background="@drawable/selector_flag_armenia"
+                            android:layout_marginLeft="@dimen/padding_12"
+                            android:layout_marginRight="@dimen/padding_12"
+                            android:background="@drawable/selector_flag_am"
                             android:button="@null" />
 
                         <RadioButton
-                            android:id="@+id/radioButtonGameWordsLanguageRussian"
+                            android:id="@+id/radioButtonGameWordsLanguageRu"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/selector_flag_russian"
+                            android:layout_marginLeft="@dimen/padding_12"
+                            android:layout_marginRight="@dimen/padding_12"
+                            android:background="@drawable/selector_flag_ru"
                             android:button="@null" />
 
                     </RadioGroup>
@@ -440,27 +448,31 @@
                         app:layout_constraintTop_toBottomOf="@+id/textViewTranslateLanguage">
 
                         <RadioButton
-                            android:id="@+id/radioButtonWordTranslateLanguageEnglish"
+                            android:id="@+id/radioButtonWordTranslateLanguageEn"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/selector_flag_usa"
+                            android:layout_marginLeft="@dimen/padding_12"
+                            android:layout_marginRight="@dimen/padding_12"
+                            android:background="@drawable/selector_flag_en"
                             android:button="@null"
                             android:checked="true" />
 
                         <RadioButton
-                            android:id="@+id/radioButtonWordTranslateLanguageArmenian"
+                            android:id="@+id/radioButtonWordTranslateLanguageAm"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginLeft="@dimen/padding_20"
-                            android:layout_marginRight="@dimen/padding_20"
-                            android:background="@drawable/selector_flag_armenia"
+                            android:layout_marginLeft="@dimen/padding_12"
+                            android:layout_marginRight="@dimen/padding_12"
+                            android:background="@drawable/selector_flag_am"
                             android:button="@null" />
 
                         <RadioButton
-                            android:id="@+id/radioButtonWordTranslateLanguageRussian"
+                            android:id="@+id/radioButtonWordTranslateLanguageRu"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/selector_flag_russian"
+                            android:layout_marginLeft="@dimen/padding_12"
+                            android:layout_marginRight="@dimen/padding_12"
+                            android:background="@drawable/selector_flag_ru"
                             android:button="@null" />
 
                     </RadioGroup>

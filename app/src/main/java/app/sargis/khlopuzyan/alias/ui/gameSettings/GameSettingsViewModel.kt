@@ -63,17 +63,18 @@ class GameSettingsViewModel : ViewModel() {
         settings.value?.let {
             gameSettingsChangedListener.setTranslateEnabledState(check)
         }
+        settings.value = settings.value
     }
 
     fun onGameWordsLanguageCheckChanged(radioGroup: RadioGroup, id: Int) {
         when (id) {
-            R.id.radioButtonGameWordsLanguageEnglish -> {
+            R.id.radioButtonGameWordsLanguageEn -> {
                 settings.value?.gameWordLanguage = Language.EN
             }
-            R.id.radioButtonGameWordsLanguageArmenian -> {
+            R.id.radioButtonGameWordsLanguageAm -> {
                 settings.value?.gameWordLanguage = Language.AM
             }
-            R.id.radioButtonGameWordsLanguageRussian -> {
+            R.id.radioButtonGameWordsLanguageRu -> {
                 settings.value?.gameWordLanguage = Language.RU
             }
         }
@@ -81,17 +82,19 @@ class GameSettingsViewModel : ViewModel() {
         settings.value?.let {
             gameSettingsChangedListener.setGameWordsLanguage(it.gameWordLanguage)
         }
+
+        settings.value = settings.value
     }
 
     fun onTranslateLanguageCheckChanged(radioGroup: RadioGroup, id: Int) {
         when (id) {
-            R.id.radioButtonWordTranslateLanguageEnglish -> {
+            R.id.radioButtonWordTranslateLanguageEn -> {
                 settings.value?.wordTranslateLanguage = Language.EN
             }
-            R.id.radioButtonWordTranslateLanguageArmenian -> {
+            R.id.radioButtonWordTranslateLanguageAm -> {
                 settings.value?.wordTranslateLanguage = Language.AM
             }
-            R.id.radioButtonWordTranslateLanguageRussian -> {
+            R.id.radioButtonWordTranslateLanguageRu -> {
                 settings.value?.wordTranslateLanguage = Language.RU
             }
         }
@@ -99,6 +102,8 @@ class GameSettingsViewModel : ViewModel() {
         settings.value?.let {
             gameSettingsChangedListener.setTranslateLanguage(it.wordTranslateLanguage)
         }
+
+        settings.value = settings.value
     }
 
 }

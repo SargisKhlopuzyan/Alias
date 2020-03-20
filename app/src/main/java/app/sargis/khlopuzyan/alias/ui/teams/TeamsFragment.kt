@@ -11,7 +11,7 @@ import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentTeamsBinding
 import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.model.Team
-import app.sargis.khlopuzyan.alias.ui.changeTeamNameDialog.ChangeTeamNameDialogFragment
+import app.sargis.khlopuzyan.alias.ui.dialog.ChangeTeamNameDialogFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
