@@ -48,7 +48,8 @@ class GameSetupViewModel constructor(private val gameSetupRepository: GameSetupR
         }
 
         for (team in gameEngine.teams) {
-            team.roundScore = 0
+            //TODO
+            team.roundScores.clear()
             team.totalScore = 0
         }
     }

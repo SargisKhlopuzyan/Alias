@@ -31,7 +31,7 @@ data class Team(
     var totalScore: Int = 0,
 
     @Ignore
-    var roundScore: Int = 0,
+    var roundScores: MutableMap<Int, Int> = HashMap(),
 
     @Ignore
     var words: MutableList<Word> = mutableListOf()

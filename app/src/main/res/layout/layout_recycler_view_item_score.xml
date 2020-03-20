@@ -6,16 +6,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="?actionBarSize"
         android:minWidth="100dp"
-        android:padding="@dimen/padding_12">
+        android:padding="1dp"
+        android:background="@drawable/layer_list_game_score_vertical_divider_background"
+        android:minHeight="?actionBarSize">
 
         <TextView
             android:id="@+id/textViewTeamName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:gravity="center"
             android:fontFamily="sans-serif-medium"
             android:maxLines="1"
+            android:background="@drawable/layer_list_game_score_vertical_divider_background"
+            android:padding="@dimen/padding_4"
             android:singleLine="true"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
@@ -27,15 +32,37 @@
 
         <TextView
             android:id="@+id/textViewScore"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/layer_list_game_score_vertical_divider_background"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:lineHeight="30dp"
+            android:paddingVertical="@dimen/padding_4"
+            android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textViewTotalScore"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewTeamName"
+            tools:text="12" />
+
+        <TextView
+            android:id="@+id/textViewTotalScore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:background="@drawable/layer_list_game_score_vertical_divider_background"
+            android:paddingVertical="@dimen/padding_4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewScore"
             tools:text="12" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

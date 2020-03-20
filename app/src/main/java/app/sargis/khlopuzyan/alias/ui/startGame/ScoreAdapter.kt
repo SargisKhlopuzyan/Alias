@@ -1,15 +1,15 @@
 package app.sargis.khlopuzyan.alias.ui.startGame
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import app.sargis.khlopuzyan.alias.App
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.LayoutRecyclerViewItemScoreBinding
 import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.model.Team
-import app.sargis.khlopuzyan.alias.model.Word
 import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
 
 
@@ -21,10 +21,6 @@ import app.sargis.khlopuzyan.alias.ui.common.BindableAdapter
 class ScoreAdapter(
     val viewModel: StartGameViewModel
 ) : RecyclerView.Adapter<ScoreAdapter.ViewHolder>(), BindableAdapter<GameEngine> {
-
-    init {
-        viewModel.updateScore()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: LayoutRecyclerViewItemScoreBinding = DataBindingUtil.inflate(
@@ -40,9 +36,30 @@ class ScoreAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val team = viewModel.gameEngineLiveData.value?.teams?.get(position)
-        team?.let {
-            holder.bindData(it)
+
+        Log.e("LOG_TAG", "onBindViewHolder => position: $position")
+
+        val teams = viewModel.getTeams()
+        teams?.let {
+            if (it.size > position) {
+                val roundCount = viewModel.getRoundCount()
+                val team = it[position]
+
+                val isGameStarted = it[0].roundScores.isNotEmpty()
+                val isRoundStarted = it[0].roundScores[roundCount] != null
+
+                val scoresCount = if (isGameStarted) {
+                    if (isRoundStarted) {
+                        roundCount
+                    } else {
+                        roundCount - 1
+                    }
+                } else {
+                    0
+                }
+
+                holder.bindData(team, scoresCount)
+            }
         }
     }
 
@@ -57,10 +74,34 @@ class ScoreAdapter(
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindData(team: Team) {
+        fun bindData(team: Team, scoresCount: Int) {
             binding.textViewTeamName.text = "${team.name}"
-            binding.textViewScore.text = "${team.totalScore}"
+
+            if (scoresCount != 0) {
+
+                var text = ""
+                for (i in 1..scoresCount) {
+
+                    val score = team.roundScores[i]
+
+                    if (score == null) {
+                        text += "-"
+                    } else {
+                        text += score
+                    }
+
+                    if (i != scoresCount) {
+                        text += "\n"
+                    }
+                }
+
+                binding.textViewScore.text = text
+                binding.textViewScore.visibility = View.VISIBLE
+            } else {
+                binding.textViewScore.visibility = View.GONE
+            }
+
+            binding.textViewTotalScore.text = "${team.totalScore}"
         }
     }
-
 }

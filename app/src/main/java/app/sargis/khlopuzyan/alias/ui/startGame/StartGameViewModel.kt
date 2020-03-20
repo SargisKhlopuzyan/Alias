@@ -1,11 +1,11 @@
 package app.sargis.khlopuzyan.alias.ui.startGame
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.helper.SingleLiveEvent
+import app.sargis.khlopuzyan.alias.model.Team
 
 class StartGameViewModel : ViewModel() {
 
@@ -34,8 +34,6 @@ class StartGameViewModel : ViewModel() {
     }
 
     fun handleRoundFinish(gameEngine: GameEngine) {
-
-        Log.e("LOG_TAG", "handleRoundFinish")
 
         if (gameEngine.teams.isNotEmpty()) {
 
@@ -66,7 +64,11 @@ class StartGameViewModel : ViewModel() {
         return gameEngineLiveData.value?.teams?.count() ?: 0
     }
 
-    fun updateScore() {
+    private fun updateScore() {
         gameEngineLiveData.value = gameEngineLiveData.value
+    }
+
+    fun getTeams(): MutableList<Team>? {
+        return gameEngineLiveData.value?.teams
     }
 }

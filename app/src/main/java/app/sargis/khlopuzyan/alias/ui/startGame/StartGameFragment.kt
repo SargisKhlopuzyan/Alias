@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,14 +41,8 @@ class StartGameFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_start_game, container, false)
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_start_game, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-
-        setupRecyclerView()
-
         return binding.root
     }
 
@@ -64,15 +59,21 @@ class StartGameFragment : DaggerFragment() {
         }
         viewModel.setupGameEngine(gameEngine)
 
+        setupNavigationDrawer()
+        setupRecyclerView()
         setupObservers()
     }
 
-    private fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    private fun setupNavigationDrawer() {
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
 
-        binding.layoutNavScore.recyclerView.layoutManager = layoutManager
-        binding.layoutNavScore.recyclerView.hasFixedSize()
+    private fun setupRecyclerView() {
         val adapter = ScoreAdapter(viewModel)
+        binding.layoutNavScore.recyclerView.hasFixedSize()
+
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.layoutNavScore.recyclerView.layoutManager = layoutManager
         binding.layoutNavScore.recyclerView.adapter = adapter
     }
 
@@ -88,6 +89,8 @@ class StartGameFragment : DaggerFragment() {
 
     private fun showScore() {
         binding.drawerLayout.openDrawer(Gravity.LEFT);
+        binding.layoutNavScore.recyclerView.scrollToPosition(0)
+        binding.layoutNavScore.recyclerView.smoothScrollToPosition(0)
     }
 
     private fun startGameFragment(gameEngine: GameEngine) {

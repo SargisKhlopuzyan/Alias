@@ -41,22 +41,24 @@ class GameViewModel : ViewModel() {
     }
 
     private fun skipWords() {
+        gameEngineLiveData.value?.let {
 
-        var roundScore = gameEngineLiveData.value?.currentPlayingTeam?.roundScore ?: 0
-        val itemCount = if (gameEngineLiveData.value?.gameType == GameType.Classic) 5 else 1
-        val skippedWordsCount = itemCount - selectedCount
-        roundScore -= skippedWordsCount
+            var roundScore = it.currentPlayingTeam?.roundScores?.get(it.round) ?: 0
+            val itemCount = if (it.gameType == GameType.Classic) 5 else 1
+            val skippedWordsCount = itemCount - selectedCount
+            roundScore -= skippedWordsCount
 
-        gameEngineLiveData.value?.currentPlayingTeam?.roundScore = roundScore
-        roundScoreLiveData.value = roundScore
+            it.currentPlayingTeam?.roundScores?.set(it.round, roundScore)
+            roundScoreLiveData.value = roundScore
 
-        var totalScore = gameEngineLiveData.value?.currentPlayingTeam?.totalScore ?: 0
-        totalScore -= skippedWordsCount
+            var totalScore = it.currentPlayingTeam?.totalScore ?: 0
+            totalScore -= skippedWordsCount
 
-        gameEngineLiveData.value?.currentPlayingTeam?.totalScore = totalScore
-        totalScoreLiveData.value = totalScore
+            it.currentPlayingTeam?.totalScore = totalScore
+            totalScoreLiveData.value = totalScore
 
-        generateRandomWordsList()
+            generateRandomWordsList()
+        }
     }
 
     /**
@@ -99,7 +101,6 @@ class GameViewModel : ViewModel() {
     }
 
     fun finishRound() {
-        gameEngineLiveData.value?.currentPlayingTeam?.roundScore = 0
         roundFinishedLiveData.value = gameEngineLiveData.value
         timer?.cancel()
         timer = null
@@ -107,25 +108,29 @@ class GameViewModel : ViewModel() {
 
     private fun increaseDecreaseRoundScore(isIncrease: Boolean) {
 
-        var roundScore = gameEngineLiveData.value?.currentPlayingTeam?.roundScore ?: 0
-        if (isIncrease) {
-            ++roundScore
-        } else {
-            --roundScore
+        gameEngineLiveData.value?.let {
+
+            var roundScore = it.currentPlayingTeam?.roundScores?.get(it.round) ?: 0
+            if (isIncrease) {
+                ++roundScore
+            } else {
+                --roundScore
+            }
+
+            it.currentPlayingTeam?.roundScores?.set(it.round, roundScore)
+            roundScoreLiveData.value = roundScore
+
+            var totalScore = it.currentPlayingTeam?.totalScore ?: 0
+            if (isIncrease) {
+                ++totalScore
+            } else {
+                --totalScore
+            }
+
+            it.currentPlayingTeam?.totalScore = totalScore
+            totalScoreLiveData.value = totalScore
+
         }
-
-        gameEngineLiveData.value?.currentPlayingTeam?.roundScore = roundScore
-        roundScoreLiveData.value = roundScore
-
-        var totalScore = gameEngineLiveData.value?.currentPlayingTeam?.totalScore ?: 0
-        if (isIncrease) {
-            ++totalScore
-        } else {
-            --totalScore
-        }
-
-        gameEngineLiveData.value?.currentPlayingTeam?.totalScore = totalScore
-        totalScoreLiveData.value = totalScore
     }
 
     fun handleWordGuessed(word: Word) {
@@ -199,5 +204,4 @@ class GameViewModel : ViewModel() {
         }
         return randomWords
     }
-
 }

@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:orientation="vertical"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -27,16 +26,16 @@
             android:text="@string/score" />
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 data="@{viewModel.gameEngineLiveData}"
-                tools:listitem="@layout/layout_recycler_view_item_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/layout_recycler_view_item_score" />
 
         </ScrollView>
 

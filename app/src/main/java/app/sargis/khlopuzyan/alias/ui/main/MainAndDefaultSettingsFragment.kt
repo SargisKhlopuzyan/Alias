@@ -31,15 +31,12 @@ class MainAndDefaultSettingsFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_main_and_default_settings,
-                container,
-                false
-            )
-
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_main_and_default_settings,
+            container,
+            false
+        )
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
