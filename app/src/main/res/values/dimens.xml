@@ -6,6 +6,10 @@
     <dimen name="padding_12">12dp</dimen>
     <dimen name="padding_20">20dp</dimen>
     <dimen name="padding_28">28dp</dimen>
+    <dimen name="padding_32">32dp</dimen>
+    <dimen name="padding_36">36dp</dimen>
+    <dimen name="padding_40">40dp</dimen>
+    <dimen name="padding_44">44dp</dimen>
 
     <dimen name="settingsSeekBarProgressDrawableHeight">18dp</dimen>
     <dimen name="settingsSeekBarThumbHeight">20dp</dimen>

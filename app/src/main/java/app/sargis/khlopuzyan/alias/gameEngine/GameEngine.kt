@@ -16,7 +16,10 @@ import kotlinx.android.parcel.Parcelize
 data class GameEngine(
 
     var round: Int = 1,
+    var isGameFinished: Boolean = false,
     var currentPlayingTeam: Team? = null,
+    var winnerTeam: Team? = null,
+
     var gameType: GameType? = null,
     var allAvailableWords: MutableList<Word> = mutableListOf(),
 

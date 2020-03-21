@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="app.sargis.khlopuzyan.alias.ui.winner.WinnerViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerWinner"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="@dimen/padding_40"
+            android:background="@drawable/shape_blue_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_12"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <TextView
+                android:id="@+id/textViewWinnerTeamTotalScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{`` + viewModel.teamsLiveData[0].totalScore}"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintBottom_toTopOf="@+id/textViewPoint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="40" />
+
+            <TextView
+                android:id="@+id/textViewPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/point"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewWinnerTeamName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewWinnerTeamTotalScore" />
+
+            <TextView
+                android:id="@+id/textViewWinnerTeamName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_4"
+                android:layout_marginBottom="@dimen/padding_12"
+                android:gravity="center"
+                android:maxLines="2"
+                android:fontFamily="sans-serif-medium"
+                android:text="@{viewModel.teamsLiveData[0].name}"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/textViewWinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPoint"
+                tools:text="No\nChance" />
+
+            <TextView
+                android:id="@+id/textViewWinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="W I N N E R"
+                android:textColor="@color/colorRed"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewWinnerTeamName" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/imageViewMedal"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_medal"
+            app:layout_constraintBottom_toBottomOf="@+id/containerWinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/containerWinner" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:layout_marginLeft="@dimen/padding_40"
+            android:layout_marginRight="@dimen/padding_40"
+            app:data="@{viewModel.teamsLiveData}"
+            app:layout_constraintBottom_toTopOf="@+id/buttonStart"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/containerWinner" />
+
+        <Button
+            android:id="@+id/buttonStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlue"
+            android:fontFamily="sans-serif-medium"
+            android:foreground="?attr/selectableItemBackground"
+            android:minHeight="?actionBarSize"
+            android:onClick="@{(v) -> viewModel.onStartNewGameClick(v)}"
+            android:text="@string/new_game"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

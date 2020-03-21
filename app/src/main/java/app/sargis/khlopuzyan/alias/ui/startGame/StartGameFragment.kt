@@ -1,6 +1,7 @@
 package app.sargis.khlopuzyan.alias.ui.startGame
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentStartGameBinding
 import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
 import app.sargis.khlopuzyan.alias.ui.game.GameFragment
+import app.sargis.khlopuzyan.alias.ui.winner.WinnerFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -70,7 +72,6 @@ class StartGameFragment : DaggerFragment() {
 
     private fun setupRecyclerView() {
         val adapter = ScoreAdapter(viewModel)
-        binding.layoutNavScore.recyclerView.hasFixedSize()
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.layoutNavScore.recyclerView.layoutManager = layoutManager
@@ -84,6 +85,10 @@ class StartGameFragment : DaggerFragment() {
 
         viewModel.startLiveData.observe(viewLifecycleOwner) {
             startGameFragment(it)
+        }
+
+        viewModel.gameFinishedLiveData.observe(viewLifecycleOwner) {
+            startWinnerFragment(it)
         }
     }
 
@@ -105,6 +110,23 @@ class StartGameFragment : DaggerFragment() {
                 "fragment_game"
             )
             addToBackStack("game")
+        }
+    }
+
+    private fun startWinnerFragment(gameEngine: GameEngine) {
+
+        Log.e("LOG_TAG", "startWinnerFragment")
+
+        val winnerFragment = WinnerFragment.newInstance(gameEngine)
+        winnerFragment.setTargetFragment(this@StartGameFragment, REQUEST_CODE_TARGET_FRAGMENT)
+
+        activity?.supportFragmentManager?.commit {
+            replace(
+                android.R.id.content,
+                winnerFragment,
+                "fragment_winner"
+            )
+            addToBackStack("winner")
         }
     }
 

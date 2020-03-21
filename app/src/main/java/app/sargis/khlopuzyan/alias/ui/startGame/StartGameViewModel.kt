@@ -11,6 +11,7 @@ class StartGameViewModel : ViewModel() {
 
     val showScoreLiveData: SingleLiveEvent<View> = SingleLiveEvent()
     val startLiveData: SingleLiveEvent<GameEngine> = SingleLiveEvent()
+    val gameFinishedLiveData: SingleLiveEvent<GameEngine> = SingleLiveEvent()
 
     val gameEngineLiveData = MutableLiveData<GameEngine>()
 
@@ -53,6 +54,29 @@ class StartGameViewModel : ViewModel() {
 
             gameEngine.currentPlayingTeam = gameEngine.teams[nextPlayerIndex]
             gameEngineLiveData.value = gameEngine
+        }
+
+        gameEngine.settings?.let {
+
+            if (gameEngine.teams.isNullOrEmpty() ||
+                gameEngine.teams.size < 2 ||
+                gameEngine.teams.first().roundScores.size != gameEngine.teams.last().roundScores.size
+            ) {
+                return
+            }
+
+            var isGameFinished = false
+
+            for (team in gameEngine.teams) {
+                if (team.totalScore >= it.numberOfWords) {
+                    isGameFinished = true
+                    break
+                }
+            }
+
+            if (isGameFinished) {
+                gameFinishedLiveData.value = gameEngine
+            }
         }
     }
 

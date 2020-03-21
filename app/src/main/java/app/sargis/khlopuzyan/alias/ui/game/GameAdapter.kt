@@ -80,7 +80,7 @@ class GameAdapter(
                 viewModel.wordGuessedStateChanged(word.isGuessed)
             }
 
-            binding.buttonShowHideTranslate.setOnClickListener {
+            binding.imageButtonShowHideTranslate.setOnClickListener {
                 if (binding.textViewWordTranslateName.visibility == View.VISIBLE) {
                     binding.textViewWordTranslateName.visibility = View.GONE
                 } else {
