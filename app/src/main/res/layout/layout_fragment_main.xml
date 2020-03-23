@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -19,33 +18,36 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:src="@drawable/ic_background"
-            android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_6"
+            app:layout_constraintBottom_toTopOf="@+id/buttonNewGame"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageViewSettings"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_margin="@dimen/horizontal_padding"
             android:foreground="?attr/selectableItemBackground"
             android:onClick="@{v -> viewModel.onOpenSettingsClick(v)}"
-            android:padding="@dimen/padding_12"
-            android:layout_margin="@dimen/horizontal_padding"
+            android:padding="@dimen/padding_4"
             android:src="@drawable/ic_settings_normal"
+            app:layout_constraintBottom_toTopOf="@+id/buttonNewGame"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAlias" />
 
         <TextView
             android:id="@+id/textViewAlias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
-            android:rotation="320"
-            android:text="Alias"
+            android:fontFamily="sans-serif-medium"
+            android:text="A l i a s"
             android:textAllCaps="true"
-            android:textColor="@color/colorSettingsSeekBarThumb"
-            android:textSize="70sp"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

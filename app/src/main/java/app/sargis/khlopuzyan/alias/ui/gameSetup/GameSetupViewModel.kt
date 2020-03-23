@@ -26,7 +26,7 @@ class GameSetupViewModel constructor(private val gameSetupRepository: GameSetupR
             }
 
             gameEngine.settings?.let {
-                for (i in 0 until it.defaultTeamsCount) {
+                for (i in 0 until it.teamsCount) {
                     if (gameEngine.availableTeams.isNotEmpty()) {
                         val team = gameEngine.availableTeams.removeAt(0)
 

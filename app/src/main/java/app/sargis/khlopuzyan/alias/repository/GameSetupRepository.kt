@@ -53,7 +53,7 @@ class GameSetupRepositoryImpl(
     override fun storeDefaultTeamsCount(settings: Settings) {
         sharedPrefManager.storeIntInSharedPref(
             SharedPref.SHARED_PREF_DEFAULT_TEAM_COUNT,
-            settings.defaultTeamsCount
+            settings.teamsCount
         )
     }
 
@@ -120,9 +120,9 @@ class GameSetupRepositoryImpl(
 
         sharedPrefManager.loadIntFromSharedPref(SharedPref.SHARED_PREF_DEFAULT_TEAM_COUNT).let {
             if (it == 0)
-                settings.defaultTeamsCount = 2
+                settings.teamsCount = 2
             else
-                settings.defaultTeamsCount = it
+                settings.teamsCount = it
         }
 
         settings.isGameSoundEnabled =

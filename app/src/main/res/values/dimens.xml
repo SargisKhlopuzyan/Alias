@@ -4,10 +4,10 @@
     <dimen name="padding_4">4dp</dimen>
     <dimen name="padding_8">8dp</dimen>
     <dimen name="padding_12">12dp</dimen>
+    <dimen name="padding_16">16dp</dimen>
     <dimen name="padding_20">20dp</dimen>
     <dimen name="padding_28">28dp</dimen>
     <dimen name="padding_32">32dp</dimen>
-    <dimen name="padding_36">36dp</dimen>
     <dimen name="padding_40">40dp</dimen>
     <dimen name="padding_44">44dp</dimen>
 

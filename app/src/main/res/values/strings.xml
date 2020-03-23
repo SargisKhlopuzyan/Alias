@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Alias</string>
     <string name="new_game">New Game</string>
-    <string name="number_of_words">Number of words</string>
+    <string name="number_of_words_to_win">Number of words to win</string>
     <string name="round_time">Round time</string>
     <string name="game_words_language">Game words language</string>
-    <string name="select_app_language">Select app language</string>
+    <string name="app_language">App language</string>
     <string name="game_sound">Game sound</string>
-    <string name="select_translate_language">Select translate language</string>
-    <string name="enable_translate">Enable translate</string>
+    <string name="words_translation_language">Words translation language</string>
+    <string name="enable_words_translation">Enable words translation</string>
     <string name="default_teams_count">Default teams count</string>
     <string name="missed_word_penalty">Missed word penalty</string>
     <string name="default_settings">Default settings</string>
@@ -15,9 +15,6 @@
     <string name="arcade">Arcade</string>
     <string name="score">Score</string>
     <string name="start">Start</string>
-    <string name="skip">Skip</string>
-    <string name="done">Done</string>
-    <string name="alert_dialog_ok">OK</string>
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="team_new_name">Team new name</string>
     <string name="error_message_empty_team_name">Team name can not be empty</string>

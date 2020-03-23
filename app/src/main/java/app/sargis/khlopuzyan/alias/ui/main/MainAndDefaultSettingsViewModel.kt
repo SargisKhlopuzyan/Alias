@@ -68,35 +68,34 @@ class MainAndDefaultSettingsViewModel constructor(private val defaultSettingsRep
         }
     }
 
-    fun onDefaultTeamsCountProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+    fun onTeamsCountProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (fromUser) {
-            settings.value?.defaultTeamsCount = progress
             settings.value?.let {
+                it.teamsCount = progress
                 defaultSettingsRepository.storeDefaultTeamsCount(it)
             }
             settings.value = settings.value
         }
     }
 
-
     /** Checkbox : Checked Change */
     fun onGameSoundCheckedChange(button: CompoundButton, check: Boolean) {
-        settings.value?.isGameSoundEnabled = check
         settings.value?.let {
+            it.isGameSoundEnabled = check
             defaultSettingsRepository.storeGameSoundState(it)
         }
     }
 
     fun onMissedWordPenaltyCheckedChange(button: CompoundButton, check: Boolean) {
-        settings.value?.isMissedWordPenaltyEnabled = check
         settings.value?.let {
+            it.isMissedWordPenaltyEnabled = check
             defaultSettingsRepository.storeMissedWordPenaltyState(it)
         }
     }
 
     fun onEnableTranslateCheckedChange(button: CompoundButton, check: Boolean) {
-        settings.value?.isWordTranslateEnabled = check
         settings.value?.let {
+            it.isWordTranslateEnabled = check
             defaultSettingsRepository.storeWordTranslateState(it)
         }
         settings.value = settings.value
