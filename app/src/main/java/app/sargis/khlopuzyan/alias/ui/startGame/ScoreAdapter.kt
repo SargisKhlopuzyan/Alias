@@ -1,11 +1,10 @@
 package app.sargis.khlopuzyan.alias.ui.startGame
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import app.sargis.khlopuzyan.alias.App
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.LayoutRecyclerViewItemScoreBinding
 import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
@@ -37,8 +36,6 @@ class ScoreAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Log.e("LOG_TAG", "onBindViewHolder => position: $position")
-
         val teams = viewModel.getTeams()
         teams?.let {
             if (it.size > position) {
@@ -58,7 +55,7 @@ class ScoreAdapter(
                     0
                 }
 
-                holder.bindData(team, scoresCount)
+                holder.bindData(team, scoresCount, itemCount)
             }
         }
     }
@@ -74,8 +71,16 @@ class ScoreAdapter(
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindData(team: Team, scoresCount: Int) {
+        fun bindData(team: Team, scoresCount: Int, itemCount: Int) {
             binding.textViewTeamName.text = "${team.name}"
+
+            if (adapterPosition == itemCount - 1) {
+                binding.containerScores.background =
+                    App.getContext().getDrawable(R.drawable.shape_game_score_background)
+            } else {
+                binding.containerScores.background =
+                    App.getContext().getDrawable(R.drawable.layer_list_game_score_vertical_divider)
+            }
 
             if (scoresCount != 0) {
 
@@ -96,10 +101,14 @@ class ScoreAdapter(
                 }
 
                 binding.textViewScore.text = text
-                binding.textViewScore.visibility = View.VISIBLE
+//                binding.textViewScore.visibility = View.VISIBLE
             } else {
-                binding.textViewScore.visibility = View.GONE
+                binding.textViewScore.text = ""
+//                binding.textViewScore.visibility = View.INVISIBLE
             }
+
+            binding.textViewScore.text =
+                "5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n5\n3"
 
             binding.textViewTotalScore.text = "${team.totalScore}"
         }

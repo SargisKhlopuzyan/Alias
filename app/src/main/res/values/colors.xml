@@ -14,4 +14,6 @@
     <color name="colorBlueTransparent">#20142A45</color>
     <color name="colorRed">#F34839</color>
     <color name="colorGray">#e6e7ec</color>
+    <color name="colorScoreBackground">#EBBDAE</color>
+    <color name="colorRedDark">#573A3A</color>
 </resources>

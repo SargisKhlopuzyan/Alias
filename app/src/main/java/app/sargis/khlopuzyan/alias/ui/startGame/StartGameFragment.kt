@@ -1,7 +1,6 @@
 package app.sargis.khlopuzyan.alias.ui.startGame
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -94,8 +93,6 @@ class StartGameFragment : DaggerFragment() {
 
     private fun showScore() {
         binding.drawerLayout.openDrawer(Gravity.LEFT);
-        binding.layoutNavScore.recyclerView.scrollToPosition(0)
-        binding.layoutNavScore.recyclerView.smoothScrollToPosition(0)
     }
 
     private fun startGameFragment(gameEngine: GameEngine) {
@@ -115,8 +112,6 @@ class StartGameFragment : DaggerFragment() {
 
     private fun startWinnerFragment(gameEngine: GameEngine) {
 
-        Log.e("LOG_TAG", "startWinnerFragment")
-
         val winnerFragment = WinnerFragment.newInstance(gameEngine)
         winnerFragment.setTargetFragment(this@StartGameFragment, REQUEST_CODE_TARGET_FRAGMENT)
 
@@ -132,6 +127,10 @@ class StartGameFragment : DaggerFragment() {
 
     fun handleGameRoundResult(gameEngine: GameEngine) {
         viewModel.handleRoundFinish(gameEngine)
+    }
+
+    fun handleWinnerResult() {
+        viewModel.resetGameEngine()
     }
 
 }

@@ -78,6 +78,9 @@ class GameViewModel : ViewModel() {
             gameEngine.round = 1
         }
 
+        gameEngine.currentPlayingTeam?.let {
+            it.roundScores[gameEngine.round] = 0
+        }
         gameEngineLiveData.value = gameEngine
 
         totalScoreLiveData.value = gameEngine.currentPlayingTeam?.totalScore

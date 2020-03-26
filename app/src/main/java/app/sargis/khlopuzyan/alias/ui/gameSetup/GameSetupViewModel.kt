@@ -43,15 +43,6 @@ class GameSetupViewModel constructor(private val gameSetupRepository: GameSetupR
 
         gameEngine.round = 1
 
-        if (gameEngine.teams.isNotEmpty()) {
-            gameEngine.currentPlayingTeam = gameEngine.teams[0]
-        }
-
-        for (team in gameEngine.teams) {
-            //TODO
-            team.roundScores.clear()
-            team.totalScore = 0
-        }
     }
 
     /**
@@ -59,6 +50,7 @@ class GameSetupViewModel constructor(private val gameSetupRepository: GameSetupR
      * */
     fun onClassicClick() {
         gameEngine.gameType = GameType.Classic
+        resetGameEngine()
         startGameLiveData.value = gameEngine
     }
 
@@ -67,6 +59,7 @@ class GameSetupViewModel constructor(private val gameSetupRepository: GameSetupR
      * */
     fun onArcadeClick() {
         gameEngine.gameType = GameType.Arcade
+        resetGameEngine()
         startGameLiveData.value = gameEngine
     }
 
@@ -98,4 +91,13 @@ class GameSetupViewModel constructor(private val gameSetupRepository: GameSetupR
         gameEngine.settings?.wordTranslateLanguage = language
     }
 
+    private fun resetGameEngine() {
+        for (team in gameEngine.teams) {
+            team.roundScores.clear()
+            team.totalScore = 0
+        }
+        if (gameEngine.teams.isNotEmpty()) {
+            gameEngine.currentPlayingTeam = gameEngine.teams[0]
+        }
+    }
 }

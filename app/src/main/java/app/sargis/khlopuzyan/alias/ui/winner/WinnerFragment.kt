@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.sargis.khlopuzyan.alias.R
 import app.sargis.khlopuzyan.alias.databinding.FragmentWinnerBinding
 import app.sargis.khlopuzyan.alias.gameEngine.GameEngine
+import app.sargis.khlopuzyan.alias.ui.common.OnBackPressed
+import app.sargis.khlopuzyan.alias.ui.startGame.StartGameFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class WinnerFragment : DaggerFragment() {
+class WinnerFragment : DaggerFragment(), OnBackPressed {
 
     companion object {
 
@@ -69,8 +72,14 @@ class WinnerFragment : DaggerFragment() {
     }
 
     private fun startNewGame() {
-
+        val invoker = targetFragment
+        if (invoker is StartGameFragment) {
+            invoker.handleWinnerResult()
+            parentFragmentManager.popBackStack("winner", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
     }
 
-
+    override fun onBackPressed() {
+        startNewGame()
+    }
 }

@@ -95,4 +95,18 @@ class StartGameViewModel : ViewModel() {
     fun getTeams(): MutableList<Team>? {
         return gameEngineLiveData.value?.teams
     }
+
+    fun resetGameEngine() {
+        gameEngineLiveData.value?.let {
+            it.round = 1
+            it.isGameFinished = false
+            it.winnerTeam = null
+            for (team in it.teams) {
+                team.totalScore = 0
+                team.roundScores.clear()
+//            team.words.clear()
+//            team.words
+            }
+        }
+    }
 }
